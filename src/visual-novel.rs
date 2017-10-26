@@ -4,7 +4,7 @@ pub enum BackgroundCommand {
 }
 
 pub struct Command {
-    background: String,
+    background: Option<BackgroundCommand>,
     portrait: String,
     label: String,
     text: String,
