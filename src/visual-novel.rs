@@ -3,6 +3,11 @@ pub enum BackgroundCommand {
     Show(String),
 }
 
+pub enum PortraitCommand {
+    Hide,
+    Show(String, String)
+}
+
 pub struct Command {
     background: Option<BackgroundCommand>,
     portrait: String,
