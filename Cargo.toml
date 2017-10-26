@@ -1,0 +1,6 @@
+[package]
+name = "bones-quest"
+version = "0.1.0"
+authors = ["Nicholas Farley <nicholasafarley@gmail.com>"]
+
+[dependencies]
