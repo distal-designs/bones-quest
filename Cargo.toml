@@ -5,3 +5,4 @@ authors = ["Nicholas Farley <nicholasafarley@gmail.com>"]
 publish = false
 
 [dependencies]
+ggez = "0.3.3"
