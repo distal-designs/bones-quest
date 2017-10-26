@@ -1,3 +1,8 @@
+pub enum BackgroundCommand {
+    Hide,
+    Show(String),
+}
+
 pub struct Command {
     background: String,
     portrait: String,
