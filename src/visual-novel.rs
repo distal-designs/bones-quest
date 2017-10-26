@@ -11,7 +11,7 @@ pub enum PortraitCommand {
 pub struct Command {
     background: Option<BackgroundCommand>,
     portrait: Option<PortraitCommand>,
-    label: String,
+    label: Option<String>,
     text: String,
     menu: String,
 }
