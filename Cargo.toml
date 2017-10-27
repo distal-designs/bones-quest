@@ -6,3 +6,4 @@ publish = false
 
 [dependencies]
 ggez = "0.3"
+toml = "0.4"
