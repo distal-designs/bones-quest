@@ -1,3 +1,7 @@
+extern crate toml;
+
+
+
 pub enum BackgroundCommand {
     Hide,
     Show(String),
