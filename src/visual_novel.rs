@@ -17,7 +17,7 @@ pub enum BackgroundCommand {
 #[derive(Deserialize, Debug)]
 pub enum PortraitCommand {
     Hide,
-    Show(String, String)
+    Show(String, String),
 }
 
 
@@ -31,7 +31,7 @@ pub struct Command {
 
 
 impl Command {
-    fn parse (toml: &str) -> Result<Vec<Command>, toml::de::Error>{
+    fn parse(toml: &str) -> Result<Vec<Command>, toml::de::Error> {
         #[derive(Deserialize)]
         pub struct Commands {
             command: Vec<Command>,
@@ -41,7 +41,7 @@ impl Command {
     }
 
 
-    pub fn load (dialog_name: &str) -> Result<Vec<Command>, toml::de::Error> {
+    pub fn load(dialog_name: &str) -> Result<Vec<Command>, toml::de::Error> {
         let mut pathbuf = env::current_dir().unwrap();
         pathbuf.push("resources");
         pathbuf.push("dialogs");
@@ -50,8 +50,7 @@ impl Command {
         println!("{:?}", path);
         let mut f = File::open(path).unwrap();
         let mut toml = String::new();
-        f.read_to_string(&mut toml)
-         .unwrap();
+        f.read_to_string(&mut toml).unwrap();
 
         Command::parse(&toml)
     }
