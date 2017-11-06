@@ -9,12 +9,11 @@ use std::time::Duration;
 mod visual_novel;
 
 
-struct MainState {
-}
+struct MainState {}
 
 
 impl MainState {
-    fn new(_: &mut Context) -> GameResult<MainState>  {
+    fn new(_: &mut Context) -> GameResult<MainState> {
         Ok(MainState {})
     }
 }
