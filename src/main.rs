@@ -42,11 +42,10 @@ impl event::EventHandler for MainState {
 
 
 fn main() {
-    println!("{:?}", visual_novel::Command::load("blood"));
-
     let mut c = conf::Conf::default();
     c.window_title = "Bones Quest".to_string();
     let ctx = &mut Context::load_from_conf("bones-quest", "distal-designs", c).unwrap();
-    let state = &mut MainState::new(ctx).unwrap();
+    let dialog = visual_novel::Command::load("blood").unwrap();
+    let state = &mut MainState::new(ctx, dialog).unwrap();
     event::run(ctx, state).unwrap();
 }
