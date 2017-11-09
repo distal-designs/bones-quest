@@ -47,7 +47,6 @@ impl Command {
         pathbuf.push("dialogs");
         pathbuf.push(format!("{}.toml", dialog_name));
         let path = pathbuf.as_path();
-        println!("{:?}", path);
         let mut f = File::open(path).unwrap();
         let mut toml = String::new();
         f.read_to_string(&mut toml).unwrap();
