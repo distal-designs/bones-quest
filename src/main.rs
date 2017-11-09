@@ -19,8 +19,11 @@ struct MainState {
 
 
 impl MainState {
-    fn new(_: &mut Context) -> GameResult<MainState> {
-        Ok(MainState {})
+    fn new(_: &mut Context, dialog: Vec<Command>) -> GameResult<MainState> {
+        Ok(MainState {
+            dialog,
+            font:  Font::default_font().unwrap(),
+        })
     }
 }
 
