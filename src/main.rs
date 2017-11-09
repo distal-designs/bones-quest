@@ -4,12 +4,18 @@ extern crate ggez;
 
 use ggez::{conf, Context, GameResult, event};
 use ggez::graphics;
+use ggez::graphics::{Text, Font, Drawable, Point};
 use std::time::Duration;
+
+use visual_novel::Command;
 
 mod visual_novel;
 
 
-struct MainState {}
+struct MainState {
+    dialog: Vec<Command>,
+    font: Font,
+}
 
 
 impl MainState {
