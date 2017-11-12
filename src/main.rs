@@ -4,6 +4,7 @@ extern crate ggez;
 
 use ggez::{conf, Context, GameResult, event};
 use ggez::graphics;
+use ggez::event::{Keycode, Mod};
 use ggez::graphics::{Text, Font, Drawable, Point};
 use std::time::Duration;
 
@@ -43,6 +44,20 @@ impl event::EventHandler for MainState {
             .unwrap();
         graphics::present(ctx);
         Ok(())
+    }
+
+    fn key_up_event(&mut self, keycode: Keycode, _: Mod, _: bool) {
+        match keycode {
+            Keycode::Left => self.dialog_index = match self.dialog_index {
+                0 => 0,
+                x => x - 1,
+            },
+            Keycode::Right => self.dialog_index = match self.dialog_index {
+                x if x == self.dialog.len() - 1 => x,
+                x => x + 1,
+            },
+            _ => {},
+        };
     }
 }
 
