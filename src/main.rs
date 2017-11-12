@@ -37,7 +37,7 @@ impl event::EventHandler for MainState {
 
     fn draw(&mut self, ctx: &mut Context) -> GameResult<()> {
         graphics::clear(ctx);
-        Text::new(ctx, &self.dialog[0].text, &self.font)
+        Text::new(ctx, &self.dialog[self.dialog_index].text, &self.font)
             .unwrap()
             .draw(ctx, Point { x: 400.0, y: 300.0 }, 0.0)
             .unwrap();
