@@ -15,6 +15,7 @@ mod visual_novel;
 struct MainState {
     dialog: Vec<Command>,
     font: Font,
+    dialog_index: usize,
 }
 
 
@@ -23,6 +24,7 @@ impl MainState {
         Ok(MainState {
             dialog,
             font:  Font::default_font().unwrap(),
+            dialog_index: 0,
         })
     }
 }
