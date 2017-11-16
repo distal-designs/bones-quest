@@ -8,7 +8,7 @@ use ggez::event::{Keycode, Mod};
 use ggez::graphics::{Text, Font, Drawable, Point};
 use std::time::Duration;
 
-use visual_novel::Command;
+use visual_novel::command::Command;
 
 mod visual_novel;
 
@@ -71,7 +71,7 @@ fn main() {
     let mut c = conf::Conf::default();
     c.window_title = "Bones Quest".to_string();
     let ctx = &mut Context::load_from_conf("bones-quest", "distal-designs", c).unwrap();
-    let dialog = visual_novel::Command::load("blood").unwrap();
+    let dialog = Command::load("blood").unwrap();
     let state = &mut MainState::new(ctx, dialog).unwrap();
     event::run(ctx, state).unwrap();
 }
