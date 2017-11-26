@@ -2,15 +2,15 @@
 extern crate serde_derive;
 extern crate ggez;
 
-use ggez::{conf, Context, event};
-
-use visual_novel::command::Command;
-use main_state::MainState;
-
 mod visual_novel;
 mod scene_stack;
 mod scene;
 mod main_state;
+
+use ggez::{conf, Context, event};
+
+use visual_novel::command::Command;
+use main_state::MainState;
 
 fn main() {
     let mut c = conf::Conf::default();
