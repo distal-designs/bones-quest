@@ -11,6 +11,8 @@ use std::time::Duration;
 use visual_novel::command::Command;
 
 mod visual_novel;
+mod scene_stack;
+mod scene;
 
 
 struct MainState {
