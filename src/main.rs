@@ -7,6 +7,7 @@ mod scene_stack;
 mod scene;
 mod main_state;
 mod input;
+mod flags;
 
 use ggez::{conf, Context, event};
 
