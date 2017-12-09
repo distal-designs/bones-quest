@@ -6,6 +6,7 @@ mod visual_novel;
 mod scene_stack;
 mod scene;
 mod main_state;
+mod input;
 
 use ggez::{conf, Context, event};
 
