@@ -1,6 +1,10 @@
 use ggez;
 
-pub trait Scene<State> {
-    fn update(&mut self, state: &mut State);
-    fn draw(&self, state: &State, ctx: &mut ggez::Context);
+use input::Input;
+use flags::Flags;
+
+
+pub trait Scene {
+    fn update(&mut self, input: &Input, flags: &mut Flags);
+    fn draw(&self, flags: &Flags, ctx: &mut ggez::Context);
 }
