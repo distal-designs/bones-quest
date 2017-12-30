@@ -1,4 +1,5 @@
-use ggez::graphics::Font;
+use ggez::graphics;
+use ggez::graphics::{Font, Text, Point, Drawable};
 use ggez;
 
 use visual_novel::command::Command;
@@ -15,5 +16,17 @@ pub struct Scene {
 impl scene::Scene for Scene {
     fn update(&mut self, _: &Input, _: &mut Flags) { }
 
-    fn draw(&self, flags: &Flags, ctx: &mut ggez::Context) { unimplemented!() }
+    fn draw(&self, _: &Flags, ctx: &mut ggez::Context) {
+        graphics::clear(ctx);
+        let (_, lines) = self.font.get_wrap(&self.dialog[self.dialog_index].text, 700);
+
+        for (index, line) in lines.iter().enumerate() {
+            Text::new(ctx, &line, &self.font)
+                .unwrap()
+                .draw(ctx, Point { x: 400.0, y: index as f32 * 25.0 + 100.0 }, 0.0)
+                .unwrap();
+        }
+
+        graphics::present(ctx);
+    }
 }
