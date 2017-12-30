@@ -7,11 +7,24 @@ use scene;
 use input::Input;
 use flags::Flags;
 
+
 pub struct Scene {
     dialog: Vec<Command>,
     font: Font,
     dialog_index: usize,
 }
+
+
+impl Scene {
+    pub fn new(dialog: Vec<Command>) -> Scene {
+        Scene {
+            dialog,
+            font:  Font::default_font().unwrap(),
+            dialog_index: 0,
+        }
+    }
+}
+
 
 impl scene::Scene for Scene {
     fn update(&mut self, _: &Input, _: &mut Flags) { }
