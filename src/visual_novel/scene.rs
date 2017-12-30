@@ -1,4 +1,4 @@
-use ggez::graphics::{Font};
+use ggez::graphics::Font;
 
 use visual_novel::command::Command;
 
