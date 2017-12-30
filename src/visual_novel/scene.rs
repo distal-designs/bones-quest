@@ -13,6 +13,7 @@ pub struct Scene {
 }
 
 impl scene::Scene for Scene {
-    fn update(&mut self, input: &Input, flags: &mut Flags) { unimplemented!() }
+    fn update(&mut self, _: &Input, _: &mut Flags) { }
+
     fn draw(&self, flags: &Flags, ctx: &mut ggez::Context) { unimplemented!() }
 }
