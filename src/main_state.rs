@@ -2,7 +2,6 @@ use ggez::{Context, GameResult, event};
 use ggez::graphics;
 use ggez::event::{Keycode, Mod};
 use ggez::graphics::{Text, Font, Drawable, Point};
-use std::time::Duration;
 
 use visual_novel::command::Command;
 
