@@ -25,7 +25,7 @@ impl MainState {
 
 
 impl event::EventHandler for MainState {
-    fn update(&mut self, _: &mut Context, _: Duration) -> GameResult<()> {
+    fn update(&mut self, _: &mut Context) -> GameResult<()> {
         Ok(())
     }
 
