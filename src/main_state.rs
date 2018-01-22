@@ -43,7 +43,7 @@ impl event::EventHandler for MainState {
         Ok(())
     }
 
-    fn key_up_event(&mut self, keycode: Keycode, _: Mod, _: bool) {
+    fn key_up_event(&mut self, _: &mut Context, keycode: Keycode, _: Mod, _: bool) {
         match keycode {
             Keycode::Left => self.dialog_index = match self.dialog_index {
                 0 => 0,
