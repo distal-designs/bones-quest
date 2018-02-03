@@ -1,5 +1,5 @@
 use ggez::graphics;
-use ggez::graphics::{Font, Text, Point, Drawable};
+use ggez::graphics::{Font, Text, Point2, Drawable};
 use ggez;
 
 use visual_novel::command::Command;
@@ -36,7 +36,7 @@ impl scene::Scene for Scene {
         for (index, line) in lines.iter().enumerate() {
             Text::new(ctx, &line, &self.font)
                 .unwrap()
-                .draw(ctx, Point { x: 400.0, y: index as f32 * 25.0 + 100.0 }, 0.0)
+                .draw(ctx, Point2::new(400.0, index as f32 * 25.0 + 100.0), 0.0)
                 .unwrap();
         }
 
