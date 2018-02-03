@@ -1,8 +1,7 @@
 use ggez::{Context, GameResult, event};
 use ggez::graphics;
 use ggez::event::{Keycode, Mod};
-use ggez::graphics::{Text, Font, Drawable, Point};
-use std::time::Duration;
+use ggez::graphics::{Text, Font, Drawable, Point2};
 
 use visual_novel::command::Command;
 
@@ -25,7 +24,7 @@ impl MainState {
 
 
 impl event::EventHandler for MainState {
-    fn update(&mut self, _: &mut Context, _: Duration) -> GameResult<()> {
+    fn update(&mut self, _: &mut Context) -> GameResult<()> {
         Ok(())
     }
 
@@ -36,7 +35,7 @@ impl event::EventHandler for MainState {
         for (index, line) in lines.iter().enumerate() {
             Text::new(ctx, &line, &self.font)
                 .unwrap()
-                .draw(ctx, Point { x: 400.0, y: index as f32 * 25.0 + 100.0 }, 0.0)
+                .draw(ctx, Point2::new(0.0, index as f32 * 25.0 + 100.0 ), 0.0)
                 .unwrap();
         }
 
@@ -44,7 +43,7 @@ impl event::EventHandler for MainState {
         Ok(())
     }
 
-    fn key_up_event(&mut self, keycode: Keycode, _: Mod, _: bool) {
+    fn key_up_event(&mut self, _: &mut Context, keycode: Keycode, _: Mod, _: bool) {
         match keycode {
             Keycode::Left => self.dialog_index = match self.dialog_index {
                 0 => 0,
