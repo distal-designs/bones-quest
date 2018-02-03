@@ -16,7 +16,7 @@ use main_state::MainState;
 
 fn main() {
     let mut c = conf::Conf::default();
-    c.window_title = "Bones Quest".to_string();
+    c.window_setup.title = "Bones Quest".to_string();
     let ctx = &mut Context::load_from_conf("bones-quest", "distal-designs", c).unwrap();
     let dialog = Command::load("blood").unwrap();
     let state = &mut MainState::new(ctx, dialog).unwrap();
