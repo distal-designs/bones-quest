@@ -35,7 +35,7 @@ impl event::EventHandler for MainState {
         for (index, line) in lines.iter().enumerate() {
             Text::new(ctx, &line, &self.font)
                 .unwrap()
-                .draw(ctx, Point2::new(400.0, index as f32 * 25.0 + 100.0 ), 0.0)
+                .draw(ctx, Point2::new(0.0, index as f32 * 25.0 + 100.0 ), 0.0)
                 .unwrap();
         }
 
