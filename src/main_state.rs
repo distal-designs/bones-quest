@@ -16,12 +16,12 @@ pub struct MainState {
 
 
 impl MainState {
-    pub fn new(_: &mut Context, dialog: Vec<Command>) -> GameResult<MainState> {
-        Ok(MainState {
-            dialog,
-            font:  Font::default_font().unwrap(),
-            dialog_index: 0,
-        })
+    pub fn new() -> MainState {
+       MainState {
+           flags: Flags {},
+           input: Input {},
+           scenes: Box::new(Vec::new())
+       }
     }
 }
 
