@@ -11,7 +11,7 @@ use scene_stack::SceneStack;
 pub struct MainState {
     flags: Flags,
     input: Input,
-    scenes: SceneStack,
+    scenes: Box<SceneStack>,
 }
 
 
