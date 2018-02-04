@@ -45,18 +45,4 @@ impl event::EventHandler for MainState {
         graphics::present(ctx);
         Ok(())
     }
-
-    fn key_up_event(&mut self, _: &mut Context, keycode: Keycode, _: Mod, _: bool) {
-        match keycode {
-            Keycode::Left => self.dialog_index = match self.dialog_index {
-                0 => 0,
-                x => x - 1,
-            },
-            Keycode::Right => self.dialog_index = match self.dialog_index {
-                x if x == self.dialog.len() - 1 => x,
-                x => x + 1,
-            },
-            _ => {},
-        };
-    }
 }
