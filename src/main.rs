@@ -18,7 +18,9 @@ fn main() {
     let mut c = conf::Conf::default();
     c.window_setup.title = "Bones Quest".to_string();
     let ctx = &mut Context::load_from_conf("bones-quest", "distal-designs", c).unwrap();
+    let state = &mut MainState::new();
     let dialog = Command::load("blood").unwrap();
-    let state = &mut MainState::new(ctx, dialog).unwrap();
+    let vn = visual_novel::scene::Scene::new(dialog);
+    state.scenes.push(Box::new(vn));
     event::run(ctx, state).unwrap();
 }
