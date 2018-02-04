@@ -4,11 +4,14 @@ use ggez::event::{Keycode, Mod};
 use ggez::graphics::{Text, Font, Drawable, Point2};
 
 use visual_novel::command::Command;
+use flags::Flags;
+use input::Input;
+use scene_stack::SceneStack;
 
 pub struct MainState {
-    dialog: Vec<Command>,
-    font: Font,
-    dialog_index: usize,
+    flags: Flags,
+    input: Input,
+    scenes: SceneStack,
 }
 
 
