@@ -28,6 +28,7 @@ impl MainState {
 
 impl event::EventHandler for MainState {
     fn update(&mut self, _: &mut Context) -> GameResult<()> {
+        self.scenes.update(&self.input, &mut self.flags);
         Ok(())
     }
 
