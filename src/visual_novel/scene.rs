@@ -31,14 +31,18 @@ impl scene::Scene for Scene {
 
     fn draw(&self, _: &Flags, ctx: &mut ggez::Context) {
         graphics::clear(ctx);
-        let (_, lines) = self.font.get_wrap(&self.dialog[self.dialog_index].text, 700);
 
-        for (index, line) in lines.iter().enumerate() {
-            Text::new(ctx, &line, &self.font)
-                .unwrap()
-                .draw(ctx, Point2::new(400.0, index as f32 * 25.0 + 100.0), 0.0)
-                .unwrap();
-        }
+        self.font
+            .get_wrap(&self.dialog[self.dialog_index].text, 700)
+            .1
+            .iter()
+            .enumerate()
+            .for_each(|(index, line)| {
+                Text::new(ctx, &line, &self.font)
+                    .unwrap()
+                    .draw(ctx, Point2::new(400.0, index as f32 * 25.0 + 100.0), 0.0)
+                    .unwrap();
+            });
 
         graphics::present(ctx);
     }
