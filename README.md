@@ -1,4 +1,4 @@
-# bones-quest
+# Bones Quest
 
 ## Setup
 
