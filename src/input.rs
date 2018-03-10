@@ -1,1 +1,1 @@
-pub struct Input { }
+pub struct Input;
