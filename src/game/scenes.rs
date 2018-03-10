@@ -12,7 +12,7 @@ pub struct Scene {
 }
 
 impl Scene {
-    pub fn new(dialog: Vec<Command>) -> Scene {
+    pub fn new(dialog: Vec<Command>) -> Self {
         Scene {
             dialog,
             font: Font::default_font().unwrap(),
