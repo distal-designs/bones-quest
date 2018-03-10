@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+for FILE in $(git diff --name-only --cached); do
+  [ "${FILE: -3}" != '.rs' ] && exit 0
+
+  if ! rustfmt "$FILE" --write-mode diff > /dev/null 2>&1; then
+    echo "'$FILE' has rust style issues. Run 'cargo fmt' and then restage!"
+    exit 1
+  fi
+done

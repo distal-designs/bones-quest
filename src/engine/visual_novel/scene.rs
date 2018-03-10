@@ -2,10 +2,8 @@ use ggez::graphics;
 use ggez::graphics::{Drawable, Font, Point2, Text};
 use ggez;
 
-use visual_novel::command::Command;
-use scene;
-use input::Input;
-use flags::Flags;
+use super::command::Command;
+use super::super::scene;
 
 pub struct Scene {
     dialog: Vec<Command>,
@@ -23,10 +21,10 @@ impl Scene {
     }
 }
 
-impl scene::Scene for Scene {
-    fn update(&mut self, _: &Input, _: &mut Flags) {}
+impl<I, F> scene::Scene<I, F> for Scene {
+    fn update(&mut self, _: &I, _: &mut F) {}
 
-    fn draw(&self, _: &Flags, ctx: &mut ggez::Context) {
+    fn draw(&self, _: &F, ctx: &mut ggez::Context) {
         graphics::clear(ctx);
 
         self.font

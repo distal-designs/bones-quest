@@ -1,13 +1,13 @@
 use ggez::{event, Context, GameResult};
 
-use flags::Flags;
-use input::Input;
-use scene_stack::SceneStack;
+use super::flags::Flags;
+use super::input::Input;
+use engine::scene_stack::SceneStack;
 
 pub struct MainState {
     flags: Flags,
     input: Input,
-    pub scenes: Box<SceneStack>,
+    pub scenes: Box<SceneStack<Input, Flags>>,
 }
 
 impl MainState {
