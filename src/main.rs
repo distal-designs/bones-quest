@@ -1,6 +1,6 @@
+extern crate ggez;
 #[macro_use]
 extern crate serde_derive;
-extern crate ggez;
 
 mod visual_novel;
 mod scene_stack;
@@ -9,7 +9,7 @@ mod main_state;
 mod input;
 mod flags;
 
-use ggez::{conf, Context, event};
+use ggez::{conf, event, Context};
 
 use visual_novel::command::Command;
 use main_state::MainState;

@@ -1,11 +1,8 @@
 extern crate toml;
 
-
 use std::env;
 use std::fs::File;
 use std::io::Read;
-
-
 
 #[derive(Deserialize, Debug)]
 pub enum BackgroundCommand {
@@ -13,13 +10,11 @@ pub enum BackgroundCommand {
     Show(String),
 }
 
-
 #[derive(Deserialize, Debug)]
 pub enum PortraitCommand {
     Hide,
     Show(String, String),
 }
-
 
 #[derive(Deserialize, Debug)]
 pub struct Command {
@@ -27,8 +22,6 @@ pub struct Command {
     portrait: Option<PortraitCommand>,
     pub text: String,
 }
-
-
 
 impl Command {
     fn parse(toml: &str) -> Result<Vec<Command>, toml::de::Error> {
@@ -39,7 +32,6 @@ impl Command {
 
         toml::from_str::<Commands>(toml).map(|commands| commands.command)
     }
-
 
     pub fn load(dialog_name: &str) -> Result<Vec<Command>, toml::de::Error> {
         let mut pathbuf = env::current_dir().unwrap();
