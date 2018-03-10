@@ -2,7 +2,7 @@ use ggez::{event, Context, GameResult};
 
 use flags::Flags;
 use input::Input;
-use scene_stack::SceneStack;
+use engine::scene_stack::SceneStack;
 
 pub struct MainState {
     flags: Flags,

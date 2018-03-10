@@ -2,8 +2,8 @@ use ggez::graphics;
 use ggez::graphics::{Drawable, Font, Point2, Text};
 use ggez;
 
-use visual_novel::command::Command;
-use scene;
+use super::command::Command;
+use super::super::scene;
 use input::Input;
 use flags::Flags;
 

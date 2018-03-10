@@ -1,6 +1,6 @@
 use ggez;
 
-use scene::Scene;
+use super::scene::Scene;
 
 pub trait SceneStack<I, F> {
     fn pop(&mut self) -> Option<Box<Scene<I, F>>>;
