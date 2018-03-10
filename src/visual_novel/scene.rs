@@ -23,7 +23,7 @@ impl Scene {
     }
 }
 
-impl scene::Scene for Scene {
+impl scene::Scene<Input, Flags> for Scene {
     fn update(&mut self, _: &Input, _: &mut Flags) {}
 
     fn draw(&self, _: &Flags, ctx: &mut ggez::Context) {
