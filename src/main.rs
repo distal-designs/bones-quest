@@ -8,7 +8,7 @@ mod game;
 use ggez::{conf, event, Context};
 
 use engine::visual_novel::command::Command;
-use game::scenes::Scene;
+use game::scenes::VisualNovel;
 use game::main_state::MainState;
 
 fn main() {
@@ -17,7 +17,7 @@ fn main() {
     let ctx = &mut Context::load_from_conf("bones-quest", "distal-designs", c).unwrap();
     let state = &mut MainState::new();
     let dialog = Command::load("blood").unwrap();
-    let vn = Scene::new(dialog);
+    let vn = VisualNovel::new(dialog);
     state.scenes.push(Box::new(vn));
     event::run(ctx, state).unwrap();
 }

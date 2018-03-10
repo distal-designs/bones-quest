@@ -5,13 +5,13 @@ use ggez;
 use engine::visual_novel::command::Command;
 use engine;
 
-pub struct Scene {
+pub struct VisualNovel {
     dialog: Vec<Command>,
     font: Font,
     dialog_index: usize,
 }
 
-impl Scene {
+impl VisualNovel {
     pub fn new(dialog: Vec<Command>) -> Self {
         Self {
             dialog,
@@ -21,7 +21,7 @@ impl Scene {
     }
 }
 
-impl<I, F> engine::scene::Scene<I, F> for Scene {
+impl<I, F> engine::scene::Scene<I, F> for VisualNovel {
     fn update(&mut self, _: &I, _: &mut F) {}
 
     fn draw(&self, _: &F, ctx: &mut ggez::Context) {
