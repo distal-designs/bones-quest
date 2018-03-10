@@ -2,8 +2,8 @@ use ggez::graphics;
 use ggez::graphics::{Drawable, Font, Point2, Text};
 use ggez;
 
-use super::command::Command;
-use super::super::scene;
+use engine::visual_novel::command::Command;
+use engine;
 
 pub struct Scene {
     dialog: Vec<Command>,
@@ -21,7 +21,7 @@ impl Scene {
     }
 }
 
-impl<I, F> scene::Scene<I, F> for Scene {
+impl<I, F> engine::scene::Scene<I, F> for Scene {
     fn update(&mut self, _: &I, _: &mut F) {}
 
     fn draw(&self, _: &F, ctx: &mut ggez::Context) {
