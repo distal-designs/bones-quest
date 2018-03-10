@@ -3,15 +3,13 @@ extern crate ggez;
 extern crate serde_derive;
 
 mod engine;
-mod main_state;
-mod input;
-mod flags;
+mod game;
 
 use ggez::{conf, event, Context};
 
 use engine::visual_novel::command::Command;
 use engine::visual_novel::scene::Scene;
-use main_state::MainState;
+use game::main_state::MainState;
 
 fn main() {
     let mut c = conf::Conf::default();
