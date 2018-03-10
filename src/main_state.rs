@@ -7,7 +7,7 @@ use scene_stack::SceneStack;
 pub struct MainState {
     flags: Flags,
     input: Input,
-    pub scenes: Box<SceneStack>,
+    pub scenes: Box<SceneStack<Input, Flags>>,
 }
 
 impl MainState {
