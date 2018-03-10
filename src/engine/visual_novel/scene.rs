@@ -4,8 +4,6 @@ use ggez;
 
 use super::command::Command;
 use super::super::scene;
-use input::Input;
-use flags::Flags;
 
 pub struct Scene {
     dialog: Vec<Command>,
@@ -23,10 +21,10 @@ impl Scene {
     }
 }
 
-impl scene::Scene<Input, Flags> for Scene {
-    fn update(&mut self, _: &Input, _: &mut Flags) {}
+impl<I, F> scene::Scene<I, F> for Scene {
+    fn update(&mut self, _: &I, _: &mut F) {}
 
-    fn draw(&self, _: &Flags, ctx: &mut ggez::Context) {
+    fn draw(&self, _: &F, ctx: &mut ggez::Context) {
         graphics::clear(ctx);
 
         self.font
