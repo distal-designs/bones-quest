@@ -1,5 +1,5 @@
 use ggez::graphics;
-use ggez::graphics::{Drawable, Font, Point2, Text};
+use ggez::graphics::{Drawable, Point2, Text};
 use ggez;
 
 use engine::visual_novel::command::Command;
