@@ -1,6 +1,6 @@
 use ggez::graphics;
 use ggez::graphics::{Drawable, Point2, Text};
-use ggez;
+use ggez::{self, GameResult};
 
 use engine::visual_novel::command::Command;
 use engine;
@@ -20,9 +20,11 @@ impl VisualNovel {
 }
 
 impl<I, F> engine::scene::Scene<I, F> for VisualNovel {
-    fn update(&mut self, _: &I, _: &mut F) {}
+    fn update(&mut self, _: &I, _: &mut F) -> GameResult<()> {
+        Ok(())
+    }
 
-    fn draw(&self, _: &F, ctx: &mut ggez::Context) {
+    fn draw(&self, _: &F, ctx: &mut ggez::Context) -> GameResult<()> {
         graphics::clear(ctx);
         let font = ctx.default_font.clone();
 
@@ -39,5 +41,6 @@ impl<I, F> engine::scene::Scene<I, F> for VisualNovel {
             });
 
         graphics::present(ctx);
+        Ok(())
     }
 }
