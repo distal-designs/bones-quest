@@ -21,14 +21,14 @@ impl<I, F> SceneStack<I, F> for Vec<Box<Scene<I, F>>> {
     fn update(&mut self, input: &I, flags: &mut F) {
         let current_index = self.len() - 1;
         if let Some(scene) = self.get_mut(current_index) {
-            scene.update(input, flags);
+            scene.update(input, flags).unwrap();
         }
     }
 
     fn draw(&self, flags: &F, ctx: &mut ggez::Context) {
         let current_index = self.len() - 1;
         if let Some(scene) = self.get(current_index) {
-            scene.draw(flags, ctx);
+            scene.draw(flags, ctx).unwrap();
         }
     }
 }
