@@ -28,17 +28,13 @@ impl<I, F> engine::scene::Scene<I, F> for VisualNovel {
         graphics::clear(ctx);
         let font = ctx.default_font.clone();
 
-        ctx.default_font
-            .get_wrap(&self.dialog[self.dialog_index].text, 700)
-            .1
-            .iter()
-            .enumerate()
-            .for_each(|(index, line)| {
-                Text::new(ctx, &line, &font)
-                    .unwrap()
-                    .draw(ctx, Point2::new(400.0, index as f32 * 25.0 + 100.0), 0.0)
-                    .unwrap();
-            });
+        let (_, lines) = ctx.default_font
+            .get_wrap(&self.dialog[self.dialog_index].text, 700);
+
+        for (index, line) in lines.iter().enumerate() {
+            let text = Text::new(ctx, &line, &font)?;
+            text.draw(ctx, Point2::new(400.0, index as f32 * 25.0 + 100.0), 0.0)?
+        }
 
         graphics::present(ctx);
         Ok(())
