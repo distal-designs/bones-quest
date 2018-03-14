@@ -1,5 +1,5 @@
 use ggez::{Context, GameResult};
-use ggez::graphics::{Drawable, Point2, Rect, Text};
+use ggez::graphics::{rectangle, DrawMode, Drawable, Point2, Rect, Text};
 
 pub struct Message {
     text: String,
@@ -13,6 +13,9 @@ impl Message {
     }
 
     pub fn draw(&self, ctx: &mut Context) -> GameResult<()> {
+        let bounds = Message::bounds(ctx);
+        rectangle(ctx, DrawMode::Fill, bounds)?;
+
         let font = ctx.default_font.clone();
 
         let (_, lines) = ctx.default_font.get_wrap(&self.text, 700);
