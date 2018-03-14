@@ -1,5 +1,5 @@
 use ggez::{Context, GameResult};
-use ggez::graphics::{Drawable, Point2, Text};
+use ggez::graphics::{Drawable, Point2, Rect, Text};
 
 pub struct Message {
     text: String,
@@ -23,5 +23,16 @@ impl Message {
         }
 
         Ok(())
+    }
+
+    fn bounds(ctx: &Context) -> Rect {
+        let width = ctx.conf.window_mode.width;
+        let height = ctx.conf.window_mode.height;
+        Rect {
+            w: width as f32 * 0.8,
+            h: height as f32 * 0.2,
+            x: width as f32 * 0.1,
+            y: height as f32 * 0.7,
+        }
     }
 }
