@@ -31,8 +31,8 @@ impl Message {
 
         let mut line_cache = self.line_cache.borrow_mut();
         let texts = line_cache.get_or_insert_with(|| {
-            let lines = font.get_wrap(&self.text, bounds.w as usize).1;
-            lines
+            font.get_wrap(&self.text, bounds.w as usize)
+                .1
                 .iter()
                 .map(|line| Text::new(ctx, &line, &font).unwrap())
                 .collect()
