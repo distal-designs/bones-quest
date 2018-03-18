@@ -1,5 +1,5 @@
 use ggez::{Context, GameResult};
-use ggez::graphics::{rectangle, set_color, Color, DrawMode, Drawable, Point2, Rect, Text};
+use ggez::graphics::{rectangle, Color, DrawMode, Drawable, Point2, Rect, Text};
 
 use super::color::with_color;
 
