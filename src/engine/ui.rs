@@ -22,9 +22,6 @@ impl Message {
 
     pub fn draw(&self, ctx: &mut Context) -> GameResult<()> {
         let bounds = Message::bounds(ctx);
-        with_color(ctx, &Color::from_rgb(0, 0, 0), |ctx| {
-            rectangle(ctx, DrawMode::Fill, bounds)
-        })?;
 
         let mut font_cache = self.font_cache.borrow_mut();
         let font = font_cache.get_or_insert_with(|| ctx.default_font.clone());
@@ -37,6 +34,10 @@ impl Message {
                 .map(|line| Text::new(ctx, &line, &font).unwrap())
                 .collect()
         });
+
+        with_color(ctx, &Color::from_rgb(0, 0, 0), |ctx| {
+            rectangle(ctx, DrawMode::Fill, bounds)
+        })?;
 
         for (index, text) in texts.iter().enumerate() {
             let x = bounds.x;
