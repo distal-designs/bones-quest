@@ -26,7 +26,7 @@ pub struct Command {
 impl Command {
     fn parse(toml: &str) -> Result<Vec<Command>, toml::de::Error> {
         #[derive(Deserialize)]
-        pub struct Commands {
+        struct Commands {
             command: Vec<Command>,
         }
 
