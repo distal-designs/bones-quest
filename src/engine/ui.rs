@@ -1,4 +1,3 @@
-use std::collections::HashMap;
 use std::cell::RefCell;
 
 use ggez::{Context, GameResult};
@@ -9,7 +8,7 @@ use super::color::with_color;
 pub struct Message {
     text: String,
     font_cache: RefCell<Option<Font>>,
-    line_cache: RefCell<HashMap<String, Text>>,
+    line_cache: RefCell<Option<Vec<Text>>>,
 }
 
 impl Message {
@@ -17,7 +16,7 @@ impl Message {
         Self {
             text: text.to_string(),
             font_cache: RefCell::new(None),
-            line_cache: RefCell::new(HashMap::new()),
+            line_cache: RefCell::new(None),
         }
     }
 
@@ -30,17 +29,20 @@ impl Message {
         let mut font_cache = self.font_cache.borrow_mut();
         let font = font_cache.get_or_insert_with(|| ctx.default_font.clone());
 
-        let (_, lines) = font.get_wrap(&self.text, bounds.w as usize);
         let mut line_cache = self.line_cache.borrow_mut();
-        for (index, line) in lines.iter().enumerate() {
-            let text = line_cache
-                .entry(line.to_string())
-                .or_insert_with(|| Text::new(ctx, &line, &font).unwrap());
+        let texts = line_cache.get_or_insert_with(|| {
+            let lines = font.get_wrap(&self.text, bounds.w as usize).1;
+            lines
+                .iter()
+                .map(|line| Text::new(ctx, &line, &font).unwrap())
+                .collect()
+        });
+
+        for (index, text) in texts.iter().enumerate() {
             let x = bounds.x;
             let y = bounds.y as usize + (index * text.height() as usize);
             text.draw(ctx, Point2::new(x, y as f32), 0.0)?
         }
-
         Ok(())
     }
 
