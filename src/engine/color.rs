@@ -7,7 +7,7 @@ where
 {
     let current_color = get_color(ctx);
     set_color(ctx, *color)?;
-    fun(ctx);
+    fun(ctx)?;
     set_color(ctx, current_color)?;
     Ok(())
 }
