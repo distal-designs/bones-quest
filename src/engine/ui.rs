@@ -16,7 +16,7 @@ impl Message {
 
     pub fn draw(&self, ctx: &mut Context) -> GameResult<()> {
         let bounds = Message::bounds(ctx);
-        with_color(ctx, &Color::new(0.0, 0.0, 0.0, 1.0), |ctx| {
+        with_color(ctx, &Color::from_rgb(0, 0, 0), |ctx| {
             rectangle(ctx, DrawMode::Fill, bounds)
         })?;
 
