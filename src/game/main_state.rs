@@ -1,5 +1,6 @@
 use ggez::{event, Context, GameResult};
-use ggez::graphics;
+use ggez::timer;
+use ggez::graphics::{self, Drawable, Point2, Text};
 
 use super::flags::Flags;
 use super::input::Input;
@@ -30,6 +31,10 @@ impl event::EventHandler for MainState {
     fn draw(&mut self, ctx: &mut Context) -> GameResult<()> {
         graphics::clear(ctx);
         self.scenes.draw(&self.flags, ctx);
+        let font = ctx.default_font.clone();
+        let fps = timer::get_fps(ctx) as u8;
+        let text = Text::new(ctx, &fps.to_string(), &font)?;
+        text.draw(ctx, Point2::new(0.0, 0.0), 0.0)?;
         graphics::present(ctx);
         Ok(())
     }
