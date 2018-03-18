@@ -20,7 +20,7 @@ impl Message {
 
         let font = ctx.default_font.clone();
 
-        let (_, lines) = ctx.default_font.get_wrap(&self.text, 700);
+        let (_, lines) = ctx.default_font.get_wrap(&self.text, bounds.w as usize);
 
         for (index, line) in lines.iter().enumerate() {
             let text = Text::new(ctx, &line, &font)?;
