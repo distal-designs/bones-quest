@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::cell::RefCell;
 
 use ggez::{Context, GameResult};
 use ggez::graphics::{rectangle, Color, DrawMode, Drawable, Font, Point2, Rect, Text};
@@ -7,16 +8,16 @@ use super::color::with_color;
 
 pub struct Message {
     text: String,
-    font_cache: Option<Font>,
-    line_cache: HashMap<String, Text>,
+    font_cache: RefCell<Option<Font>>,
+    line_cache: RefCell<HashMap<String, Text>>,
 }
 
 impl Message {
     pub fn new(text: &str) -> Self {
         Self {
             text: text.to_string(),
-            font_cache: None,
-            line_cache: HashMap::new(),
+            font_cache: RefCell::new(None),
+            line_cache: RefCell::new(HashMap::new()),
         }
     }
 
