@@ -24,7 +24,9 @@ impl Message {
 
         for (index, line) in lines.iter().enumerate() {
             let text = Text::new(ctx, &line, &font)?;
-            text.draw(ctx, Point2::new(400.0, index as f32 * 25.0 + 100.0), 0.0)?
+            let x = bounds.x;
+            let y = bounds.y as usize + (index * text.height() as usize);
+            text.draw(ctx, Point2::new(x, y as f32), 0.0)?
         }
 
         Ok(())
