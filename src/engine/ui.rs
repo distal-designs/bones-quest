@@ -8,7 +8,7 @@ use super::color::with_color;
 pub struct Message {
     text: String,
     font_cache: RefCell<Option<Font>>,
-    line_cache: RefCell<Option<Vec<Text>>>,
+    text_cache: RefCell<Option<Vec<Text>>>,
 }
 
 impl Message {
@@ -16,7 +16,7 @@ impl Message {
         Self {
             text: text.to_string(),
             font_cache: RefCell::new(None),
-            line_cache: RefCell::new(None),
+            text_cache: RefCell::new(None),
         }
     }
 
@@ -26,8 +26,8 @@ impl Message {
         let mut font_cache = self.font_cache.borrow_mut();
         let font = font_cache.get_or_insert_with(|| ctx.default_font.clone());
 
-        let mut line_cache = self.line_cache.borrow_mut();
-        let texts = line_cache.get_or_insert_with(|| {
+        let mut text_cache = self.text_cache.borrow_mut();
+        let texts = text_cache.get_or_insert_with(|| {
             font.get_wrap(&self.text, bounds.w as usize)
                 .1
                 .iter()
