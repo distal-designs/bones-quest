@@ -1,4 +1,5 @@
 use ggez::{event, Context, GameResult};
+use ggez::graphics;
 
 use super::flags::Flags;
 use super::input::Input;
@@ -27,7 +28,9 @@ impl event::EventHandler for MainState {
     }
 
     fn draw(&mut self, ctx: &mut Context) -> GameResult<()> {
+        graphics::clear(ctx);
         self.scenes.draw(&self.flags, ctx);
+        graphics::present(ctx);
         Ok(())
     }
 }

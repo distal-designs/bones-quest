@@ -1,4 +1,3 @@
-use ggez::graphics;
 use ggez::{self, GameResult};
 
 use engine::visual_novel::command::Command;
@@ -28,9 +27,7 @@ impl<I, F> engine::scene::Scene<I, F> for VisualNovel {
     }
 
     fn draw(&self, _: &F, ctx: &mut ggez::Context) -> GameResult<()> {
-        graphics::clear(ctx);
         self.message.draw(ctx)?;
-        graphics::present(ctx);
         Ok(())
     }
 }
