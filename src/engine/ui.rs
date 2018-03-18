@@ -27,12 +27,15 @@ impl Message {
             rectangle(ctx, DrawMode::Fill, bounds)
         })?;
 
-        let font = ctx.default_font.clone();
+        let mut font_cache = self.font_cache.borrow_mut();
+        let font = font_cache.get_or_insert_with(|| ctx.default_font.clone());
 
-        let (_, lines) = ctx.default_font.get_wrap(&self.text, bounds.w as usize);
-
+        let (_, lines) = font.get_wrap(&self.text, bounds.w as usize);
+        let mut line_cache = self.line_cache.borrow_mut();
         for (index, line) in lines.iter().enumerate() {
-            let text = Text::new(ctx, &line, &font)?;
+            let text = line_cache
+                .entry(line.to_string())
+                .or_insert_with(|| Text::new(ctx, &line, &font).unwrap());
             let x = bounds.x;
             let y = bounds.y as usize + (index * text.height() as usize);
             text.draw(ctx, Point2::new(x, y as f32), 0.0)?
