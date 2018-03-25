@@ -1,5 +1,8 @@
 [[command]]
   text = "THIS IS A STORY OF A DAY WHERE THERE WAS ALL THIS BLOOD."
+  [command.background]
+    t = "Color"
+    c = "#ff0000"
 
 [[command]]
   text = "A MAN WAS WALKING AROUND AND BLOOD STARTED COMING OUT OF HIM EVERYWHERE."
