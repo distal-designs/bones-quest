@@ -5,6 +5,7 @@ use std::fs::File;
 use std::io::Read;
 
 #[derive(Deserialize, Debug)]
+#[serde(tag = "t", content = "c")]
 pub enum BackgroundCommand {
     Hide,
     Show(String),
