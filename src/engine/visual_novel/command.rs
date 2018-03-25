@@ -8,7 +8,8 @@ use std::io::Read;
 #[serde(tag = "t", content = "c")]
 pub enum BackgroundCommand {
     Hide,
-    Show(String),
+    Color(String),
+    Image(String),
 }
 
 #[derive(Deserialize, Debug)]
