@@ -43,3 +43,15 @@ impl<I, F> engine::scene::Scene<I, F> for Conquest {
         unimplemented!();
     }
 }
+
+pub struct Investigation;
+
+impl<I, F> engine::scene::Scene<I, F> for Investigation {
+    fn update(&mut self, _: &I, _: &mut F) -> GameResult<()> {
+        unimplemented!();
+    }
+
+    fn draw(&self, _: &F, _ctx: &mut ggez::Context) -> GameResult<()> {
+        unimplemented!();
+    }
+}
