@@ -24,13 +24,13 @@ impl MainState {
 
 impl event::EventHandler for MainState {
     fn update(&mut self, _: &mut Context) -> GameResult<()> {
-        self.scenes.update(&self.input, &mut self.flags);
+        self.scenes.update(&self.input, &mut self.flags)?;
         Ok(())
     }
 
     fn draw(&mut self, ctx: &mut Context) -> GameResult<()> {
         graphics::clear(ctx);
-        self.scenes.draw(&self.flags, ctx);
+        self.scenes.draw(&self.flags, ctx)?;
         let font = ctx.default_font.clone();
         let fps = timer::get_fps(ctx) as u8;
         let text = Text::new(ctx, &fps.to_string(), &font)?;
