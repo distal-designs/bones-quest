@@ -37,7 +37,6 @@ impl VisualNovel {
             message: None,
             background: None,
         };
-        s.apply();
         return s;
     }
 }
