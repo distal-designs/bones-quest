@@ -1,7 +1,7 @@
 use ggez::{self, GameResult};
 use ggez::graphics::Drawable;
 
-use engine::visual_novel::command::Command;
+use engine::visual_novel::command::{BackgroundCommand, Command};
 use engine::ui::Message;
 use engine;
 
@@ -17,6 +17,10 @@ impl VisualNovel {
         let commands = &mut self.dialog;
         let command = &mut commands[self.dialog_index];
         self.message = Some(Message::new(&command.text));
+        self.background = match command.background {
+            Some(BackgroundCommand::Hide) => None,
+            _ => unimplemented!(),
+        };
     }
 
     pub fn new(dialog: Vec<Command>) -> Self {
