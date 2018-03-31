@@ -18,11 +18,13 @@ impl VisualNovel {
     }
 
     pub fn new(dialog: Vec<Command>) -> Self {
-        Self {
+        let mut s = Self {
             dialog,
             dialog_index: 0,
             message: None,
-        }
+        };
+        s.apply();
+        return s;
     }
 }
 
