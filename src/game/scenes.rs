@@ -5,6 +5,11 @@ use engine::visual_novel::command::{BackgroundCommand, Command};
 use engine::ui::Message;
 use engine;
 
+pub enum Status {
+    CommandsApplied,
+    PendingCommands
+}
+
 pub struct VisualNovel {
     dialog: Vec<Command>,
     dialog_index: usize,
