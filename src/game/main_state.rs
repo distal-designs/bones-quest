@@ -25,6 +25,7 @@ impl MainState {
 
 impl event::EventHandler for MainState {
     fn update(&mut self, _: &mut Context) -> GameResult<()> {
+        self.input.finalize();
         self.scenes.update(&self.input, &mut self.flags)?;
         Ok(())
     }
@@ -40,23 +41,15 @@ impl event::EventHandler for MainState {
         Ok(())
     }
 
-    // input object will be a set of all key downs
-    // clone set of previous frame
-    // add any new key downs, remove any key ups
-    // ask ggez what frame it is, input handler should store the most recent frame index it has
-    // seen
+    // ask ggez what frame it is
+    // input handler should store the most recent frame index it has seen
+    fn key_down_event(&mut self, keycode: Keycode, _: Mod, _: bool) {
+        let frame_index = 0;
+        self.input.add_input(keycode, frame_index);
+    }
+
     fn key_up_event(&mut self, keycode: Keycode, _: Mod, _: bool) {
-        
-        /*match keycode {
-            Keycode::Left => self.dialog_index = match self.dialog_index {
-                0 => 0,
-                x => x - 1,
-            },
-            Keycode::Right => self.dialog_index = match self.dialog_index {
-                x if x == self.dialog.len() - 1 => x,
-                x => x + 1,
-            },
-            _ => {},
-        };*/
+        let frame_index = 0;
+        self.input.remove_input(keycode, frame_index);
     }
 }
