@@ -17,7 +17,7 @@ impl MainState {
     pub fn new() -> MainState {
         MainState {
             flags: Flags {},
-            input: Input {},
+            input: Input::new(),
             scenes: Box::new(Vec::new()),
         }
     }
@@ -41,15 +41,11 @@ impl event::EventHandler for MainState {
         Ok(())
     }
 
-    // ask ggez what frame it is
-    // input handler should store the most recent frame index it has seen
-    fn key_down_event(&mut self, keycode: Keycode, _: Mod, _: bool) {
-        let frame_index = 0;
-        self.input.add_input(keycode, frame_index);
+    fn key_down_event(&mut self, _: &mut Context, keycode: Keycode, _: Mod, _: bool) {
+        self.input.add_input(keycode);
     }
 
-    fn key_up_event(&mut self, keycode: Keycode, _: Mod, _: bool) {
-        let frame_index = 0;
-        self.input.remove_input(keycode, frame_index);
+    fn key_up_event(&mut self, _: &mut Context, keycode: Keycode, _: Mod, _: bool) {
+        self.input.remove_input(keycode);
     }
 }
