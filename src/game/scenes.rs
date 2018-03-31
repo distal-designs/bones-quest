@@ -30,14 +30,13 @@ impl VisualNovel {
     }
 
     pub fn new(dialog: Vec<Command>) -> Self {
-        let mut s = Self {
+        Self {
             dialog,
             dialog_index: 0,
             status: Status::PendingCommands,
             message: None,
             background: None,
-        };
-        return s;
+        }
     }
 }
 
