@@ -15,6 +15,7 @@ pub struct VisualNovel {
     dialog_index: usize,
     message: Option<Message>,
     background: Option<Box<Drawable>>,
+    status: Status,
 }
 
 impl VisualNovel {
@@ -32,6 +33,7 @@ impl VisualNovel {
         let mut s = Self {
             dialog,
             dialog_index: 0,
+            status: Status::PendingCommands,
             message: None,
             background: None,
         };
