@@ -7,16 +7,15 @@ use engine;
 pub struct VisualNovel {
     dialog: Vec<Command>,
     dialog_index: usize,
-    message: Message,
+    message: Option<Message>,
 }
 
 impl VisualNovel {
     pub fn new(dialog: Vec<Command>) -> Self {
-        let message = Message::new(&dialog[0].text);
         Self {
             dialog,
-            message,
             dialog_index: 0,
+            message: None,
         }
     }
 }
@@ -27,7 +26,9 @@ impl<I, F> engine::scene::Scene<I, F> for VisualNovel {
     }
 
     fn draw(&self, _: &F, ctx: &mut ggez::Context) -> GameResult<()> {
-        self.message.draw(ctx)?;
+        if let Some(ref message) = self.message {
+            message.draw(ctx)?;
+        }
         Ok(())
     }
 }
