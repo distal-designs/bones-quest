@@ -1,4 +1,5 @@
 use ggez::{self, GameResult};
+use ggez::graphics::Drawable;
 
 use engine::visual_novel::command::Command;
 use engine::ui::Message;
@@ -8,6 +9,7 @@ pub struct VisualNovel {
     dialog: Vec<Command>,
     dialog_index: usize,
     message: Option<Message>,
+    background: Option<Box<Drawable>>,
 }
 
 impl VisualNovel {
@@ -22,6 +24,7 @@ impl VisualNovel {
             dialog,
             dialog_index: 0,
             message: None,
+            background: None,
         };
         s.apply();
         return s;
