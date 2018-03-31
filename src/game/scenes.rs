@@ -14,7 +14,7 @@ impl VisualNovel {
     fn apply(&mut self) {
         let commands = &mut self.dialog;
         let command = &mut commands[self.dialog_index];
-        self.message = Some(Message::new(&command.text))
+        self.message = Some(Message::new(&command.text));
     }
 
     pub fn new(dialog: Vec<Command>) -> Self {
