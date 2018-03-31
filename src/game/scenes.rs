@@ -42,6 +42,10 @@ impl VisualNovel {
 
 impl<I, F> engine::scene::Scene<I, F> for VisualNovel {
     fn update(&mut self, _: &I, _: &mut F) -> GameResult<()> {
+        if let Status::PendingCommands = self.status {
+            self.apply();
+            self.status = Status::CommandsApplied;
+        }
         Ok(())
     }
 
