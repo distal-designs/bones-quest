@@ -15,6 +15,11 @@ enum Background {
     Color(ggez::graphics::Color)
 }
 
+enum BackgroundCache {
+    Mesh(ggez::graphics::Mesh),
+    Image(ggez::graphics::Image)
+}
+
 pub struct VisualNovel {
     dialog: Vec<Command>,
     dialog_index: usize,
