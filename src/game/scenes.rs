@@ -1,4 +1,5 @@
 use ggez::{self, GameResult};
+use ggez::graphics::{self, DrawMode, Mesh, Point2};
 
 use engine::visual_novel::command::{BackgroundCommand, Command};
 use engine::ui::Message;
@@ -16,6 +17,24 @@ enum Background {
 
 enum BackgroundCache {
     Mesh(ggez::graphics::Mesh),
+}
+
+impl BackgroundCache {
+    fn from_background(bg: &Background, ctx: &mut ggez::Context) -> Self {
+        let h = ctx.conf.window_mode.height as f32;
+        let w = ctx.conf.window_mode.width as f32;
+        let points = [
+            Point2::new(0.0, 0.0),
+            Point2::new(0.0, h),
+            Point2::new(w, h),
+            Point2::new(w, 0.0)
+        ];
+        let &Background::Color(color) = bg;
+        color::with_color(ctx, &color, |ctx| {
+            let mesh = Mesh::new_polygon(ctx, DrawMode::Fill, &points)?;
+            Ok(BackgroundCache::Mesh(mesh))
+        }).unwrap()
+    }
 }
 
 pub struct VisualNovel {
