@@ -2,6 +2,7 @@ use ggez::{self, GameResult};
 
 use engine::visual_novel::command::{BackgroundCommand, Command};
 use engine::ui::Message;
+use engine::color;
 use engine;
 
 pub enum Status {
@@ -35,6 +36,8 @@ impl VisualNovel {
         self.message = Some(Message::new(&command.text));
         self.background = match command.background {
             Some(BackgroundCommand::Hide) => None,
+            Some(BackgroundCommand::Color(ref hex)) =>
+                Some(Background::Color(color::from_hex(&hex))),
             _ => unimplemented!(),
         };
     }
