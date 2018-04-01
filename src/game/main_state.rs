@@ -4,7 +4,7 @@ use ggez::timer;
 use ggez::graphics::{self, Drawable, Point2, Text};
 
 use super::flags::Flags;
-use super::input::Input;
+use super::input::input::Input;
 use engine::scene_stack::SceneStack;
 
 pub struct MainState {
