@@ -1,5 +1,4 @@
 use ggez::{self, GameResult};
-use ggez::graphics::Drawable;
 
 use engine::visual_novel::command::{BackgroundCommand, Command};
 use engine::ui::Message;
@@ -47,6 +46,7 @@ impl VisualNovel {
             status: Status::PendingCommands,
             message: None,
             background: None,
+            background_cache: None,
         }
     }
 }
