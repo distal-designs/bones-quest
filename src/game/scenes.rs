@@ -24,7 +24,7 @@ pub struct VisualNovel {
     dialog: Vec<Command>,
     dialog_index: usize,
     message: Option<Message>,
-    background: Option<Box<Drawable>>,
+    background: Option<Background>,
     status: Status,
 }
 
