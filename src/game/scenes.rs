@@ -12,12 +12,10 @@ pub enum Status {
 
 enum Background {
     Color(ggez::graphics::Color),
-    Image(String),
 }
 
 enum BackgroundCache {
     Mesh(ggez::graphics::Mesh),
-    Image(ggez::graphics::Image)
 }
 
 pub struct VisualNovel {
