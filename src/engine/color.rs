@@ -3,15 +3,15 @@ use ggez::{Context, GameResult};
 
 use regex::Regex;
 
-pub fn with_color<F>(ctx: &mut Context, color: &Color, fun: F) -> GameResult<()>
+pub fn with_color<F, T>(ctx: &mut Context, color: &Color, fun: F) -> GameResult<T>
 where
-    F: FnOnce(&mut Context) -> GameResult<()>,
+    F: FnOnce(&mut Context) -> GameResult<T>,
 {
     let current_color = get_color(ctx);
     set_color(ctx, *color)?;
-    fun(ctx)?;
+    let t = fun(ctx)?;
     set_color(ctx, current_color)?;
-    Ok(())
+    Ok(t)
 }
 
 pub fn from_hex(hex: &str) -> Color {
