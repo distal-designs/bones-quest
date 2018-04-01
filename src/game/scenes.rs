@@ -25,6 +25,7 @@ pub struct VisualNovel {
     dialog_index: usize,
     message: Option<Message>,
     background: Option<Background>,
+    background_cache: Option<Background>,
     status: Status,
 }
 
