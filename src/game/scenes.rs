@@ -11,8 +11,8 @@ pub enum Status {
 }
 
 enum Background {
-    Hex(String),
-    Color(ggez::graphics::Color)
+    Color(ggez::graphics::Color),
+    Image(String),
 }
 
 enum BackgroundCache {
