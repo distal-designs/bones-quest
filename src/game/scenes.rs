@@ -10,6 +10,11 @@ pub enum Status {
     PendingCommands
 }
 
+enum Background {
+    Hex(String),
+    Color(ggez::graphics::Color)
+}
+
 pub struct VisualNovel {
     dialog: Vec<Command>,
     dialog_index: usize,
