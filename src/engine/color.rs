@@ -9,9 +9,9 @@ where
 {
     let current_color = get_color(ctx);
     set_color(ctx, *color)?;
-    let t = fun(ctx)?;
+    let a = fun(ctx);
     set_color(ctx, current_color)?;
-    Ok(t)
+    a
 }
 
 pub fn from_hex(hex: &str) -> Color {
