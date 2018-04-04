@@ -27,11 +27,6 @@ use engine::{
     ui::Message,
 };
 
-pub enum Status {
-    CommandsApplied,
-    PendingCommands,
-}
-
 enum Background {
     Color(graphics::Color),
 }
@@ -84,7 +79,6 @@ pub struct VisualNovel {
     message: Option<Message>,
     background: Option<Background>,
     background_cache: Option<Background>,
-    status: Status,
 }
 
 impl VisualNovel {
@@ -105,7 +99,6 @@ impl VisualNovel {
         Self {
             dialog,
             dialog_index: 0,
-            status: Status::PendingCommands,
             message: None,
             background: None,
             background_cache: None,
