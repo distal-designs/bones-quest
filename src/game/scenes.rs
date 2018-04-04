@@ -119,8 +119,16 @@ impl<I, F> engine::scene::Scene<I, F> for VisualNovel {
     }
 
     fn draw(&self, _: &F, ctx: &mut ggez::Context) -> GameResult<()> {
-        if let Some(ref bg) = self.background { bg.draw(ctx, Point2::new(0.0, 0.0), 0.0)?; }
-        if let Some(ref message) = self.message { message.draw(ctx)?; }
+        if let Some(ref bg) = self.background {
+            match bg.get() {
+                &Background::Color(ref color) => {
+                    with_color(ctx, color, |ctx| bg.draw(ctx, Point2::new(0.0, 0.0), 0.0))?;
+                }
+            };
+        };
+        if let Some(ref message) = self.message {
+            message.draw(ctx)?;
+        }
         Ok(())
     }
 }
