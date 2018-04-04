@@ -44,16 +44,12 @@ where
     U: Drawable,
 {
     fn draw_ex(&self, ctx: &mut Context, param: DrawParam) -> GameResult<()> {
-        static ERROR_MESSAGE: &'static str = "DrawCache Error";
-        if let None = *self.cache.borrow() {
+        let is_cached = self.cache.borrow().is_some();
+        if !is_cached {
             let drawable = self.data.try_into_drawable(ctx)?;
             self.cache.replace(Some(drawable));
         }
-        if let Some(ref cache) = *self.cache.borrow() {
-            cache.draw_ex(ctx, param)
-        } else {
-            Err(GameError::RenderError(ERROR_MESSAGE.to_string()))
-        }
+        self.cache.borrow_mut().as_mut().unwrap().draw_ex(ctx, param)
     }
 
     fn set_blend_mode(&mut self, mode: Option<BlendMode>) {
