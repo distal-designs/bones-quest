@@ -1,18 +1,5 @@
-use ggez::graphics::{get_color, set_color, Color};
-use ggez::{Context, GameResult};
-
+use ggez::graphics::Color;
 use regex::Regex;
-
-pub fn with_color<F, T>(ctx: &mut Context, color: &Color, fun: F) -> GameResult<T>
-where
-    F: FnOnce(&mut Context) -> GameResult<T>,
-{
-    let current_color = get_color(ctx);
-    set_color(ctx, *color)?;
-    let a = fun(ctx);
-    set_color(ctx, current_color)?;
-    a
-}
 
 pub fn from_hex(hex: &str) -> Color {
     let re = Regex::new(r"^#([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$").unwrap();
