@@ -47,7 +47,6 @@ impl TryIntoDrawable<BackgroundCache> for Background {
             Point2::new(w, h),
             Point2::new(w, 0.0),
         ];
-        let &Background::Color(color) = self;
         let mesh = graphics::Mesh::new_polygon(ctx, DrawMode::Fill, &points)?;
         Ok(BackgroundCache::Mesh(mesh))
     }
