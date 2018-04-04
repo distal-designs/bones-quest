@@ -40,13 +40,13 @@ where
 
 impl<T, U> Drawable for DrawCache<T, U>
 where
-    T: Clone,
-    U: Drawable + TryFrom<T, Err=GameError>,
+    T: TryIntoDrawable<U>,
+    U: Drawable,
 {
     fn draw_ex(&self, ctx: &mut Context, param: DrawParam) -> GameResult<()> {
         static ERROR_MESSAGE: &'static str = "DrawCache Error";
         if let None = *self.cache.borrow() {
-            let drawable = U::try_from(self.data.clone())?;
+            let drawable = self.data.try_into_drawable(ctx)?;
             self.cache.replace(Some(drawable));
         }
         if let Some(ref cache) = *self.cache.borrow() {
