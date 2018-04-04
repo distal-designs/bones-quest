@@ -2,7 +2,6 @@ use std::cell::RefCell;
 
 use ggez::{
     Context,
-    GameError,
     GameResult,
     graphics::BlendMode,
     graphics::Drawable,
