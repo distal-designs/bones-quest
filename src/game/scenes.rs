@@ -1,32 +1,7 @@
-use ggez::{
-    self,
-    graphics::{
-        self,
-        BlendMode,
-        Drawable,
-        DrawMode,
-        DrawParam,
-        Point2,
-    },
-    GameResult,
-};
+use ggez::{self, GameResult, graphics::{self, BlendMode, DrawMode, DrawParam, Drawable, Point2}};
 
-use engine::{
-    self,
-    draw_cache::{
-        DrawCache,
-        TryIntoDrawable,
-    },
-    color::{
-        self,
-        with_color,
-    },
-    visual_novel::command::{
-        BackgroundCommand,
-        Command,
-    },
-    ui::Message,
-};
+use engine::{self, color::{self, with_color}, draw_cache::{DrawCache, TryIntoDrawable},
+             ui::Message, visual_novel::command::{BackgroundCommand, Command}};
 
 pub enum Status {
     CommandsApplied,
@@ -59,19 +34,19 @@ enum BackgroundCache {
 impl Drawable for BackgroundCache {
     fn draw_ex(&self, ctx: &mut ggez::Context, mode: DrawParam) -> GameResult<()> {
         match self {
-            &BackgroundCache::Mesh(ref mesh) => mesh.draw_ex(ctx, mode)
+            &BackgroundCache::Mesh(ref mesh) => mesh.draw_ex(ctx, mode),
         }
     }
 
     fn set_blend_mode(&mut self, mode: Option<BlendMode>) {
         match self {
-            &mut BackgroundCache::Mesh(ref mut mesh) => mesh.set_blend_mode(mode)
+            &mut BackgroundCache::Mesh(ref mut mesh) => mesh.set_blend_mode(mode),
         }
     }
 
     fn get_blend_mode(&self) -> Option<BlendMode> {
         match self {
-            &BackgroundCache::Mesh(ref mesh) => mesh.get_blend_mode()
+            &BackgroundCache::Mesh(ref mesh) => mesh.get_blend_mode(),
         }
     }
 }

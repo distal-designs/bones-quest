@@ -1,16 +1,10 @@
 use std::cell::RefCell;
 
-use ggez::{
-    Context,
-    GameResult,
-    graphics::BlendMode,
-    graphics::Drawable,
-    graphics::DrawParam,
-};
+use ggez::{Context, GameResult, graphics::{BlendMode, DrawParam, Drawable}};
 
 pub trait TryIntoDrawable<T>
 where
-    T: Drawable
+    T: Drawable,
 {
     fn try_into_drawable(&self, ctx: &mut Context) -> GameResult<T>;
 }
@@ -27,7 +21,7 @@ where
 impl<T, U> DrawCache<T, U>
 where
     T: TryIntoDrawable<U>,
-    U: Drawable
+    U: Drawable,
 {
     pub fn new(data: T) -> Self {
         Self {
@@ -52,7 +46,11 @@ where
             let drawable = self.data.try_into_drawable(ctx)?;
             self.cache.replace(Some(drawable));
         }
-        self.cache.borrow_mut().as_mut().unwrap().draw_ex(ctx, param)
+        self.cache
+            .borrow_mut()
+            .as_mut()
+            .unwrap()
+            .draw_ex(ctx, param)
     }
 
     fn set_blend_mode(&mut self, mode: Option<BlendMode>) {
@@ -64,7 +62,7 @@ where
     fn get_blend_mode(&self) -> Option<BlendMode> {
         match *self.cache.borrow() {
             None => None,
-            Some(ref drawable) => drawable.get_blend_mode()
+            Some(ref drawable) => drawable.get_blend_mode(),
         }
     }
 }
