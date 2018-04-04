@@ -1,6 +1,5 @@
 use std::cell::RefCell;
 
-use try_from::TryFrom;
 use ggez::{
     Context,
     GameError,
