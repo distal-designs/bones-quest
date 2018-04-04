@@ -13,6 +13,9 @@ use ggez::{
 
 use engine::{
     self,
+    draw_cache::{
+        TryIntoDrawable,
+    },
     color::{
         self,
         with_color,
@@ -31,6 +34,24 @@ pub enum Status {
 
 enum Background {
     Color(graphics::Color),
+}
+
+impl TryIntoDrawable<BackgroundCache> for Background {
+    fn try_into_drawable(&self, ctx: &mut ggez::Context) -> GameResult<BackgroundCache> {
+        let h = ctx.conf.window_mode.height as f32;
+        let w = ctx.conf.window_mode.width as f32;
+        let points = [
+            Point2::new(0.0, 0.0),
+            Point2::new(0.0, h),
+            Point2::new(w, h),
+            Point2::new(w, 0.0),
+        ];
+        let &Background::Color(color) = self;
+        with_color(ctx, &color, |ctx| {
+            let mesh = graphics::Mesh::new_polygon(ctx, DrawMode::Fill, &points)?;
+            Ok(BackgroundCache::Mesh(mesh))
+        })
+    }
 }
 
 enum BackgroundCache {
