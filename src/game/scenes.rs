@@ -1,22 +1,37 @@
-use ggez::{self, GameResult};
-use ggez::graphics::{self, DrawMode, Mesh, Point2};
+use ggez::{
+    self,
+    graphics::{
+        self,
+        DrawMode,
+        Point2,
+    },
+    GameResult,
+};
 
-use engine::visual_novel::command::{BackgroundCommand, Command};
-use engine::ui::Message;
-use engine::color;
-use engine;
+use engine::{
+    self,
+    color::{
+        self,
+        with_color,
+    },
+    visual_novel::command::{
+        BackgroundCommand,
+        Command,
+    },
+    ui::Message,
+};
 
 pub enum Status {
     CommandsApplied,
-    PendingCommands
+    PendingCommands,
 }
 
 enum Background {
-    Color(ggez::graphics::Color),
+    Color(graphics::Color),
 }
 
 enum BackgroundCache {
-    Mesh(ggez::graphics::Mesh),
+    Mesh(graphics::Mesh),
 }
 
 impl BackgroundCache {
@@ -27,11 +42,11 @@ impl BackgroundCache {
             Point2::new(0.0, 0.0),
             Point2::new(0.0, h),
             Point2::new(w, h),
-            Point2::new(w, 0.0)
+            Point2::new(w, 0.0),
         ];
         let &Background::Color(color) = bg;
-        color::with_color(ctx, &color, |ctx| {
-            let mesh = Mesh::new_polygon(ctx, DrawMode::Fill, &points)?;
+        with_color(ctx, &color, |ctx| {
+            let mesh = graphics::Mesh::new_polygon(ctx, DrawMode::Fill, &points)?;
             Ok(BackgroundCache::Mesh(mesh))
         }).unwrap()
     }
@@ -53,8 +68,9 @@ impl VisualNovel {
         self.message = Some(Message::new(&command.text));
         self.background = match command.background {
             Some(BackgroundCommand::Hide) => None,
-            Some(BackgroundCommand::Color(ref hex)) =>
-                Some(Background::Color(color::from_hex(&hex))),
+            Some(BackgroundCommand::Color(ref hex)) => {
+                Some(Background::Color(color::from_hex(&hex)))
+            }
             _ => unimplemented!(),
         };
     }
