@@ -9,6 +9,13 @@ use ggez::{
     graphics::DrawParam,
 };
 
+pub trait TryIntoDrawable<T>
+where
+    T: Drawable
+{
+    fn try_into_drawable(&self, ctx: &mut Context) -> GameResult<T>;
+}
+
 pub struct DrawCache<T, U> {
     data: T,
     cache: RefCell<Option<U>>,
