@@ -1,7 +1,8 @@
 extern crate ggez;
+extern crate regex;
 #[macro_use]
 extern crate serde_derive;
-extern crate regex;
+extern crate try_from;
 
 mod engine;
 mod game;
