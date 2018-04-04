@@ -78,7 +78,6 @@ pub struct VisualNovel {
     dialog_index: usize,
     message: Option<Message>,
     background: Option<Background>,
-    background_cache: Option<Background>,
 }
 
 impl VisualNovel {
@@ -101,7 +100,6 @@ impl VisualNovel {
             dialog_index: 0,
             message: None,
             background: None,
-            background_cache: None,
         }
     }
 }
