@@ -1,7 +1,7 @@
 use ggez::{self, GameResult, graphics::{self, BlendMode, DrawMode, DrawParam, Drawable, Point2}};
 
-use engine::{self, color::{self, with_color}, draw_cache::{DrawCache, TryIntoDrawable},
-             ui::Message, visual_novel::command::{BackgroundCommand, Command}};
+use engine::{self, color, draw_cache::{DrawCache, TryIntoDrawable}, ui::Message,
+             visual_novel::command::{BackgroundCommand, Command}};
 
 pub enum Status {
     CommandsApplied,
@@ -96,8 +96,15 @@ impl<I, F> engine::scene::Scene<I, F> for VisualNovel {
     fn draw(&self, _: &F, ctx: &mut ggez::Context) -> GameResult<()> {
         if let Some(ref bg) = self.background {
             match bg.get() {
-                &Background::Color(ref color) => {
-                    with_color(ctx, color, |ctx| bg.draw(ctx, Point2::new(0.0, 0.0), 0.0))?;
+                &Background::Color(color) => {
+                    bg.draw_ex(
+                        ctx,
+                        DrawParam {
+                            dest: Point2::new(0.0, 0.0),
+                            color: Some(color),
+                            ..Default::default()
+                        },
+                    )?;
                 }
             };
         };
