@@ -16,7 +16,11 @@ where
     fn try_into_drawable(&self, ctx: &mut Context) -> GameResult<T>;
 }
 
-pub struct DrawCache<T, U> {
+pub struct DrawCache<T, U>
+where
+    T: TryIntoDrawable<U>,
+    U: Drawable,
+{
     data: T,
     cache: RefCell<Option<U>>,
 }
