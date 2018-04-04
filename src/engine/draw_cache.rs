@@ -27,7 +27,8 @@ where
 
 impl<T, U> DrawCache<T, U>
 where
-    U: Drawable + TryFrom<T, Err=GameError>,
+    T: TryIntoDrawable<U>,
+    U: Drawable
 {
     pub fn new(data: T) -> Self {
         Self {
