@@ -14,6 +14,7 @@ use ggez::{
 use engine::{
     self,
     draw_cache::{
+        DrawCache,
         TryIntoDrawable,
     },
     color::{
@@ -82,7 +83,7 @@ pub struct VisualNovel {
     dialog: Vec<Command>,
     dialog_index: usize,
     message: Option<Message>,
-    background: Option<Background>,
+    background: Option<DrawCache<Background, BackgroundCache>>,
     status: Status,
 }
 
@@ -94,7 +95,7 @@ impl VisualNovel {
         self.background = match command.background {
             Some(BackgroundCommand::Hide) => None,
             Some(BackgroundCommand::Color(ref hex)) => {
-                Some(Background::Color(color::from_hex(&hex)))
+                Some(DrawCache::new(Background::Color(color::from_hex(&hex))))
             }
             _ => unimplemented!(),
         };
@@ -121,9 +122,8 @@ impl<I, F> engine::scene::Scene<I, F> for VisualNovel {
     }
 
     fn draw(&self, _: &F, ctx: &mut ggez::Context) -> GameResult<()> {
-        if let Some(ref message) = self.message {
-            message.draw(ctx)?;
-        }
+        if let Some(ref bg) = self.background { bg.draw(ctx, Point2::new(0.0, 0.0), 0.0)?; }
+        if let Some(ref message) = self.message { message.draw(ctx)?; }
         Ok(())
     }
 }
