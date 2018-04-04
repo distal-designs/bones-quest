@@ -78,25 +78,6 @@ impl Drawable for BackgroundCache {
     }
 }
 
-
-impl BackgroundCache {
-    fn from_background(bg: &Background, ctx: &mut ggez::Context) -> Self {
-        let h = ctx.conf.window_mode.height as f32;
-        let w = ctx.conf.window_mode.width as f32;
-        let points = [
-            Point2::new(0.0, 0.0),
-            Point2::new(0.0, h),
-            Point2::new(w, h),
-            Point2::new(w, 0.0),
-        ];
-        let &Background::Color(color) = bg;
-        with_color(ctx, &color, |ctx| {
-            let mesh = graphics::Mesh::new_polygon(ctx, DrawMode::Fill, &points)?;
-            Ok(BackgroundCache::Mesh(mesh))
-        }).unwrap()
-    }
-}
-
 pub struct VisualNovel {
     dialog: Vec<Command>,
     dialog_index: usize,
