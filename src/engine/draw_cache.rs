@@ -35,6 +35,10 @@ where
             cache: RefCell::new(None),
         }
     }
+
+    pub fn get(&self) -> &T {
+        return &self.data;
+    }
 }
 
 impl<T, U> Drawable for DrawCache<T, U>
