@@ -43,16 +43,7 @@ impl Drawable for DialogCache {
     fn draw_ex(&self, ctx: &mut Context, _param: DrawParam) -> GameResult<()> {
         let bounds = Dialog::bounds(ctx);
 
-        graphics::Mesh::new_polygon(
-            ctx,
-            DrawMode::Fill,
-            &[
-                Point2::new(0.0, 0.0),
-                Point2::new(0.0, bounds.h),
-                Point2::new(bounds.w, bounds.h),
-                Point2::new(bounds.w, 0.0),
-            ],
-        )?.draw_ex(
+        self.dialog_box.draw_ex(
             ctx,
             DrawParam {
                 dest: Point2::new(bounds.x, bounds.y),
