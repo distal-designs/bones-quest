@@ -3,6 +3,10 @@ use std::cell::RefCell;
 use ggez::{Context, GameResult};
 use ggez::graphics::{self, Color, DrawMode, DrawParam, Drawable, Font, Point2, Rect, Text};
 
+pub struct Dialog {
+    text: String,
+}
+
 pub struct Message {
     text: String,
     font_cache: RefCell<Option<Font>>,
