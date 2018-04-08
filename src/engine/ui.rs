@@ -56,7 +56,7 @@ impl Drawable for DialogCache {
             ctx,
             DrawParam {
                 dest: Point2::new(bounds.x, bounds.y),
-                color: Some(Color::from_rgb(0, 0, 0)),
+                color: Some(graphics::BLACK),
                 ..Default::default()
             },
         )?;
