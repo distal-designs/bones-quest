@@ -1,5 +1,5 @@
 use ggez::{Context, GameResult};
-use ggez::graphics::{self, Color, DrawMode, DrawParam, Drawable, Point2, Rect, Text};
+use ggez::graphics::{self, DrawMode, DrawParam, Drawable, Mesh, Point2, Rect, Text};
 
 use super::draw_cache::TryIntoDrawable;
 
@@ -9,6 +9,7 @@ pub struct Dialog {
 
 pub struct DialogCache {
     text_cache: Vec<Text>,
+    dialog_box: Mesh,
 }
 
 impl TryIntoDrawable<DialogCache> for Dialog {
@@ -19,7 +20,22 @@ impl TryIntoDrawable<DialogCache> for Dialog {
             .iter()
             .map(|line| Text::new(ctx, &line, &font).unwrap())
             .collect();
-        Ok(DialogCache { text_cache: texts })
+
+        let bounds = Dialog::bounds(ctx);
+        let mesh = graphics::Mesh::new_polygon(
+            ctx,
+            DrawMode::Fill,
+            &[
+                Point2::new(0.0, 0.0),
+                Point2::new(0.0, bounds.h),
+                Point2::new(bounds.w, bounds.h),
+                Point2::new(bounds.w, 0.0),
+            ],
+        )?;
+        Ok(DialogCache {
+            text_cache: texts,
+            dialog_box: mesh,
+        })
     }
 }
 
