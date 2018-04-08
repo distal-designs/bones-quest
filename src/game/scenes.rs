@@ -52,8 +52,8 @@ impl Drawable for BackgroundCache {
 }
 
 pub struct VisualNovel {
-    dialog: Vec<Command>,
-    dialog_index: usize,
+    commands: Vec<Command>,
+    command_index: usize,
     message: Option<Message>,
     background: Option<DrawCache<Background, BackgroundCache>>,
     status: Status,
@@ -61,8 +61,8 @@ pub struct VisualNovel {
 
 impl VisualNovel {
     fn apply(&mut self) {
-        let commands = &mut self.dialog;
-        let command = &mut commands[self.dialog_index];
+        let commands = &mut self.commands;
+        let command = &mut commands[self.command_index];
         self.message = Some(Message::new(&command.text));
         self.background = match command.background {
             Some(BackgroundCommand::Hide) => None,
@@ -73,10 +73,10 @@ impl VisualNovel {
         };
     }
 
-    pub fn new(dialog: Vec<Command>) -> Self {
+    pub fn new(commands: Vec<Command>) -> Self {
         Self {
-            dialog,
-            dialog_index: 0,
+            commands,
+            command_index: 0,
             status: Status::PendingCommands,
             message: None,
             background: None,
