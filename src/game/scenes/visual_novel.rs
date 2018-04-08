@@ -6,7 +6,7 @@ use engine::{self, color, draw_cache::{DrawCache, TryIntoDrawable}, ui::Message,
 pub struct VisualNovel {
     commands: Vec<Command>,
     command_index: usize,
-    message: Option<Message>,
+    dialog: Option<Message>,
     background: Option<DrawCache<Background, BackgroundCache>>,
     status: Status,
 }
