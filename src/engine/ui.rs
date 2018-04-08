@@ -12,7 +12,7 @@ pub struct Dialog {
 impl TryIntoDrawable<DialogCache> for Dialog {
     fn try_into_drawable(&self, ctx: &mut Context) -> GameResult<DialogCache> {
         let font = ctx.default_font.clone();
-        let texts = font.get_wrap(&self.text, Message::bounds(ctx).w as usize)
+        let texts = font.get_wrap(&self.text, Dialog::bounds(ctx).w as usize)
             .1
             .iter()
             .map(|line| Text::new(ctx, &line, &font).unwrap())
@@ -31,7 +31,7 @@ pub struct DialogCache {
 
 impl Drawable for DialogCache {
     fn draw_ex(&self, ctx: &mut Context, _param: DrawParam) -> GameResult<()> {
-        let bounds = Message::bounds(ctx);
+        let bounds = Dialog::bounds(ctx);
 
         graphics::Mesh::new_polygon(
             ctx,
