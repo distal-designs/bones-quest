@@ -3,8 +3,25 @@ use std::cell::RefCell;
 use ggez::{Context, GameResult};
 use ggez::graphics::{self, Color, DrawMode, DrawParam, Drawable, Font, Point2, Rect, Text};
 
+use super::draw_cache::TryIntoDrawable;
+
 pub struct Dialog {
     text: String,
+}
+
+impl TryIntoDrawable<DialogCache> for Dialog {
+    fn try_into_drawable(&self, ctx: &mut Context) -> GameResult<DialogCache> {
+        let font = ctx.default_font.clone();
+        let texts = font.get_wrap(&self.text, Message::bounds(ctx).w as usize)
+            .1
+            .iter()
+            .map(|line| Text::new(ctx, &line, &font).unwrap())
+            .collect();
+        Ok(DialogCache {
+            font_cache: font,
+            text_cache: texts,
+        })
+    }
 }
 
 pub struct DialogCache {
