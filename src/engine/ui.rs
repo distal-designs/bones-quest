@@ -6,7 +6,7 @@ use ggez::graphics::{self, Color, DrawMode, DrawParam, Drawable, Font, Point2, R
 use super::draw_cache::TryIntoDrawable;
 
 pub struct Dialog {
-    text: String,
+    pub text: String,
 }
 
 impl TryIntoDrawable<DialogCache> for Dialog {
