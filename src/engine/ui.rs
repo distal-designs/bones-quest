@@ -7,6 +7,11 @@ pub struct Dialog {
     text: String,
 }
 
+pub struct DialogCache {
+    font_cache: Font,
+    text_cache: Vec<Text>,
+}
+
 pub struct Message {
     text: String,
     font_cache: RefCell<Option<Font>>,
