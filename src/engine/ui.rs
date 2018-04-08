@@ -7,6 +7,10 @@ pub struct Dialog {
     pub text: String,
 }
 
+pub struct DialogCache {
+    text_cache: Vec<Text>,
+}
+
 impl TryIntoDrawable<DialogCache> for Dialog {
     fn try_into_drawable(&self, ctx: &mut Context) -> GameResult<DialogCache> {
         let font = ctx.default_font.clone();
@@ -17,10 +21,6 @@ impl TryIntoDrawable<DialogCache> for Dialog {
             .collect();
         Ok(DialogCache { text_cache: texts })
     }
-}
-
-pub struct DialogCache {
-    text_cache: Vec<Text>,
 }
 
 impl Drawable for DialogCache {
