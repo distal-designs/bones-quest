@@ -15,14 +15,14 @@ pub struct DialogCache {
 impl TryIntoDrawable<DialogCache> for Dialog {
     fn try_into_drawable(&self, ctx: &mut Context) -> GameResult<DialogCache> {
         let font = ctx.default_font.clone();
-        let texts = font.get_wrap(&self.text, Dialog::bounds(ctx).w as usize)
+        let text_cache = font.get_wrap(&self.text, Dialog::bounds(ctx).w as usize)
             .1
             .iter()
             .map(|line| Text::new(ctx, &line, &font).unwrap())
             .collect();
 
         let bounds = Dialog::bounds(ctx);
-        let mesh = graphics::Mesh::new_polygon(
+        let dialog_box = graphics::Mesh::new_polygon(
             ctx,
             DrawMode::Fill,
             &[
@@ -33,8 +33,8 @@ impl TryIntoDrawable<DialogCache> for Dialog {
             ],
         )?;
         Ok(DialogCache {
-            text_cache: texts,
-            dialog_box: mesh,
+            text_cache,
+            dialog_box,
         })
     }
 }
