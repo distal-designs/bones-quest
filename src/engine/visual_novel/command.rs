@@ -5,9 +5,11 @@ use std::fs::File;
 use std::io::Read;
 
 #[derive(Deserialize, Debug)]
+#[serde(tag = "t", content = "c")]
 pub enum BackgroundCommand {
     Hide,
-    Show(String),
+    Color(String),
+    Image(String),
 }
 
 #[derive(Deserialize, Debug)]
@@ -18,7 +20,7 @@ pub enum PortraitCommand {
 
 #[derive(Deserialize, Debug)]
 pub struct Command {
-    background: Option<BackgroundCommand>,
+    pub background: Option<BackgroundCommand>,
     portrait: Option<PortraitCommand>,
     pub text: String,
 }

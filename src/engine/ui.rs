@@ -1,9 +1,7 @@
 use std::cell::RefCell;
 
 use ggez::{Context, GameResult};
-use ggez::graphics::{rectangle, Color, DrawMode, Drawable, Font, Point2, Rect, Text};
-
-use super::color::with_color;
+use ggez::graphics::{self, Color, DrawMode, DrawParam, Drawable, Font, Point2, Rect, Text};
 
 pub struct Message {
     text: String,
@@ -35,9 +33,23 @@ impl Message {
                 .collect()
         });
 
-        with_color(ctx, &Color::from_rgb(0, 0, 0), |ctx| {
-            rectangle(ctx, DrawMode::Fill, bounds)
-        })?;
+        graphics::Mesh::new_polygon(
+            ctx,
+            DrawMode::Fill,
+            &[
+                Point2::new(0.0, 0.0),
+                Point2::new(0.0, bounds.h),
+                Point2::new(bounds.w, bounds.h),
+                Point2::new(bounds.w, 0.0),
+            ],
+        )?.draw_ex(
+            ctx,
+            DrawParam {
+                dest: Point2::new(bounds.x, bounds.y),
+                color: Some(Color::from_rgb(0, 0, 0)),
+                ..Default::default()
+            },
+        )?;
 
         for (index, text) in texts.iter().enumerate() {
             let x = bounds.x;
