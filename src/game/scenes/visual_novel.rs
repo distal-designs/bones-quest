@@ -109,7 +109,7 @@ impl<I, F> engine::scene::Scene<I, F> for VisualNovel {
             };
         };
         if let Some(ref message) = self.message {
-            message.draw(ctx)?;
+            message.draw_ex(ctx, DrawParam::default())?;
         }
         Ok(())
     }

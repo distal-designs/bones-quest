@@ -9,16 +9,8 @@ pub struct Message {
     text_cache: RefCell<Option<Vec<Text>>>,
 }
 
-impl Message {
-    pub fn new(text: &str) -> Self {
-        Self {
-            text: text.to_string(),
-            font_cache: RefCell::new(None),
-            text_cache: RefCell::new(None),
-        }
-    }
-
-    pub fn draw(&self, ctx: &mut Context) -> GameResult<()> {
+impl Drawable for Message {
+    fn draw_ex(&self, ctx: &mut Context, _param: DrawParam) -> GameResult<()> {
         let bounds = Message::bounds(ctx);
 
         let mut font_cache = self.font_cache.borrow_mut();
@@ -57,6 +49,33 @@ impl Message {
             text.draw(ctx, Point2::new(x, y as f32), 0.0)?
         }
         Ok(())
+    }
+
+    fn set_blend_mode(&mut self, mode: Option<graphics::BlendMode>) {
+        if let &mut Some(ref mut texts) = self.text_cache.get_mut() {
+            for text in texts.iter_mut() {
+                text.set_blend_mode(mode);
+            }
+        }
+    }
+
+    fn get_blend_mode(&self) -> Option<graphics::BlendMode> {
+        if let Some(texts) = self.text_cache.borrow().as_ref() {
+            for text in texts.iter() {
+                return text.get_blend_mode();
+            }
+        }
+        None
+    }
+}
+
+impl Message {
+    pub fn new(text: &str) -> Self {
+        Self {
+            text: text.to_string(),
+            font_cache: RefCell::new(None),
+            text_cache: RefCell::new(None),
+        }
     }
 
     fn bounds(ctx: &Context) -> Rect {
