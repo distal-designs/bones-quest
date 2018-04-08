@@ -1,12 +1,12 @@
 use ggez::{self, GameResult, graphics::{self, BlendMode, DrawMode, DrawParam, Drawable, Point2}};
 
-use engine::{self, color, draw_cache::{DrawCache, TryIntoDrawable}, ui::Message,
+use engine::{self, color, draw_cache::{DrawCache, TryIntoDrawable}, ui::{Dialog, DialogCache},
              visual_novel::command::{BackgroundCommand, Command}};
 
 pub struct VisualNovel {
     commands: Vec<Command>,
     command_index: usize,
-    dialog: Option<Message>,
+    dialog: Option<DrawCache<Dialog, DialogCache>>,
     background: Option<DrawCache<Background, BackgroundCache>>,
     status: Status,
 }
@@ -15,7 +15,9 @@ impl VisualNovel {
     fn apply(&mut self) {
         let commands = &mut self.commands;
         let command = &mut commands[self.command_index];
-        self.dialog = Some(Message::new(&command.text));
+        self.dialog = Some(DrawCache::new(Dialog {
+            text: command.text.clone(),
+        }));
         self.background = match command.background {
             Some(BackgroundCommand::Hide) => None,
             Some(BackgroundCommand::Color(ref hex)) => {
