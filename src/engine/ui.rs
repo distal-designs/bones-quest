@@ -12,6 +12,50 @@ pub struct DialogCache {
     text_cache: Vec<Text>,
 }
 
+impl Drawable for DialogCache {
+    fn draw_ex(&self, ctx: &mut Context, _param: DrawParam) -> GameResult<()> {
+        let bounds = Message::bounds(ctx);
+
+        graphics::Mesh::new_polygon(
+            ctx,
+            DrawMode::Fill,
+            &[
+                Point2::new(0.0, 0.0),
+                Point2::new(0.0, bounds.h),
+                Point2::new(bounds.w, bounds.h),
+                Point2::new(bounds.w, 0.0),
+            ],
+        )?.draw_ex(
+            ctx,
+            DrawParam {
+                dest: Point2::new(bounds.x, bounds.y),
+                color: Some(Color::from_rgb(0, 0, 0)),
+                ..Default::default()
+            },
+        )?;
+
+        for (index, text) in self.text_cache.iter().enumerate() {
+            let x = bounds.x;
+            let y = bounds.y as usize + (index * text.height() as usize);
+            text.draw(ctx, Point2::new(x, y as f32), 0.0)?
+        }
+        Ok(())
+    }
+
+    fn set_blend_mode(&mut self, mode: Option<graphics::BlendMode>) {
+        for text in self.text_cache.iter_mut() {
+            text.set_blend_mode(mode);
+        }
+    }
+
+    fn get_blend_mode(&self) -> Option<graphics::BlendMode> {
+        for text in self.text_cache.iter() {
+            return text.get_blend_mode();
+        }
+        None
+    }
+}
+
 pub struct Message {
     text: String,
     font_cache: RefCell<Option<Font>>,
