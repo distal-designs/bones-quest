@@ -9,7 +9,7 @@ mod game;
 use ggez::{conf, event, Context};
 
 use engine::visual_novel::command::Command;
-use game::scenes::VisualNovel;
+use game::scenes::visual_novel::VisualNovel;
 use game::main_state::MainState;
 
 fn main() {
