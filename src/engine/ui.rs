@@ -139,6 +139,19 @@ impl Drawable for Message {
     }
 }
 
+impl Dialog {
+    fn bounds(ctx: &Context) -> Rect {
+        let width = ctx.conf.window_mode.width;
+        let height = ctx.conf.window_mode.height;
+        Rect {
+            w: width as f32 * 0.8,
+            h: height as f32 * 0.2,
+            x: width as f32 * 0.1,
+            y: height as f32 * 0.7,
+        }
+    }
+}
+
 impl Message {
     pub fn new(text: &str) -> Self {
         Self {
