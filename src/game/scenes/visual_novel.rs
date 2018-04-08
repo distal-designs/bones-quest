@@ -15,7 +15,7 @@ impl VisualNovel {
     fn apply(&mut self) {
         let commands = &mut self.commands;
         let command = &mut commands[self.command_index];
-        self.message = Some(Message::new(&command.text));
+        self.dialog = Some(Message::new(&command.text));
         self.background = match command.background {
             Some(BackgroundCommand::Hide) => None,
             Some(BackgroundCommand::Color(ref hex)) => {
@@ -30,7 +30,7 @@ impl VisualNovel {
             commands,
             command_index: 0,
             status: Status::PendingCommands,
-            message: None,
+            dialog: None,
             background: None,
         }
     }
@@ -60,8 +60,8 @@ impl<I, F> engine::scene::Scene<I, F> for VisualNovel {
                 }
             };
         };
-        if let Some(ref message) = self.message {
-            message.draw_ex(ctx, DrawParam::default())?;
+        if let Some(ref dialog) = self.dialog {
+            dialog.draw_ex(ctx, DrawParam::default())?;
         }
         Ok(())
     }
