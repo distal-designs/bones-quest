@@ -1,39 +1,28 @@
-use std::cell::RefCell;
-
 use ggez::{Context, GameResult};
-use ggez::graphics::{self, Color, DrawMode, DrawParam, Drawable, Font, Point2, Rect, Text};
+use ggez::graphics::{self, DrawMode, DrawParam, Drawable, Mesh, Point2, Rect, Text};
 
-pub struct Message {
-    text: String,
-    font_cache: RefCell<Option<Font>>,
-    text_cache: RefCell<Option<Vec<Text>>>,
+use super::draw_cache::TryIntoDrawable;
+
+pub struct Dialog {
+    pub text: String,
 }
 
-impl Message {
-    pub fn new(text: &str) -> Self {
-        Self {
-            text: text.to_string(),
-            font_cache: RefCell::new(None),
-            text_cache: RefCell::new(None),
-        }
-    }
+pub struct DialogCache {
+    text_cache: Vec<Text>,
+    dialog_box: Mesh,
+}
 
-    pub fn draw(&self, ctx: &mut Context) -> GameResult<()> {
-        let bounds = Message::bounds(ctx);
+impl TryIntoDrawable<DialogCache> for Dialog {
+    fn try_into_drawable(&self, ctx: &mut Context) -> GameResult<DialogCache> {
+        let font = ctx.default_font.clone();
+        let text_cache = font.get_wrap(&self.text, Dialog::bounds(ctx).w as usize)
+            .1
+            .iter()
+            .map(|line| Text::new(ctx, &line, &font).unwrap())
+            .collect();
 
-        let mut font_cache = self.font_cache.borrow_mut();
-        let font = font_cache.get_or_insert_with(|| ctx.default_font.clone());
-
-        let mut text_cache = self.text_cache.borrow_mut();
-        let texts = text_cache.get_or_insert_with(|| {
-            font.get_wrap(&self.text, bounds.w as usize)
-                .1
-                .iter()
-                .map(|line| Text::new(ctx, &line, &font).unwrap())
-                .collect()
-        });
-
-        graphics::Mesh::new_polygon(
+        let bounds = Dialog::bounds(ctx);
+        let dialog_box = graphics::Mesh::new_polygon(
             ctx,
             DrawMode::Fill,
             &[
@@ -42,16 +31,28 @@ impl Message {
                 Point2::new(bounds.w, bounds.h),
                 Point2::new(bounds.w, 0.0),
             ],
-        )?.draw_ex(
+        )?;
+        Ok(DialogCache {
+            text_cache,
+            dialog_box,
+        })
+    }
+}
+
+impl Drawable for DialogCache {
+    fn draw_ex(&self, ctx: &mut Context, _param: DrawParam) -> GameResult<()> {
+        let bounds = Dialog::bounds(ctx);
+
+        self.dialog_box.draw_ex(
             ctx,
             DrawParam {
                 dest: Point2::new(bounds.x, bounds.y),
-                color: Some(Color::from_rgb(0, 0, 0)),
+                color: Some(graphics::BLACK),
                 ..Default::default()
             },
         )?;
 
-        for (index, text) in texts.iter().enumerate() {
+        for (index, text) in self.text_cache.iter().enumerate() {
             let x = bounds.x;
             let y = bounds.y as usize + (index * text.height() as usize);
             text.draw(ctx, Point2::new(x, y as f32), 0.0)?
@@ -59,6 +60,21 @@ impl Message {
         Ok(())
     }
 
+    fn set_blend_mode(&mut self, mode: Option<graphics::BlendMode>) {
+        for text in self.text_cache.iter_mut() {
+            text.set_blend_mode(mode);
+        }
+    }
+
+    fn get_blend_mode(&self) -> Option<graphics::BlendMode> {
+        for text in self.text_cache.iter() {
+            return text.get_blend_mode();
+        }
+        None
+    }
+}
+
+impl Dialog {
     fn bounds(ctx: &Context) -> Rect {
         let width = ctx.conf.window_mode.width;
         let height = ctx.conf.window_mode.height;
