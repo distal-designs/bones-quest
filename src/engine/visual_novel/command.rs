@@ -13,6 +13,7 @@ pub enum BackgroundCommand {
 }
 
 #[derive(Deserialize, Debug)]
+#[serde(tag = "t", content = "c")]
 pub enum PortraitCommand {
     Hide,
     Show(String, String),
