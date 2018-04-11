@@ -2,7 +2,7 @@
   text = "THIS IS A STORY OF A DAY WHERE THERE WAS ALL THIS BLOOD."
   [command.portrait]
     t = "Show"
-    c = ["Yare", "Baby!"]
+    c = ["Yare", "Daze"]
   [command.background]
     t = "Color"
     c = "#ff0000"
