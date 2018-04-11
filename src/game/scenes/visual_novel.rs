@@ -17,6 +17,7 @@ impl VisualNovel {
         let command = &mut commands[self.command_index];
         self.dialog = Some(DrawCache::new(Dialog {
             text: command.text.clone(),
+            portrait: None,
         }));
         self.background = match command.background {
             Some(BackgroundCommand::Hide) => None,

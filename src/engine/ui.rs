@@ -5,6 +5,7 @@ use super::draw_cache::TryIntoDrawable;
 
 pub struct Dialog {
     pub text: String,
+    pub portrait: Option<Portrait>,
 }
 
 pub struct DialogCache {
