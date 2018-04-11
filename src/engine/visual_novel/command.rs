@@ -13,6 +13,7 @@ pub enum BackgroundCommand {
 }
 
 #[derive(Deserialize, Debug)]
+#[serde(tag = "t", content = "c")]
 pub enum PortraitCommand {
     Hide,
     Show(String, String),
@@ -21,7 +22,7 @@ pub enum PortraitCommand {
 #[derive(Deserialize, Debug)]
 pub struct Command {
     pub background: Option<BackgroundCommand>,
-    portrait: Option<PortraitCommand>,
+    pub portrait: Option<PortraitCommand>,
     pub text: String,
 }
 

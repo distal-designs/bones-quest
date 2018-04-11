@@ -5,11 +5,18 @@ use super::draw_cache::TryIntoDrawable;
 
 pub struct Dialog {
     pub text: String,
+    pub portrait: Option<Portrait>,
 }
 
 pub struct DialogCache {
     text_cache: Vec<Text>,
     dialog_box: Mesh,
+}
+
+#[derive(Clone)]
+pub struct Portrait {
+    pub character: String,
+    pub style: String,
 }
 
 impl TryIntoDrawable<DialogCache> for Dialog {
