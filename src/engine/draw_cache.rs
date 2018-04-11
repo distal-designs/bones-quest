@@ -35,6 +35,16 @@ where
     }
 }
 
+impl<T, U> AsRef<T> for DrawCache<T, U>
+where
+    T: TryIntoDrawable<U>,
+    U: Drawable,
+{
+    fn as_ref(&self) -> &T {
+        &self.data
+    }
+}
+
 impl<T, U> Drawable for DrawCache<T, U>
 where
     T: TryIntoDrawable<U>,
