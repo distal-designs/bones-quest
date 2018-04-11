@@ -62,7 +62,7 @@ impl<I, F> engine::scene::Scene<I, F> for VisualNovel {
 
     fn draw(&self, _: &F, ctx: &mut ggez::Context) -> GameResult<()> {
         if let Some(ref bg) = self.background {
-            match bg.get() {
+            match bg.as_ref() {
                 &Background::Color(color) => {
                     bg.draw_ex(
                         ctx,
