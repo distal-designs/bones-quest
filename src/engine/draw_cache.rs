@@ -29,10 +29,6 @@ where
             cache: RefCell::new(None),
         }
     }
-
-    pub fn get(&self) -> &T {
-        return &self.data;
-    }
 }
 
 impl<T, U> AsRef<T> for DrawCache<T, U>
