@@ -13,6 +13,7 @@ pub struct DialogCache {
     dialog_box: Mesh,
 }
 
+#[derive(Clone)]
 pub struct Portrait {
     pub character: String,
     pub style: String,
