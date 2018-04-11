@@ -22,7 +22,7 @@ pub enum PortraitCommand {
 #[derive(Deserialize, Debug)]
 pub struct Command {
     pub background: Option<BackgroundCommand>,
-    portrait: Option<PortraitCommand>,
+    pub portrait: Option<PortraitCommand>,
     pub text: String,
 }
 
