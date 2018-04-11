@@ -12,6 +12,11 @@ pub struct DialogCache {
     dialog_box: Mesh,
 }
 
+struct Portrait {
+    character: String,
+    style: String,
+}
+
 impl TryIntoDrawable<DialogCache> for Dialog {
     fn try_into_drawable(&self, ctx: &mut Context) -> GameResult<DialogCache> {
         let font = ctx.default_font.clone();
