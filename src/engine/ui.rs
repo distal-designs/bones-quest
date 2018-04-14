@@ -40,9 +40,20 @@ impl TryIntoDrawable<DialogCache> for Dialog {
                 Point2::new(bounds.w, 0.0),
             ],
         )?;
+
+        let portrait = match self.portrait {
+            Some(_) => {
+                let height = Dialog::bounds(ctx).h as u16;
+                let image = Image::solid(ctx, height, Color::from_rgb(0, 255, 0))?;
+                Some(image)
+            }
+            None => None,
+        };
+
         Ok(DialogCache {
             text_cache,
             dialog_box,
+            portrait,
         })
     }
 }
