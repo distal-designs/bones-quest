@@ -71,6 +71,16 @@ impl Drawable for DialogCache {
             },
         )?;
 
+        if let Some(ref portrait) = self.portrait {
+            portrait.draw_ex(
+                ctx,
+                DrawParam {
+                    dest: Point2::new(bounds.x, bounds.y),
+                    ..Default::default()
+                },
+            )?;
+        }
+
         for (index, text) in self.text_cache.iter().enumerate() {
             let x = bounds.x;
             let y = bounds.y as usize + (index * text.height() as usize);
