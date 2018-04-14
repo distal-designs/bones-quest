@@ -1,5 +1,5 @@
 use ggez::{Context, GameResult};
-use ggez::graphics::{self, DrawMode, DrawParam, Drawable, Mesh, Point2, Rect, Text};
+use ggez::graphics::{self, Color, DrawMode, DrawParam, Drawable, Image, Mesh, Point2, Rect, Text};
 
 use super::draw_cache::TryIntoDrawable;
 
@@ -11,6 +11,7 @@ pub struct Dialog {
 pub struct DialogCache {
     text_cache: Vec<Text>,
     dialog_box: Mesh,
+    portrait: Option<Image>,
 }
 
 #[derive(Clone)]
