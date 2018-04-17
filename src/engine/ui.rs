@@ -1,5 +1,5 @@
 use ggez::{Context, GameResult};
-use ggez::graphics::{self, DrawMode, DrawParam, Drawable, Mesh, Point2, Rect, Text};
+use ggez::graphics::{self, Color, DrawMode, DrawParam, Drawable, Image, Mesh, Point2, Rect, Text};
 
 use super::draw_cache::TryIntoDrawable;
 
@@ -11,6 +11,7 @@ pub struct Dialog {
 pub struct DialogCache {
     text_cache: Vec<Text>,
     dialog_box: Mesh,
+    portrait: Option<Image>,
 }
 
 #[derive(Clone)]
@@ -39,9 +40,20 @@ impl TryIntoDrawable<DialogCache> for Dialog {
                 Point2::new(bounds.w, 0.0),
             ],
         )?;
+
+        let portrait = match self.portrait {
+            Some(_) => {
+                let height = Dialog::bounds(ctx).h as u16;
+                let image = Image::solid(ctx, height, Color::from_rgb(0, 255, 0))?;
+                Some(image)
+            }
+            None => None,
+        };
+
         Ok(DialogCache {
             text_cache,
             dialog_box,
+            portrait,
         })
     }
 }
@@ -58,6 +70,16 @@ impl Drawable for DialogCache {
                 ..Default::default()
             },
         )?;
+
+        if let Some(ref portrait) = self.portrait {
+            portrait.draw_ex(
+                ctx,
+                DrawParam {
+                    dest: Point2::new(bounds.x, bounds.y),
+                    ..Default::default()
+                },
+            )?;
+        }
 
         for (index, text) in self.text_cache.iter().enumerate() {
             let x = bounds.x;
