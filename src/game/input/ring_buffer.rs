@@ -29,9 +29,8 @@ impl<T: Clone> RingBuffer<T> {
         self.capacity
     }
 
-    pub fn clone_as_vec(&self) -> Vec<T> {
-        let mut cpy = self.queue.to_vec();
-        cpy
+    pub fn get_queue(&self) -> &Vec<T> {
+        &self.queue
     }
 
     pub fn get_previous(&self) -> Result<T, &str> {

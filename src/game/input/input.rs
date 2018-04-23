@@ -27,8 +27,8 @@ impl Input {
         self.current_input.remove(&keycode);
     }
 
-    pub fn get_input_history(&self) -> Vec<HashSet<Keycode>> {
-        self.input_history.clone_as_vec()
+    pub fn get_input_history(&self) -> &Vec<HashSet<Keycode>> {
+        &self.input_history.get_queue()
     }
 
     pub fn finalize(&mut self) {
