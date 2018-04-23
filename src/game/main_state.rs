@@ -1,9 +1,10 @@
 use ggez::{event, Context, GameResult};
+use ggez::event::{Keycode, Mod};
 use ggez::timer;
 use ggez::graphics::{self, Drawable, Point2, Text};
 
 use super::flags::Flags;
-use super::input::Input;
+use super::input::input::Input;
 use engine::scene_stack::SceneStack;
 
 pub struct MainState {
@@ -16,7 +17,7 @@ impl MainState {
     pub fn new() -> MainState {
         MainState {
             flags: Flags {},
-            input: Input {},
+            input: Input::new(),
             scenes: Box::new(Vec::new()),
         }
     }
@@ -24,6 +25,7 @@ impl MainState {
 
 impl event::EventHandler for MainState {
     fn update(&mut self, _: &mut Context) -> GameResult<()> {
+        self.input.finalize();
         self.scenes.update(&self.input, &mut self.flags)?;
         Ok(())
     }
@@ -37,5 +39,13 @@ impl event::EventHandler for MainState {
         text.draw(ctx, Point2::new(0.0, 0.0), 0.0)?;
         graphics::present(ctx);
         Ok(())
+    }
+
+    fn key_down_event(&mut self, _: &mut Context, keycode: Keycode, _: Mod, _: bool) {
+        self.input.add_input(keycode);
+    }
+
+    fn key_up_event(&mut self, _: &mut Context, keycode: Keycode, _: Mod, _: bool) {
+        self.input.remove_input(keycode);
     }
 }
