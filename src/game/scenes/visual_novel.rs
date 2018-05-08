@@ -33,12 +33,12 @@ impl VisualNovel {
         let text = command.text.clone();
         self.dialog = Some(DrawCache::new(Dialog { text, portrait }));
 
-        self.background = match command.background {
-            Some(BackgroundCommand::Hide) => None,
+        match command.background {
+            Some(BackgroundCommand::Hide) => self.background = None,
             Some(BackgroundCommand::Color(ref hex)) => {
-                Some(DrawCache::new(Background::Color(color::from_hex(&hex))))
+                self.background = Some(DrawCache::new(Background::Color(color::from_hex(&hex))))
             }
-            _ => unimplemented!(),
+            _ => {}
         };
     }
 
