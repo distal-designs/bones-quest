@@ -1,7 +1,7 @@
 use ggez::{self, GameResult, graphics::{self, BlendMode, DrawMode, DrawParam, Drawable, Point2}};
 
 use engine::{self, color, draw_cache::{DrawCache, TryIntoDrawable},
-             ui::{Dialog, DialogCache, Portrait},
+             ui::{Background, BackgroundCache, Dialog, DialogCache, Portrait},
              visual_novel::command::{BackgroundCommand, Command, PortraitCommand}};
 
 pub struct VisualNovel {
@@ -85,47 +85,4 @@ impl<I, F> engine::scene::Scene<I, F> for VisualNovel {
 pub enum Status {
     CommandsApplied,
     PendingCommands,
-}
-
-enum Background {
-    Color(graphics::Color),
-}
-
-impl TryIntoDrawable<BackgroundCache> for Background {
-    fn try_into_drawable(&self, ctx: &mut ggez::Context) -> GameResult<BackgroundCache> {
-        let h = ctx.conf.window_mode.height as f32;
-        let w = ctx.conf.window_mode.width as f32;
-        let points = [
-            Point2::new(0.0, 0.0),
-            Point2::new(0.0, h),
-            Point2::new(w, h),
-            Point2::new(w, 0.0),
-        ];
-        let mesh = graphics::Mesh::new_polygon(ctx, DrawMode::Fill, &points)?;
-        Ok(BackgroundCache::Mesh(mesh))
-    }
-}
-
-enum BackgroundCache {
-    Mesh(graphics::Mesh),
-}
-
-impl Drawable for BackgroundCache {
-    fn draw_ex(&self, ctx: &mut ggez::Context, mode: DrawParam) -> GameResult<()> {
-        match self {
-            &BackgroundCache::Mesh(ref mesh) => mesh.draw_ex(ctx, mode),
-        }
-    }
-
-    fn set_blend_mode(&mut self, mode: Option<BlendMode>) {
-        match self {
-            &mut BackgroundCache::Mesh(ref mut mesh) => mesh.set_blend_mode(mode),
-        }
-    }
-
-    fn get_blend_mode(&self) -> Option<BlendMode> {
-        match self {
-            &BackgroundCache::Mesh(ref mesh) => mesh.get_blend_mode(),
-        }
-    }
 }
