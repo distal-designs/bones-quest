@@ -1,8 +1,10 @@
-use ggez::{self, GameResult, graphics::{self, BlendMode, DrawMode, DrawParam, Drawable, Point2}};
+use ggez::{self, GameResult};
+use ggez::graphics::{DrawParam, Drawable, Point2};
 
-use engine::{self, color, draw_cache::{DrawCache, TryIntoDrawable},
-             ui::{Background, BackgroundCache, Dialog, DialogCache, Portrait},
-             visual_novel::command::{BackgroundCommand, Command, PortraitCommand}};
+use engine::{self, color};
+use engine::draw_cache::DrawCache;
+use engine::ui::{Background, BackgroundCache, Dialog, DialogCache, Portrait};
+use engine::visual_novel::command::{BackgroundCommand, Command, PortraitCommand};
 
 pub struct VisualNovel {
     commands: Vec<Command>,
