@@ -4,9 +4,9 @@ use ggez::{self, GameResult};
 
 use engine;
 
-pub struct Fight;
+pub struct _Fight;
 
-impl<I, F> engine::scene::Scene<I, F> for Fight {
+impl<I, F> engine::scene::Scene<I, F> for _Fight {
     fn update(&mut self, _: &I, _: &mut F) -> GameResult<()> {
         unimplemented!();
     }
@@ -16,9 +16,9 @@ impl<I, F> engine::scene::Scene<I, F> for Fight {
     }
 }
 
-pub struct Overworld;
+pub struct _Overworld;
 
-impl<I, F> engine::scene::Scene<I, F> for Overworld {
+impl<I, F> engine::scene::Scene<I, F> for _Overworld {
     fn update(&mut self, _: &I, _: &mut F) -> GameResult<()> {
         unimplemented!();
     }
@@ -28,9 +28,9 @@ impl<I, F> engine::scene::Scene<I, F> for Overworld {
     }
 }
 
-pub struct Conquest;
+pub struct _Conquest;
 
-impl<I, F> engine::scene::Scene<I, F> for Conquest {
+impl<I, F> engine::scene::Scene<I, F> for _Conquest {
     fn update(&mut self, _: &I, _: &mut F) -> GameResult<()> {
         unimplemented!();
     }
@@ -40,9 +40,9 @@ impl<I, F> engine::scene::Scene<I, F> for Conquest {
     }
 }
 
-pub struct Investigation;
+pub struct _Investigation;
 
-impl<I, F> engine::scene::Scene<I, F> for Investigation {
+impl<I, F> engine::scene::Scene<I, F> for _Investigation {
     fn update(&mut self, _: &I, _: &mut F) -> GameResult<()> {
         unimplemented!();
     }
