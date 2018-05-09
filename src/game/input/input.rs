@@ -20,7 +20,7 @@ impl Input {
     }
 
     pub fn add_input(&mut self, keycode: Keycode) {
-        self.current_input.insert(keycode); 
+        self.current_input.insert(keycode);
     }
 
     pub fn remove_input(&mut self, keycode: Keycode) {

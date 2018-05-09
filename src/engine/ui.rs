@@ -1,5 +1,6 @@
 use ggez::{Context, GameResult};
-use ggez::graphics::{self, Color, DrawMode, DrawParam, Drawable, Image, Mesh, Point2, Rect, Text};
+use ggez::graphics::{self, BlendMode, Color, DrawMode, DrawParam, Drawable, Image, Mesh, Point2,
+                     Rect, Text};
 
 use super::draw_cache::TryIntoDrawable;
 
@@ -112,6 +113,49 @@ impl Dialog {
             h: height as f32 * 0.2,
             x: width as f32 * 0.1,
             y: height as f32 * 0.7,
+        }
+    }
+}
+
+pub enum Background {
+    Color(graphics::Color),
+}
+
+impl TryIntoDrawable<BackgroundCache> for Background {
+    fn try_into_drawable(&self, ctx: &mut Context) -> GameResult<BackgroundCache> {
+        let h = ctx.conf.window_mode.height as f32;
+        let w = ctx.conf.window_mode.width as f32;
+        let points = [
+            Point2::new(0.0, 0.0),
+            Point2::new(0.0, h),
+            Point2::new(w, h),
+            Point2::new(w, 0.0),
+        ];
+        let mesh = graphics::Mesh::new_polygon(ctx, DrawMode::Fill, &points)?;
+        Ok(BackgroundCache::Mesh(mesh))
+    }
+}
+
+pub enum BackgroundCache {
+    Mesh(graphics::Mesh),
+}
+
+impl Drawable for BackgroundCache {
+    fn draw_ex(&self, ctx: &mut Context, mode: DrawParam) -> GameResult<()> {
+        match self {
+            &BackgroundCache::Mesh(ref mesh) => mesh.draw_ex(ctx, mode),
+        }
+    }
+
+    fn set_blend_mode(&mut self, mode: Option<BlendMode>) {
+        match self {
+            &mut BackgroundCache::Mesh(ref mut mesh) => mesh.set_blend_mode(mode),
+        }
+    }
+
+    fn get_blend_mode(&self) -> Option<BlendMode> {
+        match self {
+            &BackgroundCache::Mesh(ref mesh) => mesh.get_blend_mode(),
         }
     }
 }
