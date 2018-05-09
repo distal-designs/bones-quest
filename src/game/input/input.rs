@@ -27,12 +27,12 @@ impl Input {
         self.current_input.remove(&keycode);
     }
 
-    pub fn get_input_history(&self) -> &Vec<HashSet<Keycode>> {
-        &self.input_history.get_queue()
+    pub fn _get_input_history(&self) -> &Vec<HashSet<Keycode>> {
+        &self.input_history._get_queue()
     }
 
     pub fn finalize(&mut self) {
-        let mut inputs = self.current_input.clone();
+        let inputs = self.current_input.clone();
         self.enqueue(inputs);
     }
 

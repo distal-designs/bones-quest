@@ -15,7 +15,7 @@ impl<T: Clone> RingBuffer<T> {
         }
     }
 
-    pub fn with_default_value(capacity: usize, default_value: T) -> RingBuffer<T> {
+    pub fn _with_default_value(capacity: usize, default_value: T) -> RingBuffer<T> {
         let queue = vec![default_value.clone(); capacity];
 
         RingBuffer {
@@ -25,15 +25,15 @@ impl<T: Clone> RingBuffer<T> {
         }
     }
 
-    pub fn capacity(&self) -> usize {
+    pub fn _capacity(&self) -> usize {
         self.capacity
     }
 
-    pub fn get_queue(&self) -> &Vec<T> {
+    pub fn _get_queue(&self) -> &Vec<T> {
         &self.queue
     }
 
-    pub fn get_previous(&self) -> Result<T, &str> {
+    pub fn _get_previous(&self) -> Result<T, &str> {
         match self.queue.last() {
             Some(val) => Ok(val.clone()),
             None => Err("The Queue is empty!"),
