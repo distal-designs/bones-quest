@@ -21,19 +21,7 @@ impl VisualNovel {
         let commands = &mut self.commands;
         let command = &mut commands[self.command_index];
 
-        let portrait = match &command.portrait {
-            &Some(PortraitCommand::Show(ref character, ref style)) => Some(Portrait {
-                character: character.clone(),
-                style: style.clone(),
-            }),
-            &None => match self.dialog {
-                Some(ref dialog_draw_cache) => dialog_draw_cache.as_ref().portrait.clone(),
-                _ => None,
-            },
-            &Some(PortraitCommand::Hide) => None,
-        };
-        let text = command.text.clone();
-        self.dialog = Some(DrawCache::new(Dialog { text, portrait }));
+        VisualNovel::apply_dialog(&mut self.dialog, command);
 
         match command.background {
             Some(BackgroundCommand::Hide) => self.background = None,
