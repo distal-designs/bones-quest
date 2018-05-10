@@ -44,6 +44,20 @@ impl VisualNovel {
         };
     }
 
+    fn apply_dialog(dialog: &mut Option<DrawCache<Dialog, DialogCache>>, command: &Command) {
+        let portrait = match (&dialog, &command.portrait) {
+            (_, Some(PortraitCommand::Show(character, style))) => Some(Portrait {
+                character: character.clone(),
+                style: style.clone(),
+            }),
+            (Some(dialog_draw_cache), None) => dialog_draw_cache.as_ref().portrait.clone(),
+            (_, Some(PortraitCommand::Hide)) => None,
+            (None, None) => None,
+        };
+        let text = command.text.clone();
+        mem::replace(dialog, Some(DrawCache::new(Dialog { text, portrait })));
+    }
+
     pub fn new(commands: Vec<Command>) -> Self {
         Self {
             commands,
