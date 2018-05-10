@@ -10,8 +10,8 @@ mod game;
 use ggez::{conf, event, Context};
 
 use engine::visual_novel::command::Command;
-use game::scenes::visual_novel::VisualNovel;
 use game::main_state::MainState;
+use game::scenes::visual_novel::VisualNovel;
 
 fn main() {
     let mut c = conf::Conf::default();
