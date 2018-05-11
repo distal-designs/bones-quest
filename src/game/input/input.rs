@@ -36,6 +36,20 @@ impl Input {
         self.enqueue(inputs);
     }
 
+    pub fn _pressed(&self) -> HashSet<Keycode> {
+        let history = self._get_input_history();
+        match history.as_slice() {
+            [] => HashSet::new(),
+            [h] => h.clone(),
+            all => {
+                let len = all.len();
+                let current = &all[len - 1];
+                let previous = &all[len - 2];
+                current.difference(&previous).cloned().collect()
+            }
+        }
+    }
+
     fn enqueue(&mut self, inputs: HashSet<Keycode>) {
         if let Err(e) = self.input_history.add(inputs) {
             panic!(format!("Could not enqueue inputs: {}", e));
