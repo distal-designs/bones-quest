@@ -1,10 +1,13 @@
 use ggez::{self, GameResult};
+use ggez::event::Keycode::{Left, Right};
 use ggez::graphics::{DrawParam, Drawable, Point2};
 
 use engine::{self, color};
 use engine::draw_cache::DrawCache;
 use engine::ui::{Background, BackgroundCache, Dialog, DialogCache, Portrait};
 use engine::visual_novel::command::{BackgroundCommand, Command, PortraitCommand};
+
+use game::input::Input;
 
 pub struct VisualNovel {
     commands: Vec<Command>,
@@ -53,8 +56,21 @@ impl VisualNovel {
     }
 }
 
-impl<I, F> engine::scene::Scene<I, F> for VisualNovel {
-    fn update(&mut self, _: &I, _: &mut F) -> GameResult<()> {
+impl<F> engine::scene::Scene<Input, F> for VisualNovel {
+    fn update(&mut self, input: &Input, _: &mut F) -> GameResult<()> {
+        for keycode in input.pressed() {
+            self.command_index = match (keycode, self.command_index) {
+                (Left, x) if x != 0 => {
+                    self.status = Status::PendingCommands;
+                    x - 1
+                }
+                (Right, x) if x != self.commands.len() - 1 => {
+                    self.status = Status::PendingCommands;
+                    x + 1
+                }
+                (_, x) => x,
+            }
+        }
         if let Status::PendingCommands = self.status {
             self.apply();
             self.status = Status::CommandsApplied;
