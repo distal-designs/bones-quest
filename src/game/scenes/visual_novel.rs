@@ -22,14 +22,7 @@ impl VisualNovel {
         let command = &mut commands[self.command_index];
 
         VisualNovel::apply_dialog(&mut self.dialog, command);
-
-        match command.background {
-            Some(BackgroundCommand::Hide) => self.background = None,
-            Some(BackgroundCommand::Color(ref hex)) => {
-                self.background = Some(DrawCache::new(Background::Color(color::from_hex(&hex))))
-            }
-            _ => {}
-        };
+        VisualNovel::apply_background(&mut self.background, command);
     }
 
     fn apply_background(
