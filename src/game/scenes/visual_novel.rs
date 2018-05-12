@@ -79,18 +79,16 @@ impl<I, F> engine::scene::Scene<I, F> for VisualNovel {
     fn draw(&self, _: &F, ctx: &mut ggez::Context) -> GameResult<()> {
         if let Some(ref bg) = self.background {
             match bg.as_ref() {
-                &Background::Color(color) => {
-                    bg.draw_ex(
-                        ctx,
-                        DrawParam {
-                            dest: Point2::new(0.0, 0.0),
-                            color: Some(color),
-                            ..Default::default()
-                        },
-                    )?;
-                }
-            };
-        };
+                Background::Color(color) => bg.draw_ex(
+                    ctx,
+                    DrawParam {
+                        dest: Point2::new(0.0, 0.0),
+                        color: Some(*color),
+                        ..Default::default()
+                    },
+                )?,
+            }
+        }
         if let Some(ref dialog) = self.dialog {
             dialog.draw_ex(ctx, DrawParam::default())?;
         }
