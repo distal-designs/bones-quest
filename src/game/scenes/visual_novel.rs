@@ -32,6 +32,23 @@ impl VisualNovel {
         };
     }
 
+    fn apply_background(
+        background: &mut Option<DrawCache<Background, BackgroundCache>>,
+        command: &Command,
+    ) {
+        match &command.background {
+            Some(BackgroundCommand::Hide) => {
+                mem::replace(background, None);
+            }
+            Some(BackgroundCommand::Color(hex)) => {
+                let new_bg = DrawCache::new(Background::Color(color::from_hex(&hex)));
+                mem::replace(background, Some(new_bg));
+            }
+            Some(BackgroundCommand::Image(_)) => unimplemented!(),
+            None => {}
+        };
+    }
+
     fn apply_dialog(dialog: &mut Option<DrawCache<Dialog, DialogCache>>, command: &Command) {
         let portrait = match (&dialog, &command.portrait) {
             (_, Some(PortraitCommand::Show(character, style))) => Some(Portrait {
