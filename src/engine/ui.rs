@@ -1,6 +1,6 @@
-use ggez::{Context, GameResult};
 use ggez::graphics::{self, BlendMode, Color, DrawMode, DrawParam, Drawable, Image, Mesh, Point2,
                      Rect, Text};
+use ggez::{Context, GameResult};
 
 use super::draw_cache::TryIntoDrawable;
 
