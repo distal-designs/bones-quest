@@ -1,7 +1,7 @@
-use ggez::{event, Context, GameResult};
 use ggez::event::{Keycode, Mod};
-use ggez::timer;
 use ggez::graphics::{self, Drawable, Point2, Text};
+use ggez::timer;
+use ggez::{event, Context, GameResult};
 
 use super::flags::Flags;
 use super::input::input::Input;
