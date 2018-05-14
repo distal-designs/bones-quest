@@ -27,8 +27,8 @@ impl Input {
         self.current_input.remove(&keycode);
     }
 
-    pub fn _get_input_history(&self) -> &Vec<HashSet<Keycode>> {
-        &self.input_history._get_queue()
+    pub fn get_input_history(&self) -> &Vec<HashSet<Keycode>> {
+        &self.input_history.get_queue()
     }
 
     pub fn finalize(&mut self) {
@@ -36,8 +36,8 @@ impl Input {
         self.enqueue(inputs);
     }
 
-    pub fn _pressed(&self) -> HashSet<Keycode> {
-        let history = self._get_input_history();
+    pub fn pressed(&self) -> HashSet<Keycode> {
+        let history = self.get_input_history();
         match history.as_slice() {
             [] => HashSet::new(),
             [h] => h.clone(),

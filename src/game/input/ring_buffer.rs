@@ -29,7 +29,7 @@ impl<T: Clone> RingBuffer<T> {
         self.capacity
     }
 
-    pub fn _get_queue(&self) -> &Vec<T> {
+    pub fn get_queue(&self) -> &Vec<T> {
         &self.queue
     }
 
