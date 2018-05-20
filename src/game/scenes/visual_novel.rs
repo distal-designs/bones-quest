@@ -1,4 +1,3 @@
-use ggez::{self, GameResult};
 use ggez::event::Keycode::{Left, Right};
 
 use ggez::graphics::{DrawParam, Drawable, Point2};
