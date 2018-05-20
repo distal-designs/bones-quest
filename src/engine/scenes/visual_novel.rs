@@ -10,7 +10,7 @@ use engine::ui::{Background, BackgroundCache, Dialog, DialogCache, Portrait};
 use engine::visual_novel::command::{BackgroundCommand, Command, PortraitCommand};
 use engine::{self, color};
 
-use game::input::Input;
+use engine::input::Input;
 
 pub struct VisualNovel {
     commands: Vec<Command>,

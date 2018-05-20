@@ -1,6 +1,10 @@
 pub mod color;
 pub mod draw_cache;
+pub mod flags;
+pub mod input;
+pub mod main_state;
 pub mod scene;
 pub mod scene_stack;
+pub mod scenes;
 pub mod ui;
 pub mod visual_novel;
