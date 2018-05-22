@@ -1,4 +1,3 @@
-use ggez::{self, GameResult};
 use ggez::event::Keycode::{Left, Right};
 
 use ggez::graphics::{DrawParam, Drawable, Point2};
@@ -11,7 +10,7 @@ use engine::ui::{Background, BackgroundCache, Dialog, DialogCache, Portrait};
 use engine::visual_novel::command::{BackgroundCommand, Command, PortraitCommand};
 use engine::{self, color};
 
-use game::input::Input;
+use engine::input::Input;
 
 pub struct VisualNovel {
     commands: Vec<Command>,
