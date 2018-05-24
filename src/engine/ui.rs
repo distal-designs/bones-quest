@@ -13,6 +13,8 @@ pub struct DialogCache {
     text_cache: Vec<Text>,
     dialog_box: Mesh,
     portrait: Option<Image>,
+    character: Option<Text>,
+    name_box: Option<Mesh>,
 }
 
 #[derive(Clone)]
