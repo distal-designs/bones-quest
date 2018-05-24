@@ -104,6 +104,19 @@ impl Drawable for DialogCache {
             )?;
         }
 
+        if let (Some(character), Some(name_box)) = (&self.character, &self.name_box) {
+            let dest = Point2::new(bounds.x, bounds.y - 20.0);
+            name_box.draw_ex(
+                ctx,
+                DrawParam {
+                    dest,
+                    color: Some(graphics::BLACK),
+                    ..Default::default()
+                },
+            )?;
+            character.draw(ctx, dest, 0.0)?;
+        }
+
         for (index, text) in self.text_cache.iter().enumerate() {
             let x = bounds.x;
             let y = bounds.y as usize + (index * text.height() as usize);
