@@ -53,10 +53,30 @@ impl TryIntoDrawable<DialogCache> for Dialog {
             None => None,
         };
 
+        let (character, name_box) = match self.portrait {
+            Some(Portrait { ref character, .. }) => {
+                let text = Text::new(ctx, &character, &font)?;
+                let name_box = graphics::Mesh::new_polygon(
+                    ctx,
+                    DrawMode::Fill,
+                    &[
+                        Point2::new(0.0, 0.0),
+                        Point2::new(0.0, 20.0),
+                        Point2::new(bounds.h, 20.0),
+                        Point2::new(bounds.h, 0.0),
+                    ],
+                )?;
+                (Some(text), Some(name_box))
+            }
+            None => (None, None),
+        };
+
         Ok(DialogCache {
             text_cache,
             dialog_box,
             portrait,
+            character,
+            name_box,
         })
     }
 }
