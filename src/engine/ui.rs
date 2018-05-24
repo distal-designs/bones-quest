@@ -13,6 +13,8 @@ pub struct DialogCache {
     text_cache: Vec<Text>,
     dialog_box: Mesh,
     portrait: Option<Image>,
+    character: Option<Text>,
+    name_box: Option<Mesh>,
 }
 
 #[derive(Clone)]
@@ -51,10 +53,30 @@ impl TryIntoDrawable<DialogCache> for Dialog {
             None => None,
         };
 
+        let (character, name_box) = match self.portrait {
+            Some(Portrait { ref character, .. }) => {
+                let text = Text::new(ctx, &character, &font)?;
+                let name_box = graphics::Mesh::new_polygon(
+                    ctx,
+                    DrawMode::Fill,
+                    &[
+                        Point2::new(0.0, 0.0),
+                        Point2::new(0.0, 20.0),
+                        Point2::new(bounds.h, 20.0),
+                        Point2::new(bounds.h, 0.0),
+                    ],
+                )?;
+                (Some(text), Some(name_box))
+            }
+            None => (None, None),
+        };
+
         Ok(DialogCache {
             text_cache,
             dialog_box,
             portrait,
+            character,
+            name_box,
         })
     }
 }
@@ -80,6 +102,19 @@ impl Drawable for DialogCache {
                     ..Default::default()
                 },
             )?;
+        }
+
+        if let (Some(character), Some(name_box)) = (&self.character, &self.name_box) {
+            let dest = Point2::new(bounds.x, bounds.y - 20.0);
+            name_box.draw_ex(
+                ctx,
+                DrawParam {
+                    dest,
+                    color: Some(graphics::BLACK),
+                    ..Default::default()
+                },
+            )?;
+            character.draw(ctx, dest, 0.0)?;
         }
 
         for (index, text) in self.text_cache.iter().enumerate() {
