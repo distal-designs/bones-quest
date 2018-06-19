@@ -1,12 +1,13 @@
+use std::collections::HashMap;
 use std::mem;
 
 use ggez::event::Keycode::{Left, Right};
 
-use ggez::graphics::{DrawParam, Drawable, Point2};
+use ggez::graphics::{DrawParam, Drawable, Image, Point2};
 use ggez::{self, GameResult};
 
 use engine::draw_cache::DrawCache;
-use engine::ui::{Background, BackgroundCache, Dialog, DialogCache, Portrait};
+use engine::ui::{Background, BackgroundCache, Character, Dialog, DialogCache, Portrait};
 use engine::visual_novel::command::{BackgroundCommand, Command, PortraitCommand};
 use engine::{self, color};
 
@@ -18,6 +19,7 @@ pub struct VisualNovel {
     dialog: Option<DrawCache<Dialog, DialogCache>>,
     background: Option<DrawCache<Background, BackgroundCache>>,
     status: Status,
+    characters: Option<HashMap<String, DrawCache<Character, Image>>>,
 }
 
 impl VisualNovel {
@@ -67,6 +69,7 @@ impl VisualNovel {
             status: Status::PendingCommands,
             dialog: None,
             background: None,
+            characters: None,
         }
     }
 }

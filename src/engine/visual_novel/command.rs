@@ -1,9 +1,9 @@
 extern crate toml;
 
+use std::collections::HashMap;
 use std::env;
 use std::fs::File;
 use std::io::Read;
-use std::collections::HashMap;
 
 #[derive(Deserialize, Debug)]
 #[serde(tag = "t", content = "c")]

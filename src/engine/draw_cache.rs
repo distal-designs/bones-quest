@@ -1,6 +1,8 @@
 use std::cell::RefCell;
 
-use ggez::{Context, GameResult, graphics::{BlendMode, DrawParam, Drawable}};
+use ggez::{graphics::{BlendMode, DrawParam, Drawable},
+           Context,
+           GameResult};
 
 pub trait TryIntoDrawable<T>
 where
