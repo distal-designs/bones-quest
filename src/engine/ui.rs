@@ -29,6 +29,12 @@ pub struct Character {
     pub position: i8,
 }
 
+impl TryIntoDrawable<Image> for Character {
+    fn try_into_drawable(&self, ctx: &mut Context) -> GameResult<Image> {
+        Image::solid(ctx, 50, graphics::WHITE)
+    }
+}
+
 impl TryIntoDrawable<DialogCache> for Dialog {
     fn try_into_drawable(&self, ctx: &mut Context) -> GameResult<DialogCache> {
         let font = ctx.default_font.clone();
