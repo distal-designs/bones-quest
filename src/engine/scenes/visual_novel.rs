@@ -1,9 +1,9 @@
+use std::mem;
+
 use ggez::event::Keycode::{Left, Right};
 
 use ggez::graphics::{DrawParam, Drawable, Point2};
 use ggez::{self, GameResult};
-
-use std::mem;
 
 use engine::draw_cache::DrawCache;
 use engine::ui::{Background, BackgroundCache, Dialog, DialogCache, Portrait};
