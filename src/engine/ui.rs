@@ -23,6 +23,12 @@ pub struct Portrait {
     pub style: String,
 }
 
+pub struct Character {
+    pub name: String,
+    pub direction: String,
+    pub position: i8,
+}
+
 impl TryIntoDrawable<DialogCache> for Dialog {
     fn try_into_drawable(&self, ctx: &mut Context) -> GameResult<DialogCache> {
         let font = ctx.default_font.clone();
