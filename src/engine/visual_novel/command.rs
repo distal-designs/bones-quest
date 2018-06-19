@@ -3,6 +3,7 @@ extern crate toml;
 use std::env;
 use std::fs::File;
 use std::io::Read;
+use std::collections::HashMap;
 
 #[derive(Deserialize, Debug)]
 #[serde(tag = "t", content = "c")]
@@ -30,6 +31,7 @@ pub struct Command {
     pub background: Option<BackgroundCommand>,
     pub portrait: Option<PortraitCommand>,
     pub text: String,
+    pub positions: Option<HashMap<String, PositionCommand>>,
 }
 
 impl Command {
