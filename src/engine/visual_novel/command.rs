@@ -20,6 +20,12 @@ pub enum PortraitCommand {
 }
 
 #[derive(Deserialize, Debug)]
+pub struct PositionCommand {
+    pub direction: String,
+    pub position: i8,
+}
+
+#[derive(Deserialize, Debug)]
 pub struct Command {
     pub background: Option<BackgroundCommand>,
     pub portrait: Option<PortraitCommand>,
