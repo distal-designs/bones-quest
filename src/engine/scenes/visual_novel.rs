@@ -2,16 +2,14 @@ use std::collections::HashMap;
 use std::mem;
 
 use ggez::event::Keycode::{Left, Right};
-
 use ggez::graphics::{DrawParam, Drawable, Image, Point2};
 use ggez::{self, GameResult};
 
 use engine::draw_cache::DrawCache;
+use engine::input::Input;
 use engine::ui::{Background, BackgroundCache, Character, Dialog, DialogCache, Portrait};
 use engine::visual_novel::command::{BackgroundCommand, Command, PortraitCommand};
 use engine::{self, color};
-
-use engine::input::Input;
 
 pub struct VisualNovel {
     commands: Vec<Command>,
