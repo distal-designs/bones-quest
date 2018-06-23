@@ -25,8 +25,26 @@ impl VisualNovel {
         let commands = &mut self.commands;
         let command = &mut commands[self.command_index];
 
+        VisualNovel::apply_characters(&mut self.characters, command);
         VisualNovel::apply_dialog(&mut self.dialog, command);
         VisualNovel::apply_background(&mut self.background, command);
+    }
+
+    fn apply_characters(
+        characters: &mut HashMap<String, DrawCache<Character, Image>>,
+        command: &Command,
+    ) {
+        if let Some(ref positions) = command.positions {
+            for (name, position) in positions {
+                characters
+                    .entry(name.clone())
+                    .or_insert(DrawCache::new(Character {
+                        name: name.clone(),
+                        direction: position.direction.clone(),
+                        position: position.position.clone(),
+                    }));
+            }
+        }
     }
 
     fn apply_background(
