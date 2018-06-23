@@ -17,7 +17,7 @@ pub struct VisualNovel {
     dialog: Option<DrawCache<Dialog, DialogCache>>,
     background: Option<DrawCache<Background, BackgroundCache>>,
     status: Status,
-    characters: Option<HashMap<String, DrawCache<Character, Image>>>,
+    characters: HashMap<String, DrawCache<Character, Image>>,
 }
 
 impl VisualNovel {
@@ -67,7 +67,7 @@ impl VisualNovel {
             status: Status::PendingCommands,
             dialog: None,
             background: None,
-            characters: None,
+            characters: HashMap::new(),
         }
     }
 }
