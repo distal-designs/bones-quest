@@ -36,13 +36,14 @@ impl VisualNovel {
     ) {
         if let Some(ref positions) = command.positions {
             for (name, position) in positions {
-                characters
-                    .entry(name.clone())
-                    .or_insert(DrawCache::new(Character {
+                characters.insert(
+                    name.clone(),
+                    DrawCache::new(Character {
                         name: name.clone(),
                         direction: position.direction.clone(),
                         position: position.position.clone(),
-                    }));
+                    }),
+                );
             }
         }
     }
