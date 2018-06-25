@@ -207,3 +207,12 @@ impl Drawable for BackgroundCache {
         }
     }
 }
+
+pub fn to_window_position(ctx: &Context, position: i8) -> f32 {
+    let position = position as f32;
+    let width = ctx.conf.window_mode.width as f32;
+
+    let half = width / 2.0;
+    let shift = half * position / 100.0;
+    half + shift
+}
