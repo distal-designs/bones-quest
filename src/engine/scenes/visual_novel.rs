@@ -129,6 +129,18 @@ impl<F> engine::scene::Scene<Input, F> for VisualNovel {
         if let Some(ref dialog) = self.dialog {
             dialog.draw_ex(ctx, DrawParam::default())?;
         }
+        let screen_width = ctx.conf.window_mode.width;
+        for (_, draw_cache) in &self.characters {
+            let position = draw_cache.as_ref().position;
+            let x = engine::ui::to_window_position(screen_width, position);
+            draw_cache.draw_ex(
+                ctx,
+                DrawParam {
+                    dest: Point2::new(x, 0.0),
+                    ..Default::default()
+                },
+            )?;
+        }
         Ok(())
     }
 }
