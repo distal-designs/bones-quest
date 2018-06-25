@@ -216,3 +216,17 @@ pub fn to_window_position(width: u32, position: i8) -> f32 {
     let shift = half * position / 100.0;
     half + shift
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_to_window_position() {
+        assert_eq!(to_window_position(800, -100), 0.0);
+        assert_eq!(to_window_position(800, -50), 200.0);
+        assert_eq!(to_window_position(800, 0), 400.0);
+        assert_eq!(to_window_position(800, 50), 600.0);
+        assert_eq!(to_window_position(800, 100), 800.0);
+    }
+}
