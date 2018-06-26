@@ -35,6 +35,7 @@ impl VisualNovel {
         command: &Command,
     ) {
         if let Some(ref positions) = command.positions {
+            characters.clear();
             for (name, position) in positions {
                 characters.insert(
                     name.clone(),
