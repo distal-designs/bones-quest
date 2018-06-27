@@ -1,5 +1,6 @@
 extern crate toml;
 
+use std::collections::HashMap;
 use std::env;
 use std::fs::File;
 use std::io::Read;
@@ -20,10 +21,17 @@ pub enum PortraitCommand {
 }
 
 #[derive(Deserialize, Debug)]
+pub struct PositionCommand {
+    pub direction: String,
+    pub position: i8,
+}
+
+#[derive(Deserialize, Debug)]
 pub struct Command {
     pub background: Option<BackgroundCommand>,
     pub portrait: Option<PortraitCommand>,
     pub text: String,
+    pub positions: Option<HashMap<String, PositionCommand>>,
 }
 
 impl Command {

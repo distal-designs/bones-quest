@@ -1,16 +1,15 @@
-use ggez::event::Keycode::{Left, Right};
-
-use ggez::graphics::{DrawParam, Drawable, Point2};
-use ggez::{self, GameResult};
-
+use std::collections::HashMap;
 use std::mem;
 
+use ggez::event::Keycode::{Left, Right};
+use ggez::graphics::{DrawParam, Drawable, Image, Point2};
+use ggez::{self, GameResult};
+
 use engine::draw_cache::DrawCache;
-use engine::ui::{Background, BackgroundCache, Dialog, DialogCache, Portrait};
+use engine::input::Input;
+use engine::ui::{Background, BackgroundCache, Character, Dialog, DialogCache, Portrait};
 use engine::visual_novel::command::{BackgroundCommand, Command, PortraitCommand};
 use engine::{self, color};
-
-use engine::input::Input;
 
 pub struct VisualNovel {
     commands: Vec<Command>,
@@ -18,6 +17,7 @@ pub struct VisualNovel {
     dialog: Option<DrawCache<Dialog, DialogCache>>,
     background: Option<DrawCache<Background, BackgroundCache>>,
     status: Status,
+    characters: HashMap<String, DrawCache<Character, Image>>,
 }
 
 impl VisualNovel {
@@ -25,8 +25,28 @@ impl VisualNovel {
         let commands = &mut self.commands;
         let command = &mut commands[self.command_index];
 
+        VisualNovel::apply_characters(&mut self.characters, command);
         VisualNovel::apply_dialog(&mut self.dialog, command);
         VisualNovel::apply_background(&mut self.background, command);
+    }
+
+    fn apply_characters(
+        characters: &mut HashMap<String, DrawCache<Character, Image>>,
+        command: &Command,
+    ) {
+        if let Some(ref positions) = command.positions {
+            characters.clear();
+            for (name, position) in positions {
+                characters.insert(
+                    name.clone(),
+                    DrawCache::new(Character {
+                        name: name.clone(),
+                        direction: position.direction.clone(),
+                        position: position.position.clone(),
+                    }),
+                );
+            }
+        }
     }
 
     fn apply_background(
@@ -67,6 +87,7 @@ impl VisualNovel {
             status: Status::PendingCommands,
             dialog: None,
             background: None,
+            characters: HashMap::new(),
         }
     }
 }
@@ -108,6 +129,18 @@ impl<F> engine::scene::Scene<Input, F> for VisualNovel {
         }
         if let Some(ref dialog) = self.dialog {
             dialog.draw_ex(ctx, DrawParam::default())?;
+        }
+        let screen_width = ctx.conf.window_mode.width;
+        for (_, draw_cache) in &self.characters {
+            let position = draw_cache.as_ref().position;
+            let x = engine::ui::to_window_position(screen_width, position);
+            draw_cache.draw_ex(
+                ctx,
+                DrawParam {
+                    dest: Point2::new(x, 0.0),
+                    ..Default::default()
+                },
+            )?;
         }
         Ok(())
     }

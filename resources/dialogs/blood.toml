@@ -6,6 +6,9 @@
   [command.background]
     t = "Color"
     c = "#ff0000"
+  [command.positions]
+    Jotaro = { direction = 'L', position = -40 }
+    Dio = { direction = 'R', position = 70 }
 
 [[command]]
   text = "A MAN WAS WALKING AROUND AND BLOOD STARTED COMING OUT OF HIM EVERYWHERE."
