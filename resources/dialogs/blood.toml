@@ -1,5 +1,8 @@
 [[command]]
   text = "THIS IS A STORY OF A DAY WHERE THERE WAS ALL THIS BLOOD."
+  [command.menu]
+    "I don't expect anyone to kill me" = "GET_KILLED"
+    "I expect to die at any moment!" = "ALSO_GET_KILLED"
   [command.portrait]
     t = "Show"
     c = ["Yare", "Daze"]
