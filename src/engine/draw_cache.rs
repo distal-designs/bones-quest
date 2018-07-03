@@ -1,4 +1,5 @@
 use std::cell::RefCell;
+use std::fmt;
 
 use ggez::{
     graphics::{BlendMode, DrawParam, Drawable}, Context, GameResult,
@@ -40,6 +41,16 @@ where
 {
     fn as_ref(&self) -> &T {
         &self.data
+    }
+}
+
+impl<T, U> fmt::Debug for DrawCache<T, U>
+where
+    T: TryIntoDrawable<U> + fmt::Debug,
+    U: Drawable,
+{
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{:?}", self.data)
     }
 }
 
