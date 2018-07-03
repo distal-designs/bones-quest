@@ -5,6 +5,8 @@ use std::env;
 use std::fs::File;
 use std::io::Read;
 
+use ggez::filesystem::Filesystem;
+
 #[derive(Deserialize, Debug)]
 #[serde(tag = "t", content = "c")]
 pub enum BackgroundCommand {
@@ -44,13 +46,8 @@ impl Command {
         toml::from_str::<Commands>(toml).map(|commands| commands.command)
     }
 
-    pub fn load(dialog_name: &str) -> Result<Vec<Command>, toml::de::Error> {
-        let mut pathbuf = env::current_dir().unwrap();
-        pathbuf.push("resources");
-        pathbuf.push("dialogs");
-        pathbuf.push(format!("{}.toml", dialog_name));
-        let path = pathbuf.as_path();
-        let mut f = File::open(path).unwrap();
+    pub fn load(fs: &mut Filesystem, path: &str) -> Result<Vec<Command>, toml::de::Error> {
+        let mut f = fs.open(path).unwrap();
         let mut toml = String::new();
         f.read_to_string(&mut toml).unwrap();
 
