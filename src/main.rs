@@ -27,7 +27,7 @@ fn main() {
     }
 
     let state = &mut MainState::new();
-    let dialog = Command::load("blood").unwrap();
+    let dialog = Command::load(&mut ctx.filesystem, "/dialogs/blood.toml").unwrap();
     let vn = VisualNovel::new(dialog);
     state.scenes.push(Box::new(vn));
     event::run(ctx, state).unwrap();
