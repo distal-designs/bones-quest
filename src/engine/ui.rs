@@ -190,20 +190,20 @@ pub enum BackgroundCache {
 
 impl Drawable for BackgroundCache {
     fn draw_ex(&self, ctx: &mut Context, mode: DrawParam) -> GameResult<()> {
-        match self {
-            &BackgroundCache::Mesh(ref mesh) => mesh.draw_ex(ctx, mode),
+        match *self {
+            BackgroundCache::Mesh(ref mesh) => mesh.draw_ex(ctx, mode),
         }
     }
 
     fn set_blend_mode(&mut self, mode: Option<BlendMode>) {
-        match self {
-            &mut BackgroundCache::Mesh(ref mut mesh) => mesh.set_blend_mode(mode),
+        match *self {
+            BackgroundCache::Mesh(ref mut mesh) => mesh.set_blend_mode(mode),
         }
     }
 
     fn get_blend_mode(&self) -> Option<BlendMode> {
-        match self {
-            &BackgroundCache::Mesh(ref mesh) => mesh.get_blend_mode(),
+        match *self {
+            BackgroundCache::Mesh(ref mesh) => mesh.get_blend_mode(),
         }
     }
 }
