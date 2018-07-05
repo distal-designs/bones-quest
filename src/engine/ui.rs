@@ -139,7 +139,7 @@ impl Drawable for DialogCache {
     }
 
     fn set_blend_mode(&mut self, mode: Option<graphics::BlendMode>) {
-        for text in self.text_cache.iter_mut() {
+        for text in &mut self.text_cache {
             text.set_blend_mode(mode);
         }
     }
