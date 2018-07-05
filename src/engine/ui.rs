@@ -209,7 +209,7 @@ impl Drawable for BackgroundCache {
 }
 
 pub fn to_window_position(width: u32, position: i8) -> f32 {
-    let position = position as f32;
+    let position = f32::from(position);
     let width = width as f32;
 
     let half = width / 2.0;
