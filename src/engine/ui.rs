@@ -145,10 +145,9 @@ impl Drawable for DialogCache {
     }
 
     fn get_blend_mode(&self) -> Option<graphics::BlendMode> {
-        for text in self.text_cache.iter() {
-            return text.get_blend_mode();
-        }
-        None
+        self.text_cache
+            .first()
+            .and_then(|text| text.get_blend_mode())
     }
 }
 
