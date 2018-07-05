@@ -35,7 +35,7 @@ pub struct Command {
 }
 
 impl Command {
-    fn parse(toml: &str) -> Result<Vec<Command>, toml::de::Error> {
+    fn parse(toml: &str) -> Result<Vec<Self>, toml::de::Error> {
         #[derive(Deserialize)]
         struct Commands {
             command: Vec<Command>,
@@ -44,11 +44,11 @@ impl Command {
         toml::from_str::<Commands>(toml).map(|commands| commands.command)
     }
 
-    pub fn load(fs: &mut Filesystem, path: &str) -> Result<Vec<Command>, toml::de::Error> {
+    pub fn load(fs: &mut Filesystem, path: &str) -> Result<Vec<Self>, toml::de::Error> {
         let mut f = fs.open(path).unwrap();
         let mut toml = String::new();
         f.read_to_string(&mut toml).unwrap();
 
-        Command::parse(&toml)
+        Self::parse(&toml)
     }
 }
