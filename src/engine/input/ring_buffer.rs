@@ -48,7 +48,7 @@ impl<T: Clone> IsQueue<T> for RingBuffer<T> {
             Ok(None)
         } else {
             self.queue.push(val);
-            Ok(Some(self.queue.remove(0usize)))
+            Ok(Some(self.queue.remove(0_usize)))
         }
     }
 
@@ -57,7 +57,7 @@ impl<T: Clone> IsQueue<T> for RingBuffer<T> {
             if let Some(val) = self.default_value.clone() {
                 self.queue.push(val);
             };
-            Ok(self.queue.remove(0usize))
+            Ok(self.queue.remove(0_usize))
         } else {
             Err("The Buffer is empty!")
         }
