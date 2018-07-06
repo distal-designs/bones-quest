@@ -14,8 +14,8 @@ pub struct Input {
 }
 
 impl Input {
-    pub fn new() -> Input {
-        Input {
+    pub fn new() -> Self {
+        Self {
             current_input: HashSet::new(),
             input_history: RingBuffer::new(HISTORY_CAPACITY),
         }
