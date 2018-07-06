@@ -42,7 +42,7 @@ impl VisualNovel {
                     DrawCache::new(Character {
                         name: name.clone(),
                         direction: position.direction.clone(),
-                        position: position.position.clone(),
+                        position: position.position,
                     }),
                 );
             }
