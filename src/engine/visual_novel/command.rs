@@ -7,7 +7,7 @@ use ggez::filesystem::Filesystem;
 
 #[derive(Deserialize, Debug)]
 #[serde(tag = "t", content = "c")]
-pub enum BackgroundCommand {
+pub enum Background {
     Hide,
     Color(String),
     Image(String),
@@ -15,23 +15,23 @@ pub enum BackgroundCommand {
 
 #[derive(Deserialize, Debug)]
 #[serde(tag = "t", content = "c")]
-pub enum PortraitCommand {
+pub enum Portrait {
     Hide,
     Show(String, String),
 }
 
 #[derive(Deserialize, Debug)]
-pub struct PositionCommand {
+pub struct Position {
     pub direction: String,
     pub position: i8,
 }
 
 #[derive(Deserialize, Debug)]
 pub struct Command {
-    pub background: Option<BackgroundCommand>,
-    pub portrait: Option<PortraitCommand>,
+    pub background: Option<Background>,
+    pub portrait: Option<Portrait>,
     pub text: String,
-    pub positions: Option<HashMap<String, PositionCommand>>,
+    pub positions: Option<HashMap<String, Position>>,
 }
 
 impl Command {
