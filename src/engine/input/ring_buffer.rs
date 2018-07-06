@@ -53,7 +53,7 @@ impl<T: Clone> IsQueue<T> for RingBuffer<T> {
     }
 
     fn remove(&mut self) -> Result<T, &str> {
-        if self.queue.len() > 0 {
+        if self.queue.is_empty() {
             if let Some(val) = self.default_value.clone() {
                 self.queue.push(val);
             };
