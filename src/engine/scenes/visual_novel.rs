@@ -138,7 +138,7 @@ impl<F> engine::scene::Scene<Input, F> for VisualNovel {
                 ctx,
                 DrawParam {
                     dest: Point2::new(x, 0.0),
-                    ..Default::default()
+                    ..DrawParam::default()
                 },
             )?;
         }
