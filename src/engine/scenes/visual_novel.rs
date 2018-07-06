@@ -8,7 +8,7 @@ use ggez::{self, GameResult};
 use engine::draw_cache::DrawCache;
 use engine::input::Input;
 use engine::ui::{Background, BackgroundCache, Character, Dialog, DialogCache, Portrait};
-use engine::visual_novel::command::{BackgroundCommand, Command, PortraitCommand};
+use engine::visual_novel::command::{self, Command};
 use engine::{self, color};
 
 pub struct VisualNovel {
@@ -54,26 +54,26 @@ impl VisualNovel {
         command: &Command,
     ) {
         match &command.background {
-            Some(BackgroundCommand::Hide) => {
+            Some(command::Background::Hide) => {
                 mem::replace(background, None);
             }
-            Some(BackgroundCommand::Color(hex)) => {
+            Some(command::Background::Color(hex)) => {
                 let new_bg = DrawCache::new(Background::Color(color::from_hex(&hex)));
                 mem::replace(background, Some(new_bg));
             }
-            Some(BackgroundCommand::Image(_)) => unimplemented!(),
+            Some(command::Background::Image(_)) => unimplemented!(),
             None => {}
         };
     }
 
     fn apply_dialog(dialog: &mut Option<DrawCache<Dialog, DialogCache>>, command: &Command) {
         let portrait = match (&dialog, &command.portrait) {
-            (_, Some(PortraitCommand::Show(character, style))) => Some(Portrait {
+            (_, Some(command::Portrait::Show(character, style))) => Some(Portrait {
                 character: character.clone(),
                 style: style.clone(),
             }),
             (Some(dialog_draw_cache), None) => dialog_draw_cache.as_ref().portrait.clone(),
-            (_, Some(PortraitCommand::Hide)) => None,
+            (_, Some(command::Portrait::Hide)) => None,
             (None, None) => None,
         };
         let text = command.text.clone();
