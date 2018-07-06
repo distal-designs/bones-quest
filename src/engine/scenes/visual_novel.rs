@@ -25,9 +25,9 @@ impl VisualNovel {
         let commands = &mut self.commands;
         let command = &mut commands[self.command_index];
 
-        VisualNovel::apply_characters(&mut self.characters, command);
-        VisualNovel::apply_dialog(&mut self.dialog, command);
-        VisualNovel::apply_background(&mut self.background, command);
+        Self::apply_characters(&mut self.characters, command);
+        Self::apply_dialog(&mut self.dialog, command);
+        Self::apply_background(&mut self.background, command);
     }
 
     fn apply_characters(
