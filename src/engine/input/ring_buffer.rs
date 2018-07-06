@@ -7,18 +7,18 @@ pub struct RingBuffer<T: Clone> {
 }
 
 impl<T: Clone> RingBuffer<T> {
-    pub fn new(capacity: usize) -> RingBuffer<T> {
-        RingBuffer {
+    pub fn new(capacity: usize) -> Self {
+        Self {
             queue: vec![],
             capacity,
             default_value: None,
         }
     }
 
-    pub fn _with_default_value(capacity: usize, default_value: T) -> RingBuffer<T> {
+    pub fn _with_default_value(capacity: usize, default_value: T) -> Self {
         let queue = vec![default_value.clone(); capacity];
 
-        RingBuffer {
+        Self {
             queue,
             capacity,
             default_value: Some(default_value),
