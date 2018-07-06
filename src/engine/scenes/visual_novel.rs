@@ -121,7 +121,7 @@ impl<F> engine::scene::Scene<Input, F> for VisualNovel {
                     DrawParam {
                         dest: Point2::new(0.0, 0.0),
                         color: Some(*color),
-                        ..Default::default()
+                        ..DrawParam::default()
                     },
                 )?,
             }
