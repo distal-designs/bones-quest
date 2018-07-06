@@ -14,8 +14,8 @@ pub struct MainState {
 }
 
 impl MainState {
-    pub fn new() -> MainState {
-        MainState {
+    pub fn new() -> Self {
+        Self {
             flags: Flags {},
             input: Input::new(),
             scenes: Box::new(Vec::new()),
