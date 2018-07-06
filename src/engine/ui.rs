@@ -103,7 +103,7 @@ impl Drawable for DialogCache {
             DrawParam {
                 dest: Point2::new(bounds.x, bounds.y),
                 color: Some(graphics::BLACK),
-                ..Default::default()
+                ..DrawParam::default()
             },
         )?;
 
@@ -112,7 +112,7 @@ impl Drawable for DialogCache {
                 ctx,
                 DrawParam {
                     dest: Point2::new(bounds.x, bounds.y),
-                    ..Default::default()
+                    ..DrawParam::default()
                 },
             )?;
         }
@@ -124,7 +124,7 @@ impl Drawable for DialogCache {
                 DrawParam {
                     dest,
                     color: Some(graphics::BLACK),
-                    ..Default::default()
+                    ..DrawParam::default()
                 },
             )?;
             character.draw(ctx, dest, 0.0)?;
