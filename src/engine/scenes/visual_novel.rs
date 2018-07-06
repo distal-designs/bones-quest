@@ -73,8 +73,7 @@ impl VisualNovel {
                 style: style.clone(),
             }),
             (Some(dialog_draw_cache), None) => dialog_draw_cache.as_ref().portrait.clone(),
-            (_, Some(command::Portrait::Hide)) => None,
-            (None, None) => None,
+            (_, Some(command::Portrait::Hide)) | (None, None) => None,
         };
         let text = command.text.clone();
         mem::replace(dialog, Some(DrawCache::new(Dialog { text, portrait })));
