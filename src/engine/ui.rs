@@ -39,13 +39,13 @@ impl TryIntoDrawable<Image> for Character {
 impl TryIntoDrawable<DialogCache> for Dialog {
     fn try_into_drawable(&self, ctx: &mut Context) -> GameResult<DialogCache> {
         let font = ctx.default_font.clone();
-        let text_cache = font.get_wrap(&self.text, Dialog::bounds(ctx).w as usize)
+        let text_cache = font.get_wrap(&self.text, Self::bounds(ctx).w as usize)
             .1
             .iter()
             .map(|line| Text::new(ctx, &line, &font).unwrap())
             .collect();
 
-        let bounds = Dialog::bounds(ctx);
+        let bounds = Self::bounds(ctx);
         let dialog_box = graphics::Mesh::new_polygon(
             ctx,
             DrawMode::Fill,
@@ -59,7 +59,7 @@ impl TryIntoDrawable<DialogCache> for Dialog {
 
         let portrait = match self.portrait {
             Some(_) => {
-                let height = Dialog::bounds(ctx).h as u16;
+                let height = Self::bounds(ctx).h as u16;
                 let image = Image::solid(ctx, height, Color::from_rgb(0, 255, 0))?;
                 Some(image)
             }
@@ -103,7 +103,7 @@ impl Drawable for DialogCache {
             DrawParam {
                 dest: Point2::new(bounds.x, bounds.y),
                 color: Some(graphics::BLACK),
-                ..Default::default()
+                ..DrawParam::default()
             },
         )?;
 
@@ -112,7 +112,7 @@ impl Drawable for DialogCache {
                 ctx,
                 DrawParam {
                     dest: Point2::new(bounds.x, bounds.y),
-                    ..Default::default()
+                    ..DrawParam::default()
                 },
             )?;
         }
@@ -124,7 +124,7 @@ impl Drawable for DialogCache {
                 DrawParam {
                     dest,
                     color: Some(graphics::BLACK),
-                    ..Default::default()
+                    ..DrawParam::default()
                 },
             )?;
             character.draw(ctx, dest, 0.0)?;
@@ -139,16 +139,15 @@ impl Drawable for DialogCache {
     }
 
     fn set_blend_mode(&mut self, mode: Option<graphics::BlendMode>) {
-        for text in self.text_cache.iter_mut() {
+        for text in &mut self.text_cache {
             text.set_blend_mode(mode);
         }
     }
 
     fn get_blend_mode(&self) -> Option<graphics::BlendMode> {
-        for text in self.text_cache.iter() {
-            return text.get_blend_mode();
-        }
-        None
+        self.text_cache
+            .first()
+            .and_then(|text| text.get_blend_mode())
     }
 }
 
@@ -190,26 +189,26 @@ pub enum BackgroundCache {
 
 impl Drawable for BackgroundCache {
     fn draw_ex(&self, ctx: &mut Context, mode: DrawParam) -> GameResult<()> {
-        match self {
-            &BackgroundCache::Mesh(ref mesh) => mesh.draw_ex(ctx, mode),
+        match *self {
+            BackgroundCache::Mesh(ref mesh) => mesh.draw_ex(ctx, mode),
         }
     }
 
     fn set_blend_mode(&mut self, mode: Option<BlendMode>) {
-        match self {
-            &mut BackgroundCache::Mesh(ref mut mesh) => mesh.set_blend_mode(mode),
+        match *self {
+            BackgroundCache::Mesh(ref mut mesh) => mesh.set_blend_mode(mode),
         }
     }
 
     fn get_blend_mode(&self) -> Option<BlendMode> {
-        match self {
-            &BackgroundCache::Mesh(ref mesh) => mesh.get_blend_mode(),
+        match *self {
+            BackgroundCache::Mesh(ref mesh) => mesh.get_blend_mode(),
         }
     }
 }
 
 pub fn to_window_position(width: u32, position: i8) -> f32 {
-    let position = position as f32;
+    let position = f32::from(position);
     let width = width as f32;
 
     let half = width / 2.0;

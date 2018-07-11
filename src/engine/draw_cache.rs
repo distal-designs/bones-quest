@@ -73,7 +73,7 @@ where
     }
 
     fn set_blend_mode(&mut self, mode: Option<BlendMode>) {
-        if let &mut Some(ref mut drawable) = self.cache.get_mut() {
+        if let Some(ref mut drawable) = *self.cache.get_mut() {
             drawable.set_blend_mode(mode);
         }
     }

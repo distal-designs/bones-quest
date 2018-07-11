@@ -8,7 +8,7 @@ use ggez::{self, GameResult};
 use engine::draw_cache::DrawCache;
 use engine::input::Input;
 use engine::ui::{Background, BackgroundCache, Character, Dialog, DialogCache, Portrait};
-use engine::visual_novel::command::{BackgroundCommand, Command, PortraitCommand};
+use engine::visual_novel::command::{self, Command};
 use engine::{self, color};
 
 pub struct VisualNovel {
@@ -25,9 +25,9 @@ impl VisualNovel {
         let commands = &mut self.commands;
         let command = &mut commands[self.command_index];
 
-        VisualNovel::apply_characters(&mut self.characters, command);
-        VisualNovel::apply_dialog(&mut self.dialog, command);
-        VisualNovel::apply_background(&mut self.background, command);
+        Self::apply_characters(&mut self.characters, command);
+        Self::apply_dialog(&mut self.dialog, command);
+        Self::apply_background(&mut self.background, command);
     }
 
     fn apply_characters(
@@ -42,7 +42,7 @@ impl VisualNovel {
                     DrawCache::new(Character {
                         name: name.clone(),
                         direction: position.direction.clone(),
-                        position: position.position.clone(),
+                        position: position.position,
                     }),
                 );
             }
@@ -54,27 +54,26 @@ impl VisualNovel {
         command: &Command,
     ) {
         match &command.background {
-            Some(BackgroundCommand::Hide) => {
+            Some(command::Background::Hide) => {
                 mem::replace(background, None);
             }
-            Some(BackgroundCommand::Color(hex)) => {
+            Some(command::Background::Color(hex)) => {
                 let new_bg = DrawCache::new(Background::Color(color::from_hex(&hex)));
                 mem::replace(background, Some(new_bg));
             }
-            Some(BackgroundCommand::Image(_)) => unimplemented!(),
+            Some(command::Background::Image(_)) => unimplemented!(),
             None => {}
         };
     }
 
     fn apply_dialog(dialog: &mut Option<DrawCache<Dialog, DialogCache>>, command: &Command) {
         let portrait = match (&dialog, &command.portrait) {
-            (_, Some(PortraitCommand::Show(character, style))) => Some(Portrait {
+            (_, Some(command::Portrait::Show(character, style))) => Some(Portrait {
                 character: character.clone(),
                 style: style.clone(),
             }),
             (Some(dialog_draw_cache), None) => dialog_draw_cache.as_ref().portrait.clone(),
-            (_, Some(PortraitCommand::Hide)) => None,
-            (None, None) => None,
+            (_, Some(command::Portrait::Hide)) | (None, None) => None,
         };
         let text = command.text.clone();
         mem::replace(dialog, Some(DrawCache::new(Dialog { text, portrait })));
@@ -122,7 +121,7 @@ impl<F> engine::scene::Scene<Input, F> for VisualNovel {
                     DrawParam {
                         dest: Point2::new(0.0, 0.0),
                         color: Some(*color),
-                        ..Default::default()
+                        ..DrawParam::default()
                     },
                 )?,
             }
@@ -131,14 +130,14 @@ impl<F> engine::scene::Scene<Input, F> for VisualNovel {
             dialog.draw_ex(ctx, DrawParam::default())?;
         }
         let screen_width = ctx.conf.window_mode.width;
-        for (_, draw_cache) in &self.characters {
+        for draw_cache in self.characters.values() {
             let position = draw_cache.as_ref().position;
             let x = engine::ui::to_window_position(screen_width, position);
             draw_cache.draw_ex(
                 ctx,
                 DrawParam {
                     dest: Point2::new(x, 0.0),
-                    ..Default::default()
+                    ..DrawParam::default()
                 },
             )?;
         }

@@ -1,15 +1,13 @@
 extern crate toml;
 
 use std::collections::HashMap;
-use std::env;
-use std::fs::File;
 use std::io::Read;
 
 use ggez::filesystem::Filesystem;
 
 #[derive(Deserialize, Debug)]
 #[serde(tag = "t", content = "c")]
-pub enum BackgroundCommand {
+pub enum Background {
     Hide,
     Color(String),
     Image(String),
@@ -17,27 +15,27 @@ pub enum BackgroundCommand {
 
 #[derive(Deserialize, Debug)]
 #[serde(tag = "t", content = "c")]
-pub enum PortraitCommand {
+pub enum Portrait {
     Hide,
     Show(String, String),
 }
 
 #[derive(Deserialize, Debug)]
-pub struct PositionCommand {
+pub struct Position {
     pub direction: String,
     pub position: i8,
 }
 
 #[derive(Deserialize, Debug)]
 pub struct Command {
-    pub background: Option<BackgroundCommand>,
-    pub portrait: Option<PortraitCommand>,
+    pub background: Option<Background>,
+    pub portrait: Option<Portrait>,
     pub text: String,
-    pub positions: Option<HashMap<String, PositionCommand>>,
+    pub positions: Option<HashMap<String, Position>>,
 }
 
 impl Command {
-    fn parse(toml: &str) -> Result<Vec<Command>, toml::de::Error> {
+    fn parse(toml: &str) -> Result<Vec<Self>, toml::de::Error> {
         #[derive(Deserialize)]
         struct Commands {
             command: Vec<Command>,
@@ -46,11 +44,11 @@ impl Command {
         toml::from_str::<Commands>(toml).map(|commands| commands.command)
     }
 
-    pub fn load(fs: &mut Filesystem, path: &str) -> Result<Vec<Command>, toml::de::Error> {
+    pub fn load(fs: &mut Filesystem, path: &str) -> Result<Vec<Self>, toml::de::Error> {
         let mut f = fs.open(path).unwrap();
         let mut toml = String::new();
         f.read_to_string(&mut toml).unwrap();
 
-        Command::parse(&toml)
+        Self::parse(&toml)
     }
 }
