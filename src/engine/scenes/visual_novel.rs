@@ -18,6 +18,7 @@ pub struct VisualNovel {
     background: Option<DrawCache<Background, BackgroundCache>>,
     status: Status,
     characters: HashMap<String, DrawCache<Character, Image>>,
+    menu: Option<HashMap<String, String>>,
 }
 
 impl VisualNovel {
@@ -25,6 +26,7 @@ impl VisualNovel {
         let commands = &mut self.commands;
         let command = &mut commands[self.command_index];
 
+        self.menu = command.menu.clone();
         Self::apply_characters(&mut self.characters, command);
         Self::apply_dialog(&mut self.dialog, command);
         Self::apply_background(&mut self.background, command);
@@ -87,6 +89,7 @@ impl VisualNovel {
             dialog: None,
             background: None,
             characters: HashMap::new(),
+            menu: None,
         }
     }
 }

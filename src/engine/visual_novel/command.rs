@@ -32,6 +32,7 @@ pub struct Command {
     pub portrait: Option<Portrait>,
     pub text: String,
     pub positions: Option<HashMap<String, Position>>,
+    pub menu: Option<HashMap<String, String>>,
 }
 
 impl Command {
