@@ -1,4 +1,6 @@
-# Bones Quest [ ![Codeship Status for distal-designs/bones-quest](https://app.codeship.com/projects/17cf20a0-68f1-0136-a566-320625a88350/status?branch=develop)](https://app.codeship.com/projects/297951)
+[ ![Codeship Status for distal-designs/bones-quest](https://app.codeship.com/projects/17cf20a0-68f1-0136-a566-320625a88350/status?branch=develop)](https://app.codeship.com/projects/297951)
+
+# Bones Quest
 
 ## Setup
 
