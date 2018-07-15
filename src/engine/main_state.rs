@@ -7,11 +7,13 @@ use super::flags::Flags;
 use super::input::Input;
 use engine::scene_stack::SceneStack;
 
+
 pub struct MainState {
     flags: Flags,
     input: Input,
     pub scenes: Box<SceneStack<Input, Flags>>,
 }
+
 
 impl MainState {
     pub fn new() -> Self {
@@ -23,12 +25,14 @@ impl MainState {
     }
 }
 
+
 impl event::EventHandler for MainState {
     fn update(&mut self, _: &mut Context) -> GameResult<()> {
         self.input.finalize();
         self.scenes.update(&self.input, &mut self.flags)?;
         Ok(())
     }
+
 
     fn draw(&mut self, ctx: &mut Context) -> GameResult<()> {
         graphics::clear(ctx);
@@ -41,9 +45,11 @@ impl event::EventHandler for MainState {
         Ok(())
     }
 
+
     fn key_down_event(&mut self, _: &mut Context, keycode: Keycode, _: Mod, _: bool) {
         self.input.add_input(keycode);
     }
+
 
     fn key_up_event(&mut self, _: &mut Context, keycode: Keycode, _: Mod, _: bool) {
         self.input.remove_input(keycode);

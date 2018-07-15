@@ -1,9 +1,11 @@
 extern crate toml;
 
+
 use std::collections::HashMap;
 use std::io::Read;
 
 use ggez::filesystem::Filesystem;
+
 
 #[derive(Deserialize, Debug)]
 #[serde(tag = "t", content = "c")]
@@ -13,6 +15,7 @@ pub enum Background {
     Image(String),
 }
 
+
 #[derive(Deserialize, Debug)]
 #[serde(tag = "t", content = "c")]
 pub enum Portrait {
@@ -20,11 +23,13 @@ pub enum Portrait {
     Show(String, String),
 }
 
+
 #[derive(Deserialize, Debug)]
 pub struct Position {
     pub direction: String,
     pub position: i8,
 }
+
 
 #[derive(Deserialize, Debug)]
 pub struct Command {
@@ -35,6 +40,7 @@ pub struct Command {
     pub menu: Option<HashMap<String, String>>,
 }
 
+
 impl Command {
     fn parse(toml: &str) -> Result<Vec<Self>, toml::de::Error> {
         #[derive(Deserialize)]
@@ -44,6 +50,7 @@ impl Command {
 
         toml::from_str::<Commands>(toml).map(|commands| commands.command)
     }
+
 
     pub fn load(fs: &mut Filesystem, path: &str) -> Result<Vec<Self>, toml::de::Error> {
         let mut f = fs.open(path).unwrap();

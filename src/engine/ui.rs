@@ -5,10 +5,12 @@ use ggez::{Context, GameResult};
 
 use super::draw_cache::TryIntoDrawable;
 
+
 pub struct Dialog {
     pub text: String,
     pub portrait: Option<Portrait>,
 }
+
 
 pub struct DialogCache {
     text_cache: Vec<Text>,
@@ -18,17 +20,20 @@ pub struct DialogCache {
     name_box: Option<Mesh>,
 }
 
+
 #[derive(Clone)]
 pub struct Portrait {
     pub character: String,
     pub style: String,
 }
 
+
 pub struct Character {
     pub name: String,
     pub direction: String,
     pub position: i8,
 }
+
 
 impl TryIntoDrawable<Image> for Character {
     fn try_into_drawable(&self, ctx: &mut Context) -> GameResult<Image> {
@@ -39,7 +44,8 @@ impl TryIntoDrawable<Image> for Character {
 impl TryIntoDrawable<DialogCache> for Dialog {
     fn try_into_drawable(&self, ctx: &mut Context) -> GameResult<DialogCache> {
         let font = ctx.default_font.clone();
-        let text_cache = font.get_wrap(&self.text, Self::bounds(ctx).w as usize)
+        let text_cache = font
+            .get_wrap(&self.text, Self::bounds(ctx).w as usize)
             .1
             .iter()
             .map(|line| Text::new(ctx, &line, &font).unwrap())
@@ -94,6 +100,7 @@ impl TryIntoDrawable<DialogCache> for Dialog {
     }
 }
 
+
 impl Drawable for DialogCache {
     fn draw_ex(&self, ctx: &mut Context, _param: DrawParam) -> GameResult<()> {
         let bounds = Dialog::bounds(ctx);
@@ -138,11 +145,13 @@ impl Drawable for DialogCache {
         Ok(())
     }
 
+
     fn set_blend_mode(&mut self, mode: Option<graphics::BlendMode>) {
         for text in &mut self.text_cache {
             text.set_blend_mode(mode);
         }
     }
+
 
     fn get_blend_mode(&self) -> Option<graphics::BlendMode> {
         self.text_cache
@@ -150,6 +159,7 @@ impl Drawable for DialogCache {
             .and_then(|text| text.get_blend_mode())
     }
 }
+
 
 impl Dialog {
     fn bounds(ctx: &Context) -> Rect {
@@ -164,9 +174,11 @@ impl Dialog {
     }
 }
 
+
 pub enum Background {
     Color(graphics::Color),
 }
+
 
 impl TryIntoDrawable<BackgroundCache> for Background {
     fn try_into_drawable(&self, ctx: &mut Context) -> GameResult<BackgroundCache> {
@@ -183,9 +195,11 @@ impl TryIntoDrawable<BackgroundCache> for Background {
     }
 }
 
+
 pub enum BackgroundCache {
     Mesh(graphics::Mesh),
 }
+
 
 impl Drawable for BackgroundCache {
     fn draw_ex(&self, ctx: &mut Context, mode: DrawParam) -> GameResult<()> {
@@ -194,11 +208,13 @@ impl Drawable for BackgroundCache {
         }
     }
 
+
     fn set_blend_mode(&mut self, mode: Option<BlendMode>) {
         match *self {
             BackgroundCache::Mesh(ref mut mesh) => mesh.set_blend_mode(mode),
         }
     }
+
 
     fn get_blend_mode(&self) -> Option<BlendMode> {
         match *self {
@@ -206,6 +222,7 @@ impl Drawable for BackgroundCache {
         }
     }
 }
+
 
 pub fn to_window_position(width: u32, position: i8) -> f32 {
     let position = f32::from(position);
@@ -216,9 +233,11 @@ pub fn to_window_position(width: u32, position: i8) -> f32 {
     half + shift
 }
 
+
 #[cfg(test)]
 mod tests {
     use super::*;
+
 
     #[test]
     fn test_to_window_position() {

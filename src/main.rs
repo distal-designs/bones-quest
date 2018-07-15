@@ -4,7 +4,9 @@ extern crate regex;
 #[macro_use]
 extern crate serde_derive;
 
+
 mod engine;
+
 
 use std::env;
 use std::path;
@@ -14,6 +16,7 @@ use ggez::{conf, event, Context};
 use engine::main_state::MainState;
 use engine::scenes::visual_novel::VisualNovel;
 use engine::visual_novel::command::Command;
+
 
 fn main() {
     let mut c = conf::Conf::default();
