@@ -11,6 +11,7 @@ use engine::ui::{Background, BackgroundCache, Character, Dialog, DialogCache, Po
 use engine::visual_novel::command::{self, Command};
 use engine::{self, color};
 
+
 pub struct VisualNovel {
     commands: Vec<Command>,
     command_index: usize,
@@ -20,6 +21,7 @@ pub struct VisualNovel {
     characters: HashMap<String, DrawCache<Character, Image>>,
     menu: Option<HashMap<String, String>>,
 }
+
 
 impl VisualNovel {
     fn apply(&mut self) {
@@ -31,6 +33,7 @@ impl VisualNovel {
         Self::apply_dialog(&mut self.dialog, command);
         Self::apply_background(&mut self.background, command);
     }
+
 
     fn apply_characters(
         characters: &mut HashMap<String, DrawCache<Character, Image>>,
@@ -51,6 +54,7 @@ impl VisualNovel {
         }
     }
 
+
     fn apply_background(
         background: &mut Option<DrawCache<Background, BackgroundCache>>,
         command: &Command,
@@ -68,6 +72,7 @@ impl VisualNovel {
         };
     }
 
+
     fn apply_dialog(dialog: &mut Option<DrawCache<Dialog, DialogCache>>, command: &Command) {
         let portrait = match (&dialog, &command.portrait) {
             (_, Some(command::Portrait::Show(character, style))) => Some(Portrait {
@@ -81,6 +86,7 @@ impl VisualNovel {
         mem::replace(dialog, Some(DrawCache::new(Dialog { text, portrait })));
     }
 
+
     pub fn new(commands: Vec<Command>) -> Self {
         Self {
             commands,
@@ -93,6 +99,7 @@ impl VisualNovel {
         }
     }
 }
+
 
 impl<F> engine::scene::Scene<Input, F> for VisualNovel {
     fn update(&mut self, input: &Input, _: &mut F) -> GameResult<()> {
@@ -115,6 +122,7 @@ impl<F> engine::scene::Scene<Input, F> for VisualNovel {
         }
         Ok(())
     }
+
 
     fn draw(&self, _: &F, ctx: &mut ggez::Context) -> GameResult<()> {
         if let Some(ref bg) = self.background {
@@ -147,6 +155,7 @@ impl<F> engine::scene::Scene<Input, F> for VisualNovel {
         Ok(())
     }
 }
+
 
 pub enum Status {
     CommandsApplied,

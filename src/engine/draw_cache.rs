@@ -2,8 +2,10 @@ use std::cell::RefCell;
 use std::fmt;
 
 use ggez::{
-    graphics::{BlendMode, DrawParam, Drawable}, Context, GameResult,
+    graphics::{BlendMode, DrawParam, Drawable},
+    Context, GameResult,
 };
+
 
 pub trait TryIntoDrawable<T>
 where
@@ -11,6 +13,7 @@ where
 {
     fn try_into_drawable(&self, ctx: &mut Context) -> GameResult<T>;
 }
+
 
 pub struct DrawCache<T, U>
 where
@@ -20,6 +23,7 @@ where
     data: T,
     cache: RefCell<Option<U>>,
 }
+
 
 impl<T, U> DrawCache<T, U>
 where
@@ -34,6 +38,7 @@ where
     }
 }
 
+
 impl<T, U> AsRef<T> for DrawCache<T, U>
 where
     T: TryIntoDrawable<U>,
@@ -44,6 +49,7 @@ where
     }
 }
 
+
 impl<T, U> fmt::Debug for DrawCache<T, U>
 where
     T: TryIntoDrawable<U> + fmt::Debug,
@@ -53,6 +59,7 @@ where
         write!(f, "{:?}", self.data)
     }
 }
+
 
 impl<T, U> Drawable for DrawCache<T, U>
 where
@@ -72,11 +79,13 @@ where
             .draw_ex(ctx, param)
     }
 
+
     fn set_blend_mode(&mut self, mode: Option<BlendMode>) {
         if let Some(ref mut drawable) = *self.cache.get_mut() {
             drawable.set_blend_mode(mode);
         }
     }
+
 
     fn get_blend_mode(&self) -> Option<BlendMode> {
         match *self.cache.borrow() {
