@@ -1,4 +1,5 @@
 [[command]]
+  id = "blood-begin"
   text = "THIS IS A STORY OF A DAY WHERE THERE WAS ALL THIS BLOOD."
   [command.menu]
     "I don't expect anyone to kill me" = "GET_KILLED"
@@ -14,6 +15,7 @@
     Dio = { direction = 'R', position = 70 }
 
 [[command]]
+  id = "blood-second"
   text = "A MAN WAS WALKING AROUND AND BLOOD STARTED COMING OUT OF HIM EVERYWHERE."
 
 [[command]]
@@ -38,4 +40,5 @@
   text = "AT THE END OF THE DAY EVERYONE DECIDED THEY WOULD SEND HIM TO SPACE SO THAT HE WOULD STOP GETTING BLOOD EVERY WHERE."
 
 [[command]]
+  id = "blood-end"
   text = "THE SCARIEST PART IS THAT THE MAN WAS YOU!!! (OR HE WAS A LADY IF YOU ARE A LADY) AND YOU FORGOT THAT THIS HAPPENED."

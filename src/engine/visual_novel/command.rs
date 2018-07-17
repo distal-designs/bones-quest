@@ -36,6 +36,7 @@ pub struct Command {
     pub background: Option<Background>,
     pub portrait: Option<Portrait>,
     pub text: String,
+    pub id: Option<String>,
     pub positions: Option<HashMap<String, Position>>,
     pub menu: Option<HashMap<String, String>>,
 }
@@ -48,7 +49,9 @@ impl Command {
             command: Vec<Command>,
         }
 
-        toml::from_str::<Commands>(toml).map(|commands| commands.command)
+        let t = toml::from_str::<Commands>(toml).map(|commands| commands.command);
+        println!("{:#?}", t);
+        t
     }
 
 
