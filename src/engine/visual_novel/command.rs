@@ -36,6 +36,7 @@ pub struct Command {
     pub background: Option<Background>,
     pub portrait: Option<Portrait>,
     pub text: String,
+    pub id: Option<String>,
     pub positions: Option<HashMap<String, Position>>,
     pub menu: Option<HashMap<String, String>>,
 }
