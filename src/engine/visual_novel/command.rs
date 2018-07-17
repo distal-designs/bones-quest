@@ -49,9 +49,7 @@ impl Command {
             command: Vec<Command>,
         }
 
-        let t = toml::from_str::<Commands>(toml).map(|commands| commands.command);
-        println!("{:#?}", t);
-        t
+        toml::from_str::<Commands>(toml).map(|commands| commands.command)
     }
 
 
