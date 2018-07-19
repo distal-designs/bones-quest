@@ -24,14 +24,15 @@ pub struct VisualNovel {
 
 
 impl VisualNovel {
-    fn jump(&mut self, target: &str) {
+    fn jump(&mut self, target: &str) -> usize {
         let pred = |c: &Command| c.id == Some(target.to_string());
-        self.command_index = self
+        let new_index = self
             .commands
             .iter()
             .position(pred)
             .expect(&format!("ID does not exist: {}", target));
         self.status = Status::PendingCommands;
+        return new_index;
     }
 
 
