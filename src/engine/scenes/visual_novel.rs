@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use std::mem;
 
-use ggez::event::Keycode::{Left, Right};
+use ggez::event::Keycode::{Left, Num1, Num2, Num3, Right};
 use ggez::graphics::{DrawParam, Drawable, Image, Point2};
 use ggez::{self, GameResult};
 
@@ -24,6 +24,18 @@ pub struct VisualNovel {
 
 
 impl VisualNovel {
+    fn jump(&mut self, target: &str) -> usize {
+        let pred = |c: &Command| c.id == Some(target.to_string());
+        let new_index = self
+            .commands
+            .iter()
+            .position(pred)
+            .expect(&format!("ID does not exist: {}", target));
+        self.status = Status::PendingCommands;
+        return new_index;
+    }
+
+
     fn apply(&mut self) {
         let commands = &mut self.commands;
         let command = &mut commands[self.command_index];
@@ -113,6 +125,9 @@ impl<F> engine::scene::Scene<Input, F> for VisualNovel {
                     self.status = Status::PendingCommands;
                     x + 1
                 }
+                (Num1, _) => Self::jump(self, "blood-begin"),
+                (Num2, _) => Self::jump(self, "blood-second"),
+                (Num3, _) => Self::jump(self, "blood-end"),
                 (_, x) => x,
             }
         }
