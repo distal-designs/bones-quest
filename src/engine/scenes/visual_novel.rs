@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use std::mem;
 
-use ggez::event::Keycode::{Left, Right};
+use ggez::event::Keycode::{Left, Num1, Num2, Num3, Right};
 use ggez::graphics::{DrawParam, Drawable, Image, Point2};
 use ggez::{self, GameResult};
 
@@ -125,6 +125,9 @@ impl<F> engine::scene::Scene<Input, F> for VisualNovel {
                     self.status = Status::PendingCommands;
                     x + 1
                 }
+                (Num1, _) => Self::jump(self, "blood-begin"),
+                (Num2, _) => Self::jump(self, "blood-second"),
+                (Num3, _) => Self::jump(self, "blood-end"),
                 (_, x) => x,
             }
         }
