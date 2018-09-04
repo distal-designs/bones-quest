@@ -6,7 +6,7 @@ publish = false
 
 [dependencies]
 ggez = "0.4.4"
-toml = "0.4.5"
+toml = "0.4.6"
 serde_derive = "1.0.33"
 serde = "1.0.33"
 regex = "0.2.10"
