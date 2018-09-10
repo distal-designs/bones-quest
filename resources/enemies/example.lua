@@ -18,7 +18,7 @@ return {
         right = false,
         duck = false,
         stand = false,
-      }
+      },
       on_hitting_player = "IDLE",
       on_getting_hit = "IDLE",
       on_block = "IDLE",
