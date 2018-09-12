@@ -3,6 +3,7 @@ use std::collections::HashMap;
 use rlua;
 
 
+#[derive(Debug)]
 pub enum MainCharacter {
     Bones,
     Beat,
@@ -10,6 +11,7 @@ pub enum MainCharacter {
 }
 
 
+#[derive(Debug)]
 pub enum Vulnerability {
     Block,
     Hit,
@@ -17,6 +19,7 @@ pub enum Vulnerability {
 }
 
 
+#[derive(Debug)]
 pub struct EnemyStateVulnerability {
     left: Vulnerability,
     right: Vulnerability,
@@ -24,6 +27,7 @@ pub struct EnemyStateVulnerability {
 }
 
 
+#[derive(Debug)]
 pub enum Hitzone {
     Left,
     Right,
@@ -32,6 +36,7 @@ pub enum Hitzone {
 }
 
 
+#[derive(Debug)]
 pub struct EnemyHitzones {
     left: Hitzone,
     right: Hitzone,
@@ -40,12 +45,14 @@ pub struct EnemyHitzones {
 }
 
 
+#[derive(Debug)]
 pub enum EnemyStateTransition<'lua> {
     Static(String),
     Dynamic(rlua::Function<'lua>),
 }
 
 
+#[derive(Debug)]
 pub struct EnemyStateDefinition<'lua> {
     frames: u8,
     vulnerability: EnemyStateVulnerability,
@@ -57,6 +64,7 @@ pub struct EnemyStateDefinition<'lua> {
 }
 
 
+#[derive(Debug)]
 pub struct EnemyDefinition<'lua> {
     name: String,
     id: String,
