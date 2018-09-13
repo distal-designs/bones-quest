@@ -8,9 +8,6 @@ extern crate serde_derive;
 mod engine;
 
 
-use std::env;
-use std::path;
-
 use ggez::{conf, event, Context};
 
 use engine::main_state::MainState;
