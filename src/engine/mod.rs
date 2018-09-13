@@ -2,6 +2,7 @@ pub mod color;
 pub mod draw_cache;
 pub mod flags;
 pub mod input;
+pub mod lua;
 pub mod main_state;
 pub mod punch;
 pub mod scene;
