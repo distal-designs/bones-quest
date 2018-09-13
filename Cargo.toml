@@ -5,7 +5,7 @@ authors = ["Nicholas Farley <nicholasafarley@gmail.com>", "Eric Bronner <erbronn
 publish = false
 
 [dependencies]
-ggez = "0.4.4"
+ggez = { version = "0.4.4", features = ["cargo-resource-root"] }
 toml = "0.4.6"
 serde_derive = "1.0.76"
 serde = "1.0.76"
