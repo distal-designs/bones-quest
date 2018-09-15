@@ -54,10 +54,10 @@ pub enum Hitzone {
 
 #[derive(Clone, Debug)]
 pub struct EnemyHitzones {
-    left: Hitzone,
-    right: Hitzone,
-    duck: Hitzone,
-    stand: Hitzone,
+    left: bool,
+    right: bool,
+    duck: bool,
+    stand: bool,
 }
 
 
