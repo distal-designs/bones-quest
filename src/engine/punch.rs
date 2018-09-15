@@ -4,8 +4,11 @@ use rlua::{self, FromLua, Lua, Table, Value};
 
 #[derive(Clone, Debug, EnumString)]
 pub enum MainCharacter {
+    #[strum(serialize="BONES")]
     Bones,
+    #[strum(serialize="BEAT")]
     Beat,
+    #[strum(serialize="CATTLEBONES")]
     Cattlebones,
 }
 
