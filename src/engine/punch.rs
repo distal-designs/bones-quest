@@ -1,36 +1,22 @@
 use std::collections::HashMap;
-use std::str::FromStr;
 
 use rlua::{self, FromLua, Lua, Table, Value};
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, EnumString)]
 pub enum MainCharacter {
     Bones,
     Beat,
     Cattlebones,
 }
 
-impl FromStr for MainCharacter {
-    type Err = &'static str;
-
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        match s.as_ref() {
-            "BONES" => Ok(MainCharacter::Bones),
-            "BEAT" => Ok(MainCharacter::Beat),
-            "CATTLEBONES" => Ok(MainCharacter::Cattlebones),
-            x => Err(&format!("'{}' is not a valid main character", x)),
-        }
-    }
-}
-
 impl<'lua> FromLua<'lua> for MainCharacter {
     fn from_lua(value: Value, lua: &'lua Lua) -> rlua::Result<Self> {
         let s: String = lua.unpack(value)?;
         s.parse::<MainCharacter>()
-            .map_err(|message| rlua::Error::FromLuaConversionError {
+            .map_err(|_| rlua::Error::FromLuaConversionError {
                 from: "String",
                 to: "MainCharacter",
-                message: Some(message.to_owned()),
+                message: None,
             })
     }
 }
