@@ -82,3 +82,16 @@ pub struct EnemyDefinition<'lua> {
     default_state: String,
     states: HashMap<String, EnemyStateDefinition<'lua>>,
 }
+
+impl<'lua> FromLua<'lua> for EnemyDefinition<'lua> {
+    fn from_lua(value: Value, lua: &'lua Lua) -> rlua::Result<Self> {
+        let root: Table = lua.unpack(value)?;
+        Ok(EnemyDefinition {
+            name: root.get("name")?,
+            id: root.get("id")?,
+            default_state: root.get("default_state")?,
+            fights: root.get("fights")?,
+            states: HashMap::new(),
+        })
+    }
+}
