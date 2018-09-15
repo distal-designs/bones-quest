@@ -19,6 +19,7 @@ use engine::main_state::MainState;
 use engine::scenes::visual_novel::VisualNovel;
 use engine::visual_novel::command::Command;
 use engine::lua::LuaExt;
+use engine::punch::EnemyDefinition;
 
 
 fn main() {
@@ -34,12 +35,9 @@ fn main() {
         .read_to_string(&mut script)
         .unwrap();
     let script = r#"
-    local enemy = require 'resources.enemies.example'
-    for i,v in pairs(enemy) do
-      print(i,v)
-    end
+        return require 'resources.enemies.example'
     "#;
-    lua.eval::<rlua::Value>(&script, None).unwrap();
+    println!("{:?}", lua.eval::<EnemyDefinition>(&script, None).unwrap());
 
     let state = &mut MainState::new();
     let dialog = Command::load(&mut ctx.filesystem, "/dialogs/blood.toml").unwrap();
