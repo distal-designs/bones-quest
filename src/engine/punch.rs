@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::str::FromStr;
 
 use rlua;
 
@@ -10,6 +11,18 @@ pub enum MainCharacter {
     Cattlebones,
 }
 
+impl FromStr for MainCharacter {
+    type Err = &'static str;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s.as_ref() {
+            "BONES" => Ok(MainCharacter::Bones),
+            "BEAT" => Ok(MainCharacter::Beat),
+            "CATTLEBONES" => Ok(MainCharacter::Cattlebones),
+            x => Err(&format!("'{}' is not a valid main character", x)),
+        }
+    }
+}
 
 #[derive(Clone, Debug)]
 pub enum Vulnerability {
