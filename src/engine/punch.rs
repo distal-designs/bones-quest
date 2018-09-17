@@ -13,7 +13,7 @@ pub enum MainCharacter {
 }
 
 impl<'lua> FromLua<'lua> for MainCharacter {
-    fn from_lua(value: Value, lua: &'lua Lua) -> rlua::Result<Self> {
+    fn from_lua(value: Value, lua: &Lua) -> rlua::Result<Self> {
         let s: String = lua.unpack(value)?;
         s.parse::<MainCharacter>()
             .map_err(|_| rlua::Error::FromLuaConversionError {
@@ -90,7 +90,7 @@ pub struct EnemyDefinition<'lua> {
 }
 
 impl<'lua> FromLua<'lua> for EnemyDefinition<'lua> {
-    fn from_lua(value: Value, lua: &'lua Lua) -> rlua::Result<Self> {
+    fn from_lua(value: Value<'lua>, lua: &'lua Lua) -> rlua::Result<Self> {
         let root: Table = lua.unpack(value)?;
         Ok(EnemyDefinition {
             name: root.get("name")?,
