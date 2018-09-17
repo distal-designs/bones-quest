@@ -11,8 +11,6 @@ extern crate serde_derive;
 mod engine;
 
 
-use std::io::Read;
-
 use ggez::{conf, event, Context};
 
 use engine::main_state::MainState;
@@ -28,12 +26,6 @@ fn main() {
     let ctx = &mut Context::load_from_conf("bones-quest", "distal-designs", c).unwrap();
 
     let lua = rlua::Lua::new_with_path();
-    let mut script = String::new();
-    ctx.filesystem
-        .open("/enemies/example.lua")
-        .unwrap()
-        .read_to_string(&mut script)
-        .unwrap();
     let script = "return require 'resources.enemies.example'";
     println!("{:#?}", lua.eval::<EnemyDefinition>(&script, None).unwrap());
 
