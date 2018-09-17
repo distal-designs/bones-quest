@@ -55,6 +55,17 @@ pub struct EnemyStateVulnerability {
     parry: bool,
 }
 
+impl<'lua> FromLua<'lua> for EnemyStateVulnerability {
+    fn from_lua(value: Value, lua: &Lua) -> rlua::Result<Self> {
+        let t: Table = lua.unpack(value)?;
+        Ok(EnemyStateVulnerability {
+            left: t.get("left")?,
+            right: t.get("right")?,
+            parry: t.get("parry")?,
+        })
+    }
+}
+
 
 #[derive(Clone, Debug)]
 pub enum Hitzone {
