@@ -24,6 +24,7 @@ impl<'lua> FromLua<'lua> for MainCharacter {
     }
 }
 
+
 #[derive(Clone, Debug, EnumString)]
 pub enum Vulnerability {
     #[strum(serialize="BLOCK")]
