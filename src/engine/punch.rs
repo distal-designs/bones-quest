@@ -163,7 +163,7 @@ impl<'lua> FromLua<'lua> for EnemyDefinition<'lua> {
             id: root.get("id")?,
             default_state: root.get("default_state")?,
             fights: root.get("fights")?,
-            states: HashMap::new(),
+            states: root.get("states")?,
         })
     }
 }
