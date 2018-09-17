@@ -34,10 +34,8 @@ fn main() {
         .unwrap()
         .read_to_string(&mut script)
         .unwrap();
-    let script = r#"
-        return require 'resources.enemies.example'
-    "#;
-    println!("{:?}", lua.eval::<EnemyDefinition>(&script, None).unwrap());
+    let script = "return require 'resources.enemies.example'";
+    println!("{:#?}", lua.eval::<EnemyDefinition>(&script, None).unwrap());
 
     let state = &mut MainState::new();
     let dialog = Command::load(&mut ctx.filesystem, "/dialogs/blood.toml").unwrap();
