@@ -130,6 +130,21 @@ pub struct EnemyStateDefinition<'lua> {
     on_end: EnemyStateTransition<'lua>
 }
 
+impl<'lua> FromLua<'lua> for EnemyStateDefinition<'lua> {
+    fn from_lua(value: Value<'lua>, lua: &'lua Lua) -> rlua::Result<Self> {
+        let state: Table = lua.unpack(value)?;
+        Ok(EnemyStateDefinition {
+            frames: state.get("frames")?,
+            vulnerability: state.get("vulnerability")?,
+            hitzones: state.get("hitzones")?,
+            on_hitting_player: state.get("on_hitting_player")?,
+            on_getting_hit: state.get("on_getting_hit")?,
+            on_block: state.get("on_block")?,
+            on_end: state.get("on_end")?,
+        })
+    }
+}
+
 
 #[derive(Clone, Debug)]
 pub struct EnemyDefinition<'lua> {
