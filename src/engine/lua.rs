@@ -14,6 +14,7 @@ impl LuaExt for Lua {
         let script = format!("package.path = '{}/?.lua;' .. package.path", manifest_dir);
         let lua = Lua::new();
         lua.eval::<Value>(&script, Some(&"package.path Initialization")).unwrap();
+        lua.eval::<Value>(&"math.randomseed(os.time())", None).unwrap();
         lua
     }
 }
