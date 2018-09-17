@@ -84,6 +84,18 @@ pub struct EnemyHitzones {
     stand: bool,
 }
 
+impl<'lua> FromLua<'lua> for EnemyHitzones {
+    fn from_lua(value: Value, lua: &Lua) -> rlua::Result<Self> {
+        let t: Table = lua.unpack(value)?;
+        Ok(EnemyHitzones {
+            left: t.get("left")?,
+            right: t.get("right")?,
+            duck: t.get("duck")?,
+            stand: t.get("stand")?,
+        })
+    }
+}
+
 
 #[derive(Clone, Debug)]
 pub enum EnemyStateTransition<'lua> {
