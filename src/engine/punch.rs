@@ -103,6 +103,21 @@ pub enum EnemyStateTransition<'lua> {
     Dynamic(rlua::Function<'lua>),
 }
 
+impl<'lua> FromLua<'lua> for EnemyStateTransition<'lua> {
+    fn from_lua(value: Value<'lua>, _lua: &'lua Lua) -> rlua::Result<Self> {
+        match value {
+            rlua::Value::Function(func) => Ok(EnemyStateTransition::Dynamic(func)),
+            rlua::Value::String(s) =>
+                Ok(EnemyStateTransition::Static(s.to_str()?.to_owned())),
+            _ => Err(rlua::Error::FromLuaConversionError {
+                from: "Function or String",
+                to: "EnemyStateTransition",
+                message: None,
+            }),
+        }
+    }
+}
+
 
 #[derive(Clone, Debug)]
 pub struct EnemyStateDefinition<'lua> {
