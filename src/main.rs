@@ -17,7 +17,7 @@ use engine::main_state::MainState;
 use engine::scenes::visual_novel::VisualNovel;
 use engine::visual_novel::command::Command;
 use engine::lua::LuaExt;
-use engine::punch::EnemyDefinition;
+use engine::punch::scripting::EnemyDefinition;
 
 
 fn main() {
