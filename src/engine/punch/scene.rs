@@ -1,6 +1,7 @@
 use ggez::{self, GameResult};
 use rlua::Lua;
 
+use super::scripting::EnemyDefinition;
 use engine;
 use engine::lua::LuaExt;
 
@@ -18,6 +19,13 @@ impl Scene {
             enemy_id: enemy_id.to_owned(),
         }
     }
+
+
+    fn enemy_definition(&self) -> EnemyDefinition {
+        let loader = format!("return require 'resources.enemies.{}'", self.enemy_id);
+        self.lua.exec(&loader, Some("Loading enemy definition")).unwrap()
+    }
+}
 
 
 impl<I, F> engine::scene::Scene<I, F> for Scene {
