@@ -1,9 +1,14 @@
 use ggez::{self, GameResult};
+use rlua::Lua;
 
 use engine;
+use super::scripting::EnemyDefinition;
 
 
-pub struct Scene;
+pub struct Scene {
+    lua: Lua,
+    enemy_id: String,
+}
 
 
 impl<I, F> engine::scene::Scene<I, F> for Scene {
