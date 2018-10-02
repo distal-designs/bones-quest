@@ -13,7 +13,7 @@ pub struct Scene {
 
 
 impl Scene {
-    fn new(enemy_id: &str) -> Self {
+    pub fn new(enemy_id: &str) -> Self {
         Scene {
             lua: Lua::new_with_path(),
             enemy_id: enemy_id.to_owned(),
