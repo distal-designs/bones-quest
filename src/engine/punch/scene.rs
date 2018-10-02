@@ -2,7 +2,7 @@ use ggez::{self, GameResult};
 use rlua::Lua;
 
 use engine;
-use super::scripting::EnemyDefinition;
+use engine::lua::LuaExt;
 
 
 pub struct Scene {
