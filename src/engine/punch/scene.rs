@@ -27,9 +27,9 @@ impl Scene {
     }
 
 
-    fn enemy_definition(&self) -> EnemyDefinition {
-        let loader = format!("return require 'resources.enemies.{}'", self.enemy_id);
-        self.lua.exec(&loader, Some("Loading enemy definition")).unwrap()
+    fn enemy_definition<'lua>(lua: &'lua Lua, enemy_id: &str) -> EnemyDefinition<'lua> {
+        let loader = format!("return require 'resources.enemies.{}'", enemy_id);
+        lua.exec(&loader, Some("Loading enemy definition")).unwrap()
     }
 }
 
