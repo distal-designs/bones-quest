@@ -6,6 +6,12 @@ use engine;
 use engine::lua::LuaExt;
 
 
+pub struct EnemyState {
+    frame: u8,
+    state: String,
+}
+
+
 pub struct Scene {
     lua: Lua,
     enemy_id: String,
