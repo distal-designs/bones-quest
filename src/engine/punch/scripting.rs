@@ -155,6 +155,13 @@ pub struct EnemyDefinition<'lua> {
     states: HashMap<String, EnemyStateDefinition<'lua>>,
 }
 
+impl<'lua> EnemyDefinition<'lua> {
+    pub fn load(lua: &'lua Lua, enemy_id: &str) -> EnemyDefinition<'lua> {
+        let loader = format!("return require 'resources.enemies.{}'", enemy_id);
+        lua.exec(&loader, Some("Loading enemy definition")).unwrap()
+    }
+}
+
 impl<'lua> FromLua<'lua> for EnemyDefinition<'lua> {
     fn from_lua(value: Value<'lua>, lua: &'lua Lua) -> rlua::Result<Self> {
         let root: Table = lua.unpack(value)?;

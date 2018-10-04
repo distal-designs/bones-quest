@@ -23,18 +23,12 @@ impl Scene {
     pub fn new(enemy_id: &str) -> Self {
         let lua = Lua::new_with_path();
         let enemy_id = enemy_id.to_owned();
-        let state = Self::enemy_definition(&lua, &enemy_id).default_state;
+        let state = EnemyDefinition::load(&lua, &enemy_id).default_state;
         Scene {
             lua: Lua::new_with_path(),
             enemy_id: enemy_id.to_owned(),
             enemy_state: EnemyState { state, frame: 0 }
         }
-    }
-
-
-    fn enemy_definition<'lua>(lua: &'lua Lua, enemy_id: &str) -> EnemyDefinition<'lua> {
-        let loader = format!("return require 'resources.enemies.{}'", enemy_id);
-        lua.exec(&loader, Some("Loading enemy definition")).unwrap()
     }
 }
 
