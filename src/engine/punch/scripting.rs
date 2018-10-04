@@ -151,7 +151,7 @@ pub struct EnemyDefinition<'lua> {
     name: String,
     id: String,
     fights: MainCharacter,
-    default_state: String,
+    pub default_state: String,
     states: HashMap<String, EnemyStateDefinition<'lua>>,
 }
 
