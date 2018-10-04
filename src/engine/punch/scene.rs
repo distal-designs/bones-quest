@@ -15,14 +15,19 @@ pub struct EnemyState {
 pub struct Scene {
     lua: Lua,
     enemy_id: String,
+    enemy_state: EnemyState,
 }
 
 
 impl Scene {
     pub fn new(enemy_id: &str) -> Self {
+        let lua = Lua::new_with_path();
+        let enemy_id = enemy_id.to_owned();
+        let state = Self::enemy_definition(&lua, &enemy_id).default_state;
         Scene {
             lua: Lua::new_with_path(),
             enemy_id: enemy_id.to_owned(),
+            enemy_state: EnemyState { state, frame: 0 }
         }
     }
 
