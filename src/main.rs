@@ -18,6 +18,7 @@ use engine::scenes::visual_novel::VisualNovel;
 use engine::visual_novel::command::Command;
 use engine::lua::LuaExt;
 use engine::punch::scripting::EnemyDefinition;
+use engine::punch::Scene;
 
 
 fn main() {
@@ -25,13 +26,8 @@ fn main() {
     c.window_setup.title = "Bones Quest".to_string();
     let ctx = &mut Context::load_from_conf("bones-quest", "distal-designs", c).unwrap();
 
-    let lua = rlua::Lua::new_with_path();
-    let script = "return require 'resources.enemies.example'";
-    println!("{:#?}", lua.eval::<EnemyDefinition>(&script, None).unwrap());
-
     let state = &mut MainState::new();
-    let dialog = Command::load(&mut ctx.filesystem, "/dialogs/blood.toml").unwrap();
-    let vn = VisualNovel::new(dialog);
-    state.scenes.push(Box::new(vn));
+    let scene = Scene::new("example");
+    state.scenes.push(Box::new(scene));
     event::run(ctx, state).unwrap();
 }
