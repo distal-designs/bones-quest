@@ -148,11 +148,11 @@ impl<'lua> FromLua<'lua> for EnemyStateDefinition<'lua> {
 
 #[derive(Clone, Debug)]
 pub struct EnemyDefinition<'lua> {
-    name: String,
-    id: String,
-    fights: MainCharacter,
+    pub name: String,
+    pub id: String,
+    pub fights: MainCharacter,
     pub default_state: String,
-    states: HashMap<String, EnemyStateDefinition<'lua>>,
+    pub states: HashMap<String, EnemyStateDefinition<'lua>>,
 }
 
 impl<'lua> EnemyDefinition<'lua> {
