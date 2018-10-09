@@ -1,5 +1,6 @@
 use ggez::{self, GameResult};
 use rlua::Lua;
+use rlua::Value::Nil;
 
 use super::scripting::EnemyDefinition;
 use super::scripting::EnemyStateTransition::*;
@@ -43,8 +44,7 @@ impl<I, F> engine::scene::Scene<I, F> for Scene {
             self.enemy_state.frame = 1;
             self.enemy_state.state = match state_definition.on_end {
                 Static(ref new_state) => new_state.to_owned(),
-                Dynamic(ref transition_fn) =>
-                    transition_fn.call(self.enemy_state.state.to_owned()).unwrap(),
+                Dynamic(ref transition_fn) => transition_fn.call(Nil).unwrap(),
             }
         } else {
             self.enemy_state.frame += 1;
