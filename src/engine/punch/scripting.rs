@@ -121,13 +121,13 @@ impl<'lua> FromLua<'lua> for EnemyStateTransition<'lua> {
 
 #[derive(Clone, Debug)]
 pub struct EnemyStateDefinition<'lua> {
-    frames: u8,
-    vulnerability: EnemyStateVulnerability,
-    hitzones: EnemyHitzones,
-    on_hitting_player: EnemyStateTransition<'lua>,
-    on_getting_hit: EnemyStateTransition<'lua>,
-    on_block: EnemyStateTransition<'lua>,
-    on_end: EnemyStateTransition<'lua>
+    pub frames: u8,
+    pub vulnerability: EnemyStateVulnerability,
+    pub hitzones: EnemyHitzones,
+    pub on_hitting_player: EnemyStateTransition<'lua>,
+    pub on_getting_hit: EnemyStateTransition<'lua>,
+    pub on_block: EnemyStateTransition<'lua>,
+    pub on_end: EnemyStateTransition<'lua>
 }
 
 impl<'lua> FromLua<'lua> for EnemyStateDefinition<'lua> {
