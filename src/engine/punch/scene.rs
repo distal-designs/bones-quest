@@ -2,6 +2,7 @@ use ggez::{self, GameResult};
 use rlua::Lua;
 
 use super::scripting::EnemyDefinition;
+use super::scripting::EnemyStateTransition::*;
 use engine;
 use engine::lua::LuaExt;
 
@@ -36,11 +37,24 @@ impl Scene {
 
 impl<I, F> engine::scene::Scene<I, F> for Scene {
     fn update(&mut self, _: &I, _: &mut F) -> GameResult<()> {
-        unimplemented!();
+        let enemy_definition = EnemyDefinition::load(&self.lua, &self.enemy_id);
+        let state_definition = enemy_definition.states.get(&self.enemy_state.state).unwrap();
+        if self.enemy_state.frame >= state_definition.frames {
+            self.enemy_state.frame = 1;
+            self.enemy_state.state = match state_definition.on_end {
+                Static(ref new_state) => new_state.to_owned(),
+                Dynamic(ref transition_fn) =>
+                    transition_fn.call(self.enemy_state.state.to_owned()).unwrap(),
+            }
+        } else {
+            self.enemy_state.frame += 1;
+        }
+        Ok(())
     }
 
 
     fn draw(&self, _: &F, _ctx: &mut ggez::Context) -> GameResult<()> {
-        unimplemented!();
+        println!("{:#?}", self.enemy_state);
+        Ok(())
     }
 }
