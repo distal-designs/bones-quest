@@ -6,6 +6,7 @@ use engine;
 use engine::lua::LuaExt;
 
 
+#[derive(Debug)]
 pub struct EnemyState {
     frame: u8,
     state: String,
