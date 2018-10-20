@@ -17,6 +17,21 @@ pub struct Enemy {
     state: String,
 }
 
+impl Enemy {
+    fn update(&mut self, enemy_definition: &EnemyDefinition) {
+        let state_definition = enemy_definition.states.get(&self.state).unwrap();
+        if self.frame >= state_definition.frames {
+            self.frame = 1;
+            self.state = match state_definition.on_end {
+                Static(ref new_state) => new_state.to_owned(),
+                Dynamic(ref transition_fn) => transition_fn.call(Nil).unwrap(),
+            }
+        } else {
+            self.frame += 1;
+        }
+    }
+}
+
 
 pub struct Player {
     pub hitzone: Hitzone,
@@ -69,16 +84,7 @@ impl Scene {
 impl<F> engine::scene::Scene<Input, F> for Scene {
     fn update(&mut self, input: &Input, _: &mut F) -> GameResult<()> {
         let enemy_definition = EnemyDefinition::load(&self.lua, &self.enemy_id);
-        let state_definition = enemy_definition.states.get(&self.enemy_state.state).unwrap();
-        if self.enemy_state.frame >= state_definition.frames {
-            self.enemy_state.frame = 1;
-            self.enemy_state.state = match state_definition.on_end {
-                Static(ref new_state) => new_state.to_owned(),
-                Dynamic(ref transition_fn) => transition_fn.call(Nil).unwrap(),
-            }
-        } else {
-            self.enemy_state.frame += 1;
-        }
+        self.enemy.update(&enemy_definition);
         Ok(())
     }
 
