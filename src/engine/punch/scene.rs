@@ -26,6 +26,20 @@ impl Default for Player {
     }
 }
 
+impl Player {
+    fn update(&mut self, input: &Input) {
+        self.hitzone = if input.current_input.contains(&S) {
+            Hitzone::Duck
+        } else if input.current_input.contains(&A) {
+            Hitzone::Left
+        } else if input.current_input.contains(&D) {
+            Hitzone::Right
+        } else {
+            Hitzone::Stand
+        }
+    }
+}
+
 
 pub struct Scene {
     lua: Lua,
