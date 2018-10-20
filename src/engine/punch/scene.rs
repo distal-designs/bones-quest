@@ -45,6 +45,7 @@ pub struct Scene {
     lua: Lua,
     enemy_id: String,
     enemy_state: EnemyState,
+    player: Player,
 }
 
 
@@ -54,6 +55,7 @@ impl Scene {
         let enemy_id = enemy_id.to_owned();
         let state = EnemyDefinition::load(&lua, &enemy_id).default_state;
         Scene {
+            player: Player::default(),
             lua: Lua::new_with_path(),
             enemy_id: enemy_id.to_owned(),
             enemy_state: EnemyState { state, frame: 0 }
