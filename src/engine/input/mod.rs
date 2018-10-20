@@ -12,7 +12,7 @@ const HISTORY_CAPACITY: usize = 10;
 
 
 pub struct Input {
-    current_input: HashSet<Keycode>,
+    pub current_input: HashSet<Keycode>,
     input_history: RingBuffer<HashSet<Keycode>>,
 }
 
