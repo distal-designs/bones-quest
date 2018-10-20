@@ -1,4 +1,5 @@
 use ggez::{self, GameResult};
+use ggez::event::Keycode::{A, S, D};
 use rlua::Lua;
 use rlua::Value::Nil;
 
