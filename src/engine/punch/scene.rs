@@ -33,6 +33,7 @@ impl Enemy {
 }
 
 
+#[derive(Debug)]
 pub struct Player {
     pub hitzone: Hitzone,
 }
