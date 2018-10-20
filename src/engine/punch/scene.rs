@@ -12,7 +12,7 @@ use engine::input::Input;
 
 
 #[derive(Debug)]
-pub struct EnemyState {
+pub struct Enemy {
     frame: u8,
     state: String,
 }
@@ -46,7 +46,7 @@ impl Player {
 pub struct Scene {
     lua: Lua,
     enemy_id: String,
-    enemy_state: EnemyState,
+    enemy: Enemy,
     player: Player,
 }
 
@@ -60,7 +60,7 @@ impl Scene {
             player: Player::default(),
             lua: Lua::new_with_path(),
             enemy_id: enemy_id.to_owned(),
-            enemy_state: EnemyState { state, frame: 0 }
+            enemy: Enemy { state, frame: 0 }
         }
     }
 }
@@ -84,7 +84,7 @@ impl<F> engine::scene::Scene<Input, F> for Scene {
 
 
     fn draw(&self, _: &F, _ctx: &mut ggez::Context) -> GameResult<()> {
-        println!("{:#?}", self.enemy_state);
+        println!("{:#?}", self.enemy);
         Ok(())
     }
 }
