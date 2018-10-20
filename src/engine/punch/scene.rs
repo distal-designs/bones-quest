@@ -65,7 +65,6 @@ pub struct Scene {
     player: Player,
 }
 
-
 impl Scene {
     pub fn new(enemy_id: &str) -> Self {
         let lua = Lua::new_with_path();
@@ -79,7 +78,6 @@ impl Scene {
         }
     }
 }
-
 
 impl<F> engine::scene::Scene<Input, F> for Scene {
     fn update(&mut self, input: &Input, _: &mut F) -> GameResult<()> {
