@@ -8,6 +8,7 @@ use super::scripting::EnemyStateTransition::*;
 use super::scripting::Hitzone;
 use engine;
 use engine::lua::LuaExt;
+use engine::input::Input;
 
 
 #[derive(Debug)]
@@ -65,8 +66,8 @@ impl Scene {
 }
 
 
-impl<I, F> engine::scene::Scene<I, F> for Scene {
-    fn update(&mut self, _: &I, _: &mut F) -> GameResult<()> {
+impl<F> engine::scene::Scene<Input, F> for Scene {
+    fn update(&mut self, input: &Input, _: &mut F) -> GameResult<()> {
         let enemy_definition = EnemyDefinition::load(&self.lua, &self.enemy_id);
         let state_definition = enemy_definition.states.get(&self.enemy_state.state).unwrap();
         if self.enemy_state.frame >= state_definition.frames {
