@@ -19,7 +19,9 @@ pub struct Enemy {
 
 impl Enemy {
     fn update(&mut self, enemy_definition: &EnemyDefinition, player: &Player) {
-        let state = enemy_definition.states.get(&self.state).unwrap();
+        let state = enemy_definition.states
+            .get(&self.state)
+            .expect(&format!("No state in enemy definition called '{}'", &self.state));
         if state.hitzones.did_hit_player(&player.hitzone) {
             self.frame = 1;
             self.state = match state.on_hitting_player {
