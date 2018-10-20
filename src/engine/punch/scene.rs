@@ -97,7 +97,6 @@ impl<F> engine::scene::Scene<Input, F> for Scene {
 
 
     fn draw(&self, _: &F, _ctx: &mut ggez::Context) -> GameResult<()> {
-        println!("{:#?}", self.enemy);
         Ok(())
     }
 }
