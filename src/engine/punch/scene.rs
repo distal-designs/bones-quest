@@ -4,6 +4,7 @@ use rlua::Value::Nil;
 
 use super::scripting::EnemyDefinition;
 use super::scripting::EnemyStateTransition::*;
+use super::scripting::Hitzone;
 use engine;
 use engine::lua::LuaExt;
 
@@ -12,6 +13,17 @@ use engine::lua::LuaExt;
 pub struct EnemyState {
     frame: u8,
     state: String,
+}
+
+
+pub struct Player {
+    pub hitzone: Hitzone,
+}
+
+impl Default for Player {
+    fn default() -> Self {
+        Player { hitzone: Hitzone::Stand }
+    }
 }
 
 
