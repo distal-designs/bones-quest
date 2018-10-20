@@ -18,11 +18,18 @@ pub struct Enemy {
 }
 
 impl Enemy {
-    fn update(&mut self, enemy_definition: &EnemyDefinition) {
-        let state_definition = enemy_definition.states.get(&self.state).unwrap();
-        if self.frame >= state_definition.frames {
+    fn update(&mut self, enemy_definition: &EnemyDefinition, player: &Player) {
+        let state = enemy_definition.states.get(&self.state).unwrap();
+        if state.hitzones.did_hit_player(&player.hitzone) {
             self.frame = 1;
-            self.state = match state_definition.on_end {
+            self.state = match state.on_hitting_player {
+                Static(ref new_state) => new_state.to_owned(),
+                Dynamic(ref transition_fn) => transition_fn.call(Nil).unwrap(),
+            }
+        }
+        else if self.frame >= state.frames {
+            self.frame = 1;
+            self.state = match state.on_end {
                 Static(ref new_state) => new_state.to_owned(),
                 Dynamic(ref transition_fn) => transition_fn.call(Nil).unwrap(),
             }
@@ -84,7 +91,7 @@ impl<F> engine::scene::Scene<Input, F> for Scene {
     fn update(&mut self, input: &Input, _: &mut F) -> GameResult<()> {
         self.player.update(input);
         let enemy_definition = EnemyDefinition::load(&self.lua, &self.enemy_id);
-        self.enemy.update(&enemy_definition);
+        self.enemy.update(&enemy_definition, &self.player);
         Ok(())
     }
 
