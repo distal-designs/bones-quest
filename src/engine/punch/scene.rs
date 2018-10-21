@@ -4,9 +4,11 @@ use rlua::Lua;
 use rlua::Value::Nil;
 
 use super::scripting::EnemyDefinition;
+use super::scripting::EnemyStateDefinition;
 use super::scripting::EnemyStateTransition::*;
 use super::scripting::Hitzone;
 use super::scripting::PlayerAttack;
+use super::scripting::Vulnerability;
 use engine;
 use engine::lua::LuaExt;
 use engine::input::Input;
@@ -24,7 +26,7 @@ impl Enemy {
             .get(&self.state)
             .expect(&format!("No state in enemy definition called '{}'", &self.state));
 
-        if state.vulnerability.was_hit_by_player(&player.attack) {
+        if Self::was_hit_by_player(state, &player.attack) {
             self.frame = 1;
             self.state = match state.on_getting_hit {
                 Static(ref new_state) => new_state.to_owned(),
@@ -45,6 +47,15 @@ impl Enemy {
             };
         } else {
             self.frame += 1;
+        }
+    }
+
+    fn was_hit_by_player(state: &EnemyStateDefinition, attack: &PlayerAttack) -> bool {
+        let vulnerability = &state.vulnerability;
+        match (&vulnerability.left, &vulnerability.right, attack) {
+            (Vulnerability::Hit, _, PlayerAttack::Left) => true,
+            (_, Vulnerability::Hit, PlayerAttack::Right) => true,
+            (_, _, _) => false,
         }
     }
 }
