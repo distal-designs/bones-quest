@@ -6,6 +6,7 @@ use rlua::Value::Nil;
 use super::scripting::EnemyDefinition;
 use super::scripting::EnemyStateTransition::*;
 use super::scripting::Hitzone;
+use super::scripting::PlayerAttack;
 use engine;
 use engine::lua::LuaExt;
 use engine::input::Input;
@@ -40,15 +41,6 @@ impl Enemy {
         }
     }
 }
-
-
-#[derive(Debug)]
-pub enum PlayerAttack {
-    Left,
-    Right,
-    None
-}
-
 
 #[derive(Debug)]
 pub struct Player {
