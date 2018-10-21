@@ -50,9 +50,9 @@ impl<'lua> FromLua<'lua> for Vulnerability {
 
 #[derive(Clone, Debug)]
 pub struct EnemyStateVulnerability {
-    left: Vulnerability,
-    right: Vulnerability,
-    parry: bool,
+    pub left: Vulnerability,
+    pub right: Vulnerability,
+    pub parry: bool,
 }
 
 impl EnemyStateVulnerability {
@@ -96,10 +96,10 @@ pub enum Hitzone {
 
 #[derive(Clone, Debug)]
 pub struct EnemyHitzones {
-    left: bool,
-    right: bool,
-    duck: bool,
-    stand: bool,
+    pub left: bool,
+    pub right: bool,
+    pub duck: bool,
+    pub stand: bool,
 }
 
 impl EnemyHitzones {
