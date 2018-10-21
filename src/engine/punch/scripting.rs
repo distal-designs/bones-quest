@@ -92,17 +92,6 @@ pub struct EnemyHitzones {
     pub stand: bool,
 }
 
-impl EnemyHitzones {
-    pub fn did_hit_player(&self, player_zone: &Hitzone) -> bool {
-        match player_zone {
-            Hitzone::Left => self.left,
-            Hitzone::Right => self.right,
-            Hitzone::Duck => self.duck,
-            Hitzone::Stand => self.stand,
-        }
-    }
-}
-
 impl<'lua> FromLua<'lua> for EnemyHitzones {
     fn from_lua(value: Value, lua: &Lua) -> rlua::Result<Self> {
         let t: Table = lua.unpack(value)?;

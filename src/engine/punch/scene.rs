@@ -32,7 +32,7 @@ impl Enemy {
                 Static(ref new_state) => new_state.to_owned(),
                 Dynamic(ref transition_fn) => transition_fn.call(Nil).unwrap(),
             };
-        } else if state.hitzones.did_hit_player(&player.hitzone) {
+        } else if Self::did_hit_player(state, &player.hitzone) {
             self.frame = 1;
             self.state = match state.on_hitting_player {
                 Static(ref new_state) => new_state.to_owned(),
@@ -55,6 +55,15 @@ impl Enemy {
             (Vulnerability::Hit, _, PlayerAttack::Left) => true,
             (_, Vulnerability::Hit, PlayerAttack::Right) => true,
             (_, _, _) => false,
+        }
+    }
+
+    fn did_hit_player(state: &EnemyStateDefinition, player_zone: &Hitzone) -> bool {
+        match player_zone {
+            Hitzone::Left => state.hitzones.left,
+            Hitzone::Right => state.hitzones.right,
+            Hitzone::Duck => state.hitzones.duck,
+            Hitzone::Stand => state.hitzones.stand,
         }
     }
 }
