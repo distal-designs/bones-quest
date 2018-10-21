@@ -53,11 +53,12 @@ pub enum PlayerAttack {
 #[derive(Debug)]
 pub struct Player {
     pub hitzone: Hitzone,
+    pub attack: PlayerAttack,
 }
 
 impl Default for Player {
     fn default() -> Self {
-        Player { hitzone: Hitzone::Stand }
+        Player { hitzone: Hitzone::Stand, attack: PlayerAttack::None }
     }
 }
 
