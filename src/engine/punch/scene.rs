@@ -62,6 +62,14 @@ impl Enemy {
             Hitzone::Stand => state.hitzones.stand,
         }
     }
+
+    fn did_block_player(state: &EnemyStateDefinition, attack: &PlayerAttack) -> bool {
+        match(&state.vulnerability.left, &state.vulnerability.right, attack) {
+            (Vulnerability::Block, _, PlayerAttack::Left) => true,
+            (_, Vulnerability::Block, PlayerAttack::Right) => true,
+            (_, _, _) => false,
+        }
+    }
 }
 
 #[derive(Debug)]
