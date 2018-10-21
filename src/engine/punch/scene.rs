@@ -106,6 +106,7 @@ impl Player {
             PlayerAttack::Right
         } else {
             PlayerAttack::None
+        };
         }
     }
 }
