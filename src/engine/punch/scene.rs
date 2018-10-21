@@ -1,5 +1,5 @@
 use ggez::{self, GameResult};
-use ggez::event::Keycode::{A, S, D, Left, Right};
+use ggez::event::Keycode::{A, S, D, Left, Right, Up};
 use rlua::Lua;
 use rlua::Value::Nil;
 
@@ -78,11 +78,12 @@ impl Enemy {
 pub struct Player {
     pub hitzone: Hitzone,
     pub attack: PlayerAttack,
+    pub parrying: bool,
 }
 
 impl Default for Player {
     fn default() -> Self {
-        Player { hitzone: Hitzone::Stand, attack: PlayerAttack::None }
+        Player { hitzone: Hitzone::Stand, attack: PlayerAttack::None, parrying: true }
     }
 }
 
@@ -107,7 +108,10 @@ impl Player {
         } else {
             PlayerAttack::None
         };
-        }
+
+        self.parrying = self.hitzone == Hitzone::Stand
+            && self.attack == PlayerAttack::None
+            && input.current_input.contains(&Up);
     }
 }
 
