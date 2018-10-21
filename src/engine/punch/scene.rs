@@ -1,5 +1,5 @@
 use ggez::{self, GameResult};
-use ggez::event::Keycode::{A, S, D};
+use ggez::event::Keycode::{A, S, D, Left, Right};
 use rlua::Lua;
 use rlua::Value::Nil;
 
@@ -23,7 +23,14 @@ impl Enemy {
         let state = enemy_definition.states
             .get(&self.state)
             .expect(&format!("No state in enemy definition called '{}'", &self.state));
-        if state.hitzones.did_hit_player(&player.hitzone) {
+
+        if state.vulnerability.was_hit_by_player(&player.attack) {
+            self.frame = 1;
+            self.state = match state.on_getting_hit {
+                Static(ref new_state) => new_state.to_owned(),
+                Dynamic(ref transition_fn) => transition_fn.call(Nil).unwrap(),
+            };
+        } else if state.hitzones.did_hit_player(&player.hitzone) {
             self.frame = 1;
             self.state = match state.on_hitting_player {
                 Static(ref new_state) => new_state.to_owned(),
@@ -64,6 +71,16 @@ impl Player {
             Hitzone::Right
         } else {
             Hitzone::Stand
+        };
+
+        self.attack = if self.hitzone != Hitzone::Stand {
+            PlayerAttack::None
+        } else if input.current_input.contains(&Left) {
+            PlayerAttack::Left
+        } else if input.current_input.contains(&Right) {
+            PlayerAttack::Right
+        } else {
+            PlayerAttack::None
         }
     }
 }
