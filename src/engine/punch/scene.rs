@@ -43,6 +43,14 @@ impl Enemy {
 
 
 #[derive(Debug)]
+pub enum PlayerAttack {
+    Left,
+    Right,
+    None
+}
+
+
+#[derive(Debug)]
 pub struct Player {
     pub hitzone: Hitzone,
 }
