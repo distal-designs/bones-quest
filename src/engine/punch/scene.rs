@@ -38,9 +38,9 @@ impl Enemy {
         }
     }
 
-    fn transition(&mut self, state: &EnemyStateTransition) {
+    fn transition(&mut self, transition_definition: &EnemyStateTransition) {
         self.frame = 1;
-        self.state = match state {
+        self.state = match transition_definition {
             Static(ref new_state) => new_state.to_owned(),
             Dynamic(ref transition_fn) => transition_fn.call(Nil).unwrap(),
         };
