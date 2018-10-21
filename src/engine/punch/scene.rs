@@ -28,14 +28,14 @@ impl Enemy {
             self.state = match state.on_hitting_player {
                 Static(ref new_state) => new_state.to_owned(),
                 Dynamic(ref transition_fn) => transition_fn.call(Nil).unwrap(),
-            }
+            };
         }
         else if self.frame >= state.frames {
             self.frame = 1;
             self.state = match state.on_end {
                 Static(ref new_state) => new_state.to_owned(),
                 Dynamic(ref transition_fn) => transition_fn.call(Nil).unwrap(),
-            }
+            };
         } else {
             self.frame += 1;
         }
