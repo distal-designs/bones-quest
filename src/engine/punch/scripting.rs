@@ -55,6 +55,16 @@ pub struct EnemyStateVulnerability {
     parry: bool,
 }
 
+impl EnemyStateVulnerability {
+    pub fn was_hit_by_player(&self, attack: &PlayerAttack) -> bool {
+        match (&self.left, &self.right, attack) {
+            (Vulnerability::Hit, _, PlayerAttack::Left) => true,
+            (_, Vulnerability::Hit, PlayerAttack::Right) => true,
+            (_, _, _) => false,
+        }
+    }
+}
+
 impl<'lua> FromLua<'lua> for EnemyStateVulnerability {
     fn from_lua(value: Value, lua: &Lua) -> rlua::Result<Self> {
         let t: Table = lua.unpack(value)?;
