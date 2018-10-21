@@ -51,7 +51,7 @@ impl Enemy {
         }
     }
 
-    fn transition(&mut self, state: &EnemyStateTransition, player: &Player) {
+    fn transition(&mut self, state: &EnemyStateTransition) {
         self.frame = 1;
         self.state = match state {
             Static(ref new_state) => new_state.to_owned(),
