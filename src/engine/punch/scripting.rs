@@ -67,7 +67,7 @@ impl<'lua> FromLua<'lua> for EnemyStateVulnerability {
 }
 
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 pub enum Hitzone {
     Left,
     Right,
