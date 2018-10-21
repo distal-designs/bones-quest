@@ -51,8 +51,7 @@ impl Enemy {
     }
 
     fn was_hit_by_player(state: &EnemyStateDefinition, attack: &PlayerAttack) -> bool {
-        let vulnerability = &state.vulnerability;
-        match (&vulnerability.left, &vulnerability.right, attack) {
+        match (&state.vulnerability.left, &state.vulnerability.right, attack) {
             (Vulnerability::Hit, _, PlayerAttack::Left) => true,
             (_, Vulnerability::Hit, PlayerAttack::Right) => true,
             (_, _, _) => false,
