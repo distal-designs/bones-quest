@@ -28,24 +28,11 @@ impl Enemy {
             .expect(&format!("No state in enemy definition called '{}'", &self.state));
 
         if Self::was_hit_by_player(state, &player.attack) {
-            self.frame = 1;
-            self.state = match state.on_getting_hit {
-                Static(ref new_state) => new_state.to_owned(),
-                Dynamic(ref transition_fn) => transition_fn.call(Nil).unwrap(),
-            };
+            self.transition(&state.on_getting_hit);
         } else if Self::did_hit_player(state, &player.hitzone) {
-            self.frame = 1;
-            self.state = match state.on_hitting_player {
-                Static(ref new_state) => new_state.to_owned(),
-                Dynamic(ref transition_fn) => transition_fn.call(Nil).unwrap(),
-            };
-        }
-        else if self.frame >= state.frames {
-            self.frame = 1;
-            self.state = match state.on_end {
-                Static(ref new_state) => new_state.to_owned(),
-                Dynamic(ref transition_fn) => transition_fn.call(Nil).unwrap(),
-            };
+            self.transition(&state.on_hitting_player);
+        } else if self.frame >= state.frames {
+            self.transition(&state.on_end);
         } else {
             self.frame += 1;
         }
