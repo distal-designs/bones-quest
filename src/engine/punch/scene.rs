@@ -5,6 +5,7 @@ use rlua::Value::Nil;
 
 use super::scripting::EnemyDefinition;
 use super::scripting::EnemyStateDefinition;
+use super::scripting::EnemyStateTransition;
 use super::scripting::EnemyStateTransition::*;
 use super::scripting::Hitzone;
 use super::scripting::PlayerAttack;
@@ -48,6 +49,14 @@ impl Enemy {
         } else {
             self.frame += 1;
         }
+    }
+
+    fn transition(&mut self, state: &EnemyStateTransition, player: &Player) {
+        self.frame = 1;
+        self.state = match state {
+            Static(ref new_state) => new_state.to_owned(),
+            Dynamic(ref transition_fn) => transition_fn.call(Nil).unwrap(),
+        };
     }
 
     fn was_hit_by_player(state: &EnemyStateDefinition, attack: &PlayerAttack) -> bool {
