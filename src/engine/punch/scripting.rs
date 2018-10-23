@@ -135,6 +135,7 @@ pub struct EnemyStateDefinition<'lua> {
     pub on_hitting_player: EnemyStateTransition<'lua>,
     pub on_getting_hit: EnemyStateTransition<'lua>,
     pub on_block: EnemyStateTransition<'lua>,
+    pub on_parry: EnemyStateTransition<'lua>,
     pub on_end: EnemyStateTransition<'lua>
 }
 
@@ -148,6 +149,7 @@ impl<'lua> FromLua<'lua> for EnemyStateDefinition<'lua> {
             on_hitting_player: state.get("on_hitting_player")?,
             on_getting_hit: state.get("on_getting_hit")?,
             on_block: state.get("on_block")?,
+            on_parry: state.get("on_parry")?,
             on_end: state.get("on_end")?,
         })
     }
