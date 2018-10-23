@@ -16,14 +16,6 @@ use engine::input::Input;
 
 
 #[derive(Debug)]
-pub enum Interaction {
-    BlockedPlayer,
-    HitPlayer,
-    HitByPlayer,
-}
-
-
-#[derive(Debug)]
 pub struct Enemy {
     frame: u8,
     state: String,
