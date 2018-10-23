@@ -50,6 +50,10 @@ impl Enemy {
         };
     }
 
+    fn was_parried_by_player(state: &EnemyStateDefinition, player: &Player) -> bool {
+        state.vulnerability.parry && player.parrying
+    }
+
     fn was_hit_by_player(state: &EnemyStateDefinition, attack: &PlayerAttack) -> bool {
         match (&state.vulnerability.left, &state.vulnerability.right, attack) {
             (Vulnerability::Hit, _, PlayerAttack::Left) => true,
