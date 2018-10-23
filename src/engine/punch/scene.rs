@@ -29,7 +29,9 @@ impl Enemy {
             .get(&self.state)
             .expect(&format!("No state in enemy definition called '{}'", &self.state));
 
-        if Self::did_block_player(state, &player.attack) {
+        if Self::was_parried_by_player(state, &player) {
+            self.transition(&state.on_parry);
+        } else if Self::did_block_player(state, &player.attack) {
             self.transition(&state.on_block);
         } else if Self::was_hit_by_player(state, &player.attack) {
             self.transition(&state.on_getting_hit);
