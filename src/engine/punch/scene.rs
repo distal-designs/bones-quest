@@ -3,13 +3,15 @@ use ggez::event::Keycode::{A, S, D, Left, Right, Up};
 use rlua::Lua;
 use rlua::Value::Nil;
 
-use super::scripting::EnemyDefinition;
-use super::scripting::EnemyStateDefinition;
-use super::scripting::EnemyStateTransition;
+use super::scripting::{
+    EnemyDefinition,
+    EnemyStateDefinition,
+    EnemyStateTransition,
+    Hitzone,
+    PlayerAttack,
+    Vulnerability
+};
 use super::scripting::EnemyStateTransition::*;
-use super::scripting::Hitzone;
-use super::scripting::PlayerAttack;
-use super::scripting::Vulnerability;
 use engine;
 use engine::lua::LuaExt;
 use engine::input::Input;
