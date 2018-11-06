@@ -36,7 +36,7 @@ impl Enemy {
         } else if Self::was_hit_by_player(state, &player.attack) {
             self.transition(&state.on_getting_hit);
         } else if Self::did_hit_player(state, &player.hitzone) {
-            self.transition(&state.on_hitting_player);
+            self.transition(&state.after_hitting_player);
         } else if self.frame >= state.frames {
             self.transition(&state.on_end);
         } else {
