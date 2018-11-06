@@ -23,6 +23,21 @@ pub struct Enemy {
     state: String,
 }
 
+#[derive(Debug)]
+pub struct Player {
+    pub hitzone: Hitzone,
+    pub attack: PlayerAttack,
+    pub parrying: bool,
+}
+
+pub struct Scene {
+    lua: Lua,
+    enemy_id: String,
+    enemy: Enemy,
+    player: Player,
+}
+
+
 impl Enemy {
     fn update(&mut self, enemy_definition: &EnemyDefinition, player: &Player) {
         let state = enemy_definition.states
@@ -82,19 +97,6 @@ impl Enemy {
     }
 }
 
-#[derive(Debug)]
-pub struct Player {
-    pub hitzone: Hitzone,
-    pub attack: PlayerAttack,
-    pub parrying: bool,
-}
-
-impl Default for Player {
-    fn default() -> Self {
-        Player { hitzone: Hitzone::Stand, attack: PlayerAttack::None, parrying: true }
-    }
-}
-
 impl Player {
     fn update(&mut self, input: &Input) {
         self.hitzone = if input.current_input.contains(&S) {
@@ -123,14 +125,6 @@ impl Player {
     }
 }
 
-
-pub struct Scene {
-    lua: Lua,
-    enemy_id: String,
-    enemy: Enemy,
-    player: Player,
-}
-
 impl Scene {
     pub fn new(enemy_id: &str) -> Self {
         let lua = Lua::new_with_path();
@@ -142,6 +136,13 @@ impl Scene {
             enemy_id: enemy_id.to_owned(),
             enemy: Enemy { state, frame: 0 }
         }
+    }
+}
+
+
+impl Default for Player {
+    fn default() -> Self {
+        Player { hitzone: Hitzone::Stand, attack: PlayerAttack::None, parrying: true }
     }
 }
 
