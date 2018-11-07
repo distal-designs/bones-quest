@@ -1,5 +1,6 @@
 use ggez::{self, GameResult};
 use ggez::event::Keycode::{A, S, D, Left, Right, Up};
+use ggez::graphics::{Drawable, Point2, Text};
 use rlua::Lua;
 use rlua::Value::Nil;
 
@@ -154,8 +155,14 @@ impl<F> engine::scene::Scene<Input, F> for Scene {
         Ok(())
     }
 
-
-    fn draw(&self, _: &F, _ctx: &mut ggez::Context) -> GameResult<()> {
+    fn draw(&self, _: &F, ctx: &mut ggez::Context) -> GameResult<()> {
+        let font = ctx.default_font.clone();
+        let text = format!("Player: {:?} {:?} - Enemy: {:?}",
+                           self.player.hitzone,
+                           self.player.attack,
+                           self.enemy.state);
+        Text::new(ctx, &text, &font)?
+            .draw(ctx, Point2::new(100.0, 100.0), 0.0)?;
         Ok(())
     }
 }
