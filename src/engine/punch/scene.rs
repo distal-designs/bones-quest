@@ -1,22 +1,17 @@
-use ggez::{self, GameResult};
-use ggez::event::Keycode::{A, S, D, Left, Right, Up};
+use ggez::event::Keycode::{Left, Right, Up, A, D, S};
 use ggez::graphics::{Drawable, Point2, Text};
+use ggez::{self, GameResult};
 use rlua::Lua;
 use rlua::Value::Nil;
 
-use super::scripting::{
-    EnemyDefinition,
-    EnemyStateDefinition,
-    EnemyStateTransition,
-    Hitzone,
-    PlayerAttack,
-    Vulnerability
-};
 use super::scripting::EnemyStateTransition::*;
+use super::scripting::{
+    EnemyDefinition, EnemyStateDefinition, EnemyStateTransition, Hitzone, PlayerAttack,
+    Vulnerability,
+};
 use engine;
-use engine::lua::LuaExt;
 use engine::input::Input;
-
+use engine::lua::LuaExt;
 
 #[derive(Debug)]
 pub struct Enemy {
@@ -38,12 +33,12 @@ pub struct Scene {
     player: Player,
 }
 
-
 impl Enemy {
     fn update(&mut self, enemy_definition: &EnemyDefinition, player: &Player) {
-        let state = enemy_definition.states
-            .get(&self.state)
-            .expect(&format!("No state in enemy definition called '{}'", &self.state));
+        let state = enemy_definition.states.get(&self.state).expect(&format!(
+            "No state in enemy definition called '{}'",
+            &self.state
+        ));
 
         if Self::was_parried_by_player(state, &player) {
             self.transition(&state.on_parry);
@@ -73,7 +68,11 @@ impl Enemy {
     }
 
     fn was_hit_by_player(state: &EnemyStateDefinition, attack: &PlayerAttack) -> bool {
-        match (&state.vulnerability.left, &state.vulnerability.right, attack) {
+        match (
+            &state.vulnerability.left,
+            &state.vulnerability.right,
+            attack,
+        ) {
             (Vulnerability::Hit, _, PlayerAttack::Left) => true,
             (_, Vulnerability::Hit, PlayerAttack::Right) => true,
             (_, _, _) => false,
@@ -90,7 +89,11 @@ impl Enemy {
     }
 
     fn did_block_player(state: &EnemyStateDefinition, attack: &PlayerAttack) -> bool {
-        match(&state.vulnerability.left, &state.vulnerability.right, attack) {
+        match (
+            &state.vulnerability.left,
+            &state.vulnerability.right,
+            attack,
+        ) {
             (Vulnerability::Block, _, PlayerAttack::Left) => true,
             (_, Vulnerability::Block, PlayerAttack::Right) => true,
             (_, _, _) => false,
@@ -135,15 +138,18 @@ impl Scene {
             player: Player::default(),
             lua: Lua::new_with_path(),
             enemy_id: enemy_id.to_owned(),
-            enemy: Enemy { state, frame: 0 }
+            enemy: Enemy { state, frame: 0 },
         }
     }
 }
 
-
 impl Default for Player {
     fn default() -> Self {
-        Player { hitzone: Hitzone::Stand, attack: PlayerAttack::None, parrying: true }
+        Player {
+            hitzone: Hitzone::Stand,
+            attack: PlayerAttack::None,
+            parrying: true,
+        }
     }
 }
 
@@ -157,12 +163,11 @@ impl<F> engine::scene::Scene<Input, F> for Scene {
 
     fn draw(&self, _: &F, ctx: &mut ggez::Context) -> GameResult<()> {
         let font = ctx.default_font.clone();
-        let text = format!("Player: {:?} {:?} - Enemy: {:?}",
-                           self.player.hitzone,
-                           self.player.attack,
-                           self.enemy.state);
-        Text::new(ctx, &text, &font)?
-            .draw(ctx, Point2::new(100.0, 100.0), 0.0)?;
+        let text = format!(
+            "Player: {:?} {:?} - Enemy: {:?}",
+            self.player.hitzone, self.player.attack, self.enemy.state
+        );
+        Text::new(ctx, &text, &font)?.draw(ctx, Point2::new(100.0, 100.0), 0.0)?;
         Ok(())
     }
 }
