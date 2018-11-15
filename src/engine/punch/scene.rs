@@ -1,9 +1,9 @@
-use ggez::event::Keycode::{Left, Right, Up, A, D, S};
 use ggez::graphics::{Drawable, Point2, Text};
 use ggez::{self, GameResult};
 use rlua::Lua;
 use rlua::Value::Nil;
 
+use super::Player;
 use super::scripting::EnemyStateTransition::*;
 use super::scripting::{
     EnemyDefinition, EnemyStateDefinition, EnemyStateTransition, Hitzone, PlayerAttack,
@@ -13,17 +13,11 @@ use engine;
 use engine::input::Input;
 use engine::lua::LuaExt;
 
+
 #[derive(Debug)]
 pub struct Enemy {
     frame: u8,
     state: String,
-}
-
-#[derive(Debug)]
-pub struct Player {
-    pub hitzone: Hitzone,
-    pub attack: PlayerAttack,
-    pub parrying: bool,
 }
 
 pub struct Scene {
@@ -32,6 +26,7 @@ pub struct Scene {
     enemy: Enemy,
     player: Player,
 }
+
 
 impl Enemy {
     fn update(&mut self, enemy_definition: &EnemyDefinition, player: &Player) {
@@ -101,34 +96,6 @@ impl Enemy {
     }
 }
 
-impl Player {
-    fn update(&mut self, input: &Input) {
-        self.hitzone = if input.current_input.contains(&S) {
-            Hitzone::Duck
-        } else if input.current_input.contains(&A) {
-            Hitzone::Left
-        } else if input.current_input.contains(&D) {
-            Hitzone::Right
-        } else {
-            Hitzone::Stand
-        };
-
-        self.attack = if self.hitzone != Hitzone::Stand {
-            PlayerAttack::None
-        } else if input.current_input.contains(&Left) {
-            PlayerAttack::Left
-        } else if input.current_input.contains(&Right) {
-            PlayerAttack::Right
-        } else {
-            PlayerAttack::None
-        };
-
-        self.parrying = self.hitzone == Hitzone::Stand
-            && self.attack == PlayerAttack::None
-            && input.current_input.contains(&Up);
-    }
-}
-
 impl Scene {
     pub fn new(enemy_id: &str) -> Self {
         let lua = Lua::new_with_path();
@@ -143,15 +110,6 @@ impl Scene {
     }
 }
 
-impl Default for Player {
-    fn default() -> Self {
-        Player {
-            hitzone: Hitzone::Stand,
-            attack: PlayerAttack::None,
-            parrying: true,
-        }
-    }
-}
 
 impl<F> engine::scene::Scene<Input, F> for Scene {
     fn update(&mut self, input: &Input, _: &mut F) -> GameResult<()> {
