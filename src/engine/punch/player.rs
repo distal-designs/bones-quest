@@ -11,6 +11,12 @@ pub struct Player {
     pub parrying: bool,
 }
 
+#[derive(Debug)]
+pub enum StunStatus {
+    Normal,
+    Stunned(u8),
+}
+
 
 impl Player {
     pub fn update(&mut self, input: &Input) {
