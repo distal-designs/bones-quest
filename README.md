@@ -13,3 +13,10 @@ dependencies.
 
 Run `sudo eopkg install -c system.devel sdl2-devel alsa-lib-devel` to install necessary
 dependencies.
+
+### Fedora
+
+```bash
+sudo dnf install alsa-lib-devel SDL2-devel
+sudo dnf groupinstall 'Development Tools'
+```
