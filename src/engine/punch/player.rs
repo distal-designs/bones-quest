@@ -9,6 +9,7 @@ pub struct Player {
     pub hitzone: Hitzone,
     pub attack: PlayerAttack,
     pub parrying: bool,
+    pub stun_status: StunStatus,
 }
 
 #[derive(Debug)]
@@ -53,6 +54,7 @@ impl Default for Player {
             hitzone: Hitzone::Stand,
             attack: PlayerAttack::None,
             parrying: true,
+            stun_status: StunStatus::Normal,
         }
     }
 }
