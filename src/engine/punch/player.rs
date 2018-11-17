@@ -70,7 +70,7 @@ impl Player {
     }
 
     fn get_hit(&mut self) {
-        const STUN_DURATION: u8 = 10;
+        const STUN_DURATION: u8 = 30;
         self.stun_status = StunStatus::Stunned(STUN_DURATION);
         self.attack = PlayerAttack::None;
         self.parrying = false;
