@@ -23,13 +23,7 @@ return {
       on_getting_hit = "IDLE",
       on_block = "IDLE",
       on_parry = "IDLE",
-      on_end = function (world)
-        if math.random(100) > 30 then
-          return "IDLE"
-        else
-          return "IDLE"
-        end
-      end
+      on_end = "ATTACK",
     },
 
     ATTACK = {
