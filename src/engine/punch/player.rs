@@ -69,6 +69,14 @@ impl Player {
             _ => StunStatus::Normal,
         }
     }
+
+    fn get_hit(&mut self) {
+        const STUN_DURATION: u8 = 10;
+        self.stun_status = StunStatus::Stunned(STUN_DURATION);
+        self.attack = PlayerAttack::None;
+        self.parrying = false;
+        self.hitzone = Hitzone::Stand;
+    }
 }
 
 
