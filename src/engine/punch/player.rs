@@ -58,16 +58,15 @@ impl Player {
     }
 
     pub fn handle_collisions(&mut self, hitzones: &EnemyHitzones) {
-        const STUN_DURATION: u8 = 10;
         if let StunStatus::Stunned(_) = self.stun_status { return };
 
-        self.stun_status = match self.hitzone {
-            Hitzone::Left if hitzones.left => StunStatus::Stunned(STUN_DURATION),
-            Hitzone::Right if hitzones.right => StunStatus::Stunned(STUN_DURATION),
-            Hitzone::Stand if hitzones.stand => StunStatus::Stunned(STUN_DURATION),
-            Hitzone::Duck if hitzones.duck => StunStatus::Stunned(STUN_DURATION),
-            _ => StunStatus::Normal,
-        }
+        match self.hitzone {
+            Hitzone::Left if hitzones.left => self.get_hit(),
+            Hitzone::Right if hitzones.right => self.get_hit(),
+            Hitzone::Stand if hitzones.stand => self.get_hit(),
+            Hitzone::Duck if hitzones.duck => self.get_hit(),
+            _ => {}
+        };
     }
 
     fn get_hit(&mut self) {
