@@ -87,6 +87,13 @@ impl<'lua> EnemyDefinition<'lua> {
         let loader = format!("return require 'resources.enemies.{}'", enemy_id);
         lua.exec(&loader, Some("Loading enemy definition")).unwrap()
     }
+
+    pub fn state(&self, name: &str) -> &EnemyStateDefinition<'lua> {
+        self.states.get(name).expect(&format!(
+            "No state in enemy definition called '{}'",
+            name
+        ))
+    }
 }
 
 
