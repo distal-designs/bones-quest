@@ -1,4 +1,4 @@
-use ggez::event::Keycode::{Left, Right, Up, A, D, S};
+use ggez::event::Keycode::{Left, Right, W, A, D, S};
 
 use super::scripting::{EnemyHitzones, Hitzone, PlayerAttack};
 use engine::input::Input;
@@ -54,7 +54,7 @@ impl Player {
 
         self.parrying = self.hitzone == Hitzone::Stand
             && self.attack == PlayerAttack::None
-            && input.current_input.contains(&Up);
+            && input.current_input.contains(&W);
     }
 
     pub fn handle_collisions(&mut self, hitzones: &EnemyHitzones) {
