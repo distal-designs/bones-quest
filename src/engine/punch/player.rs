@@ -1,6 +1,6 @@
 use ggez::event::Keycode::{Left, Right, Up, A, D, S};
 
-use super::scripting::{Hitzone, PlayerAttack};
+use super::scripting::{EnemyHitzones, Hitzone, PlayerAttack};
 use engine::input::Input;
 
 
@@ -55,6 +55,19 @@ impl Player {
         self.parrying = self.hitzone == Hitzone::Stand
             && self.attack == PlayerAttack::None
             && input.current_input.contains(&Up);
+    }
+
+    pub fn handle_collisions(&mut self, hitzones: &EnemyHitzones) {
+        const STUN_DURATION: u8 = 10;
+        if let StunStatus::Stunned(_) = self.stun_status { return };
+
+        self.stun_status = match self.hitzone {
+            Hitzone::Left if hitzones.left => StunStatus::Stunned(STUN_DURATION),
+            Hitzone::Right if hitzones.right => StunStatus::Stunned(STUN_DURATION),
+            Hitzone::Stand if hitzones.stand => StunStatus::Stunned(STUN_DURATION),
+            Hitzone::Duck if hitzones.duck => StunStatus::Stunned(STUN_DURATION),
+            _ => StunStatus::Normal,
+        }
     }
 }
 
