@@ -84,7 +84,7 @@ pub enum MainCharacter {
 
 impl<'lua> EnemyDefinition<'lua> {
     pub fn load(lua: &'lua Lua, enemy_id: &str) -> EnemyDefinition<'lua> {
-        let loader = format!("return require 'resources.enemies.{}'", enemy_id);
+        let loader = format!("return require 'src.game.enemies.{}'", enemy_id);
         lua.exec(&loader, Some("Loading enemy definition")).unwrap()
     }
 
