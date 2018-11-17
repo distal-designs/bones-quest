@@ -22,7 +22,7 @@ impl Scene {
     pub fn new(enemy_id: &str) -> Self {
         let lua = Lua::new_with_path();
         let enemy_id = enemy_id.to_owned();
-        let state = EnemyDefinition::load(&lua, &enemy_id).default_state;
+        let state = EnemyDefinition::load(&lua, &enemy_id).initial_state;
         Scene {
             player: Player::default(),
             lua: Lua::new_with_path(),

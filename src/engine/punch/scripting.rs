@@ -35,7 +35,7 @@ pub struct EnemyDefinition<'lua> {
     pub name: String,
     pub id: String,
     pub fights: MainCharacter,
-    pub default_state: String,
+    pub initial_state: String,
     pub states: HashMap<String, EnemyStateDefinition<'lua>>,
 }
 
@@ -181,7 +181,7 @@ impl<'lua> FromLua<'lua> for EnemyDefinition<'lua> {
         Ok(EnemyDefinition {
             name: root.get("name")?,
             id: root.get("id")?,
-            default_state: root.get("default_state")?,
+            initial_state: root.get("initial_state")?,
             fights: root.get("fights")?,
             states: root.get("states")?,
         })

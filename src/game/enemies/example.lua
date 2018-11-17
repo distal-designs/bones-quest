@@ -3,7 +3,7 @@ return {
   id = "example",
   fights = "BONES",
 
-  default_state = "IDLE",
+  initial_state = "IDLE",
   states = {
 
     IDLE = {
