@@ -37,7 +37,8 @@ impl<F> engine::scene::Scene<Input, F> for Scene {
     fn update(&mut self, input: &Input, _: &mut F) -> GameResult<()> {
         self.player.update(input);
         let enemy_definition = EnemyDefinition::load(&self.lua, &self.enemy_id);
-        self.enemy.update(&enemy_definition, &self.player);
+        let state_definition = enemy_definition.state(&self.enemy.state);
+        self.enemy.update(&state_definition, &self.player);
         Ok(())
     }
 

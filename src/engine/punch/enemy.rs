@@ -3,7 +3,7 @@ use rlua::Value::Nil;
 use super::Player;
 use super::scripting::EnemyStateTransition::*;
 use super::scripting::{
-    EnemyDefinition, EnemyStateDefinition, EnemyStateTransition, Hitzone, PlayerAttack,
+    EnemyStateDefinition, EnemyStateTransition, Hitzone, PlayerAttack,
     Vulnerability,
 };
 
@@ -16,12 +16,7 @@ pub struct Enemy {
 
 
 impl Enemy {
-    pub fn update(&mut self, enemy_definition: &EnemyDefinition, player: &Player) {
-        let state = enemy_definition.states.get(&self.state).expect(&format!(
-            "No state in enemy definition called '{}'",
-            &self.state
-        ));
-
+    pub fn update(&mut self, state: &EnemyStateDefinition, player: &Player) {
         if Self::was_parried_by_player(state, &player) {
             self.transition(&state.on_parry);
         } else if Self::did_block_player(state, &player.attack) {
