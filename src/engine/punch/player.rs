@@ -21,6 +21,17 @@ pub enum StunStatus {
 
 impl Player {
     pub fn update(&mut self, input: &Input) {
+        match self.stun_status {
+            StunStatus::Stunned(0) => {
+                self.stun_status = StunStatus::Normal;
+            }
+            StunStatus::Stunned(x) => {
+                self.stun_status = StunStatus::Stunned(x - 1);
+                return;
+            }
+            StunStatus::Normal => {}
+        };
+
         self.hitzone = if input.current_input.contains(&S) {
             Hitzone::Duck
         } else if input.current_input.contains(&A) {
