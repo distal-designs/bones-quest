@@ -7,7 +7,7 @@ return {
   states = {
 
     IDLE = {
-      frames = 10,
+      frames = 120,
       vulnerability = {
         left = "WHIFF",
         right = "BLOCK",
