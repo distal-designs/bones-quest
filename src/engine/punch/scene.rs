@@ -39,6 +39,7 @@ impl<F> engine::scene::Scene<Input, F> for Scene {
         let enemy_definition = EnemyDefinition::load(&self.lua, &self.enemy_id);
         let state_definition = enemy_definition.state(&self.enemy.state);
         self.enemy.update(&state_definition, &self.player);
+        self.player.handle_collisions(&state_definition.hitzones);
         Ok(())
     }
 
