@@ -14,10 +14,6 @@ mod engine;
 use ggez::{conf, event, Context};
 
 use engine::main_state::MainState;
-use engine::scenes::visual_novel::VisualNovel;
-use engine::visual_novel::command::Command;
-use engine::lua::LuaExt;
-use engine::punch::scripting::EnemyDefinition;
 use engine::punch::Scene;
 
 
