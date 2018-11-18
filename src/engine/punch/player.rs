@@ -118,7 +118,7 @@ impl Player {
 
 impl Default for Player {
     fn default() -> Self {
-        Player {
+        Self {
             state: State::Stand(Action::Neutral),
         }
     }

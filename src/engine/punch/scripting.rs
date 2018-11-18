@@ -85,7 +85,7 @@ impl<'lua> EnemyDefinition<'lua> {
 impl<'lua> FromLua<'lua> for EnemyStateVulnerability {
     fn from_lua(value: Value, lua: &Lua) -> rlua::Result<Self> {
         let t: Table = lua.unpack(value)?;
-        Ok(EnemyStateVulnerability {
+        Ok(Self {
             left: t.get("left")?,
             right: t.get("right")?,
             parry: t.get("parry")?,
@@ -96,7 +96,7 @@ impl<'lua> FromLua<'lua> for EnemyStateVulnerability {
 impl<'lua> FromLua<'lua> for MainCharacter {
     fn from_lua(value: Value, lua: &Lua) -> rlua::Result<Self> {
         let s: String = lua.unpack(value)?;
-        s.parse::<MainCharacter>()
+        s.parse::<Self>()
             .map_err(|_| rlua::Error::FromLuaConversionError {
                 from: "String",
                 to: "MainCharacter",
@@ -108,7 +108,7 @@ impl<'lua> FromLua<'lua> for MainCharacter {
 impl<'lua> FromLua<'lua> for Vulnerability {
     fn from_lua(value: Value, lua: &Lua) -> rlua::Result<Self> {
         let s: String = lua.unpack(value)?;
-        s.parse::<Vulnerability>()
+        s.parse::<Self>()
             .map_err(|_| rlua::Error::FromLuaConversionError {
                 from: "String",
                 to: "Vulnerability",
@@ -120,7 +120,7 @@ impl<'lua> FromLua<'lua> for Vulnerability {
 impl<'lua> FromLua<'lua> for EnemyHitzones {
     fn from_lua(value: Value, lua: &Lua) -> rlua::Result<Self> {
         let t: Table = lua.unpack(value)?;
-        Ok(EnemyHitzones {
+        Ok(Self {
             left: t.get("left")?,
             right: t.get("right")?,
             duck: t.get("duck")?,
