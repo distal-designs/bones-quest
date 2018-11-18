@@ -47,8 +47,9 @@ impl Enemy {
             &state.vulnerability.right,
             player.attack_direction(),
         ) {
-            (Vulnerability::Hit, _, Some(AttackDirection::Left)) => true,
-            (_, Vulnerability::Hit, Some(AttackDirection::Right)) => true,
+            (Vulnerability::Hit, _, Some(AttackDirection::Left))
+            | (_, Vulnerability::Hit, Some(AttackDirection::Right))
+                => true,
             _ => false,
         }
     }
@@ -69,9 +70,10 @@ impl Enemy {
             &state.vulnerability.right,
             player.attack_direction(),
         ) {
-            (Vulnerability::Block, _, Some(AttackDirection::Left)) => true,
-            (_, Vulnerability::Block, Some(AttackDirection::Right)) => true,
-            (_, _, _) => false,
+            (Vulnerability::Block, _, Some(AttackDirection::Left))
+            | (_, Vulnerability::Block, Some(AttackDirection::Right))
+                => true,
+            _ => false,
         }
     }
 }
