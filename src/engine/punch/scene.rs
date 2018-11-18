@@ -45,8 +45,10 @@ impl<F> engine::scene::Scene<Input, F> for Scene {
 
     fn draw(&self, _: &F, ctx: &mut ggez::Context) -> GameResult<()> {
         let font = ctx.default_font.clone();
-        let text = format!("Player: {:?} - Enemy: {:?}", self.player, self.enemy.state);
-        Text::new(ctx, &text, &font)?.draw(ctx, Point2::new(100.0, 100.0), 0.0)?;
+        let player_text = format!("Player: {:?}", self.player);
+        Text::new(ctx, &player_text, &font)?.draw(ctx, Point2::new(0.0, 100.0), 0.0)?;
+        let enemy_text = format!("Enemy: {:?}", self.enemy.state);
+        Text::new(ctx, &enemy_text, &font)?.draw(ctx, Point2::new(0.0, 150.0), 0.0)?;
         Ok(())
     }
 }
