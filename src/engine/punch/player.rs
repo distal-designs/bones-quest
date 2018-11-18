@@ -6,6 +6,11 @@ use engine::input::Input;
 type Frames = u8;
 
 #[derive(Debug)]
+pub struct Player {
+    state: PlayerState,
+}
+
+#[derive(Debug)]
 pub enum PlayerState {
     Stunned(Frames),
     Dodge(Frames, DodgeDirection),
@@ -30,11 +35,6 @@ pub enum PlayerAction {
     Neutral,
     Attack(Frames, AttackDirection),
     Parry(Frames),
-}
-
-#[derive(Debug)]
-pub struct Player {
-    state: PlayerState,
 }
 
 impl Player {
