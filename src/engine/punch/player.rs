@@ -75,6 +75,14 @@ impl Player {
         }
     }
 
+    pub fn is_parrying(&self) -> bool {
+        if let PlayerState::Stand(PlayerAction::Parry(_)) = self.state {
+            true
+        } else {
+            false
+        }
+    }
+
     fn get_hit(&mut self) {
         self.state = PlayerState::Stunned(30);
     }
