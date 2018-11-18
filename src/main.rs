@@ -13,8 +13,8 @@ mod engine;
 
 use ggez::{conf, event, Context};
 
-use engine::main_state::MainState;
-use engine::punch::Scene;
+use crate::engine::main_state::MainState;
+use crate::engine::punch::Scene;
 
 
 fn main() {

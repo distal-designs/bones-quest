@@ -1,7 +1,7 @@
 use ggez::event::Keycode::{Left, Right, W, A, D, S};
 
 use super::scripting::{EnemyHitzones};
-use engine::input::Input;
+use crate::engine::input::Input;
 
 type Frames = u8;
 
