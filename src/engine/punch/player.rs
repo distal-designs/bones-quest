@@ -6,6 +6,15 @@ use engine::input::Input;
 type Frames = u8;
 
 #[derive(Debug)]
+pub enum PlayerState {
+    Stunned(Frames),
+    DodgeLeft(Frames),
+    DodgeRight(Frames),
+    Duck(Frames),
+    Stand(PlayerAction),
+}
+
+#[derive(Debug)]
 pub enum PlayerAction {
     Nothing,
     AttackLeft(Frames),
