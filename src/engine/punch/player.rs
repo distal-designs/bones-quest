@@ -80,6 +80,7 @@ impl Player {
             PlayerState::Dodge(_, DodgeDirection::Right) if hitzones.right => self.get_hit(),
             PlayerState::Dodge(_, DodgeDirection::Duck) if hitzones.duck => self.get_hit(),
             PlayerState::Stand(_) if hitzones.stand => self.get_hit(),
+            _ => {}
         }
     }
 
