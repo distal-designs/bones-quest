@@ -41,7 +41,7 @@ impl Enemy {
     }
 
     fn was_parried_by_player(state: &EnemyStateDefinition, player: &Player) -> bool {
-        state.vulnerability.parry && player.parrying
+        state.vulnerability.parry && player.is_parrying()
     }
 
     fn was_hit_by_player(state: &EnemyStateDefinition, attack: &PlayerAttack) -> bool {
