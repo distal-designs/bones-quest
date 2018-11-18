@@ -2,7 +2,6 @@ use rlua::Value::Nil;
 
 use super::Player;
 use super::player::{AttackDirection, Hitzone};
-use super::scripting::EnemyStateTransition::*;
 use super::scripting::{EnemyStateDefinition, EnemyStateTransition, Vulnerability};
 
 
@@ -33,8 +32,8 @@ impl Enemy {
     fn transition(&mut self, transition_definition: &EnemyStateTransition) {
         self.frame = 1;
         self.state = match transition_definition {
-            Static(ref new_state) => new_state.to_owned(),
-            Dynamic(ref transition_fn) => transition_fn.call(Nil).unwrap(),
+            EnemyStateTransition::Static(ref new_state) => new_state.to_owned(),
+            EnemyStateTransition::Dynamic(ref transition_fn) => transition_fn.call(Nil).unwrap(),
         };
     }
 
