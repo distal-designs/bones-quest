@@ -3,6 +3,7 @@ use ggez::event::Keycode::{Left, Right, W, A, D, S};
 use super::scripting::{EnemyHitzones, Hitzone, PlayerAttack};
 use engine::input::Input;
 
+type Frames = u8;
 
 #[derive(Debug)]
 pub struct Player {
