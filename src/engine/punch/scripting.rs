@@ -53,14 +53,6 @@ pub enum PlayerAttack {
     None
 }
 
-#[derive(Clone, Debug, PartialEq)]
-pub enum Hitzone {
-    Left,
-    Right,
-    Duck,
-    Stand,
-}
-
 #[derive(Clone, Debug, EnumString)]
 pub enum Vulnerability {
     #[strum(serialize="BLOCK")]

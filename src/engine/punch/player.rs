@@ -24,6 +24,14 @@ pub enum DodgeDirection {
     Duck,
 }
 
+#[derive(Clone, Debug, PartialEq)]
+pub enum Hitzone {
+    Left,
+    Right,
+    Duck,
+    Stand,
+}
+
 #[derive(Debug)]
 pub enum AttackDirection {
     Left,

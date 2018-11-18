@@ -1,9 +1,9 @@
 use rlua::Value::Nil;
 
 use super::Player;
-use super::player::AttackDirection;
+use super::player::{AttackDirection, Hitzone};
 use super::scripting::EnemyStateTransition::*;
-use super::scripting::{EnemyStateDefinition, EnemyStateTransition, Hitzone, Vulnerability};
+use super::scripting::{EnemyStateDefinition, EnemyStateTransition, Vulnerability};
 
 
 #[derive(Debug)]
