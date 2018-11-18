@@ -64,8 +64,8 @@ impl Player {
                 => vec![
                     (&W, Stand(Parry(7))),
                     (&A, Dodge(30, DodgeDirection::Left)),
-                    (&S, Dodge(30, DodgeDirection::Right)),
-                    (&D, Dodge(30, DodgeDirection::Duck)),
+                    (&D, Dodge(30, DodgeDirection::Right)),
+                    (&S, Dodge(30, DodgeDirection::Duck)),
                     (&Left, Stand(Attack(4, AttackDirection::Left))),
                     (&Right, Stand(Attack(4, AttackDirection::Right)))
                    ].into_iter()
