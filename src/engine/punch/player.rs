@@ -83,6 +83,13 @@ impl Player {
         }
     }
 
+    pub fn attack_direction(&self) -> Option<AttackDirection> {
+        match self.state {
+            PlayerState::Stand(PlayerAction::Attack(_, ad)) => Some(ad),
+            _ => None,
+        }
+    }
+
     fn get_hit(&mut self) {
         self.state = PlayerState::Stunned(30);
     }
