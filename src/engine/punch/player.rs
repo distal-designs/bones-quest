@@ -98,10 +98,7 @@ impl Player {
 impl Default for Player {
     fn default() -> Self {
         Player {
-            hitzone: Hitzone::Stand,
-            attack: PlayerAttack::None,
-            parrying: true,
-            stun_status: StunStatus::Normal,
+            state: PlayerState::Stand(PlayerAction::Neutral),
         }
     }
 }
