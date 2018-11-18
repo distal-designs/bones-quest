@@ -14,7 +14,7 @@ pub struct Player {
 pub enum State {
     Stunned(Frames),
     Dodge(Frames, DodgeDirection),
-    Stand(PlayerAction),
+    Stand(Action),
 }
 
 #[derive(Clone, Copy, Debug)]
@@ -39,7 +39,7 @@ pub enum AttackDirection {
 }
 
 #[derive(Debug)]
-pub enum PlayerAction {
+pub enum Action {
     Neutral,
     Attack(Frames, AttackDirection),
     Parry(Frames),
@@ -48,7 +48,7 @@ pub enum PlayerAction {
 impl Player {
     pub fn update(&mut self, input: &Input) {
         use self::State::*;
-        use self::PlayerAction::*;
+        use self::Action::*;
         let recently_pressed = input.pressed();
         self.state = match self.state {
             Stunned(1) | Dodge(1, _) | Stand(Attack(1, _)) | Stand(Parry(1))
@@ -86,7 +86,7 @@ impl Player {
     }
 
     pub fn is_parrying(&self) -> bool {
-        if let State::Stand(PlayerAction::Parry(_)) = self.state {
+        if let State::Stand(Action::Parry(_)) = self.state {
             true
         } else {
             false
@@ -95,7 +95,7 @@ impl Player {
 
     pub fn attack_direction(&self) -> Option<AttackDirection> {
         match self.state {
-            State::Stand(PlayerAction::Attack(_, ad)) => Some(ad),
+            State::Stand(Action::Attack(_, ad)) => Some(ad),
             _ => None,
         }
     }
@@ -119,7 +119,7 @@ impl Player {
 impl Default for Player {
     fn default() -> Self {
         Player {
-            state: State::Stand(PlayerAction::Neutral),
+            state: State::Stand(Action::Neutral),
         }
     }
 }
