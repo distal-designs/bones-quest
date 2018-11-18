@@ -46,13 +46,6 @@ pub enum EnemyStateTransition<'lua> {
     Dynamic(rlua::Function<'lua>),
 }
 
-#[derive(Debug, Eq, PartialEq)]
-pub enum PlayerAttack {
-    Left,
-    Right,
-    None
-}
-
 #[derive(Clone, Debug, EnumString)]
 pub enum Vulnerability {
     #[strum(serialize="BLOCK")]
