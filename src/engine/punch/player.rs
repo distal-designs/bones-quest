@@ -16,7 +16,7 @@ pub enum PlayerState {
 
 #[derive(Debug)]
 pub enum PlayerAction {
-    Nothing,
+    Neutral,
     AttackLeft(Frames),
     AttackRight(Frames),
     Parry(Frames),
