@@ -66,9 +66,9 @@ impl Player {
                     (&W, Stand(Parry(7))),
                     (&A, Dodge(30, DodgeDirection::Left)),
                     (&D, Dodge(30, DodgeDirection::Right)),
-                    (&S, Dodge(30, DodgeDirection::Duck)),
-                    (&Left, Stand(Attack(4, AttackDirection::Left))),
-                    (&Right, Stand(Attack(4, AttackDirection::Right)))
+                    (&S, Dodge(20, DodgeDirection::Duck)),
+                    (&Left, Stand(Attack(14, AttackDirection::Left))),
+                    (&Right, Stand(Attack(14, AttackDirection::Right)))
                    ].into_iter()
                     .find(|(key, _)| recently_pressed.contains(key))
                     .map_or(Stand(Neutral), |(_, new_state)| new_state)
