@@ -1,11 +1,9 @@
 use rlua::Value::Nil;
 
 use super::Player;
+use super::player::AttackDirection;
 use super::scripting::EnemyStateTransition::*;
-use super::scripting::{
-    EnemyStateDefinition, EnemyStateTransition, Hitzone, PlayerAttack,
-    Vulnerability,
-};
+use super::scripting::{EnemyStateDefinition, EnemyStateTransition, Hitzone, Vulnerability};
 
 
 #[derive(Debug)]
@@ -19,9 +17,9 @@ impl Enemy {
     pub fn update(&mut self, state: &EnemyStateDefinition, player: &Player) {
         if Self::was_parried_by_player(state, &player) {
             self.transition(&state.on_parry);
-        } else if Self::did_block_player(state, &player.attack) {
+        } else if Self::did_block_player(state, &player) {
             self.transition(&state.on_block);
-        } else if Self::was_hit_by_player(state, &player.attack) {
+        } else if Self::was_hit_by_player(state, &player) {
             self.transition(&state.on_getting_hit);
         } else if Self::did_hit_player(state, &player.hitzone) {
             self.transition(&state.after_hitting_player);
@@ -44,15 +42,15 @@ impl Enemy {
         state.vulnerability.parry && player.is_parrying()
     }
 
-    fn was_hit_by_player(state: &EnemyStateDefinition, attack: &PlayerAttack) -> bool {
+    fn was_hit_by_player(state: &EnemyStateDefinition, player: &Player) -> bool {
         match (
             &state.vulnerability.left,
             &state.vulnerability.right,
-            attack,
+            player.attack_direction(),
         ) {
-            (Vulnerability::Hit, _, PlayerAttack::Left) => true,
-            (_, Vulnerability::Hit, PlayerAttack::Right) => true,
-            (_, _, _) => false,
+            (Vulnerability::Hit, _, Some(AttackDirection::Left)) => true,
+            (_, Vulnerability::Hit, Some(AttackDirection::Right)) => true,
+            _ => false,
         }
     }
 
@@ -65,14 +63,14 @@ impl Enemy {
         }
     }
 
-    fn did_block_player(state: &EnemyStateDefinition, attack: &PlayerAttack) -> bool {
+    fn did_block_player(state: &EnemyStateDefinition, player: &Player) -> bool {
         match (
             &state.vulnerability.left,
             &state.vulnerability.right,
-            attack,
+            player.attack_direction(),
         ) {
-            (Vulnerability::Block, _, PlayerAttack::Left) => true,
-            (_, Vulnerability::Block, PlayerAttack::Right) => true,
+            (Vulnerability::Block, _, Some(AttackDirection::Left)) => true,
+            (_, Vulnerability::Block, Some(AttackDirection::Right)) => true,
             (_, _, _) => false,
         }
     }
