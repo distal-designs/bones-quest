@@ -7,11 +7,11 @@ type Frames = u8;
 
 #[derive(Debug)]
 pub struct Player {
-    state: PlayerState,
+    state: State,
 }
 
 #[derive(Debug)]
-pub enum PlayerState {
+pub enum State {
     Stunned(Frames),
     Dodge(Frames, DodgeDirection),
     Stand(PlayerAction),
@@ -47,7 +47,7 @@ pub enum PlayerAction {
 
 impl Player {
     pub fn update(&mut self, input: &Input) {
-        use self::PlayerState::*;
+        use self::State::*;
         use self::PlayerAction::*;
         let recently_pressed = input.pressed();
         self.state = match self.state {
@@ -77,16 +77,16 @@ impl Player {
 
     pub fn handle_collisions(&mut self, hitzones: &EnemyHitzones) {
         match self.state {
-            PlayerState::Dodge(_, DodgeDirection::Left) if hitzones.left => self.get_hit(),
-            PlayerState::Dodge(_, DodgeDirection::Right) if hitzones.right => self.get_hit(),
-            PlayerState::Dodge(_, DodgeDirection::Duck) if hitzones.duck => self.get_hit(),
-            PlayerState::Stand(_) if hitzones.stand => self.get_hit(),
+            State::Dodge(_, DodgeDirection::Left) if hitzones.left => self.get_hit(),
+            State::Dodge(_, DodgeDirection::Right) if hitzones.right => self.get_hit(),
+            State::Dodge(_, DodgeDirection::Duck) if hitzones.duck => self.get_hit(),
+            State::Stand(_) if hitzones.stand => self.get_hit(),
             _ => {}
         }
     }
 
     pub fn is_parrying(&self) -> bool {
-        if let PlayerState::Stand(PlayerAction::Parry(_)) = self.state {
+        if let State::Stand(PlayerAction::Parry(_)) = self.state {
             true
         } else {
             false
@@ -95,23 +95,23 @@ impl Player {
 
     pub fn attack_direction(&self) -> Option<AttackDirection> {
         match self.state {
-            PlayerState::Stand(PlayerAction::Attack(_, ad)) => Some(ad),
+            State::Stand(PlayerAction::Attack(_, ad)) => Some(ad),
             _ => None,
         }
     }
 
     pub fn hitzone(&self) -> Option<Hitzone> {
         match self.state {
-            PlayerState::Stand(_) => Some(Hitzone::Stand),
-            PlayerState::Dodge(_, DodgeDirection::Left) => Some(Hitzone::Left),
-            PlayerState::Dodge(_, DodgeDirection::Right) => Some(Hitzone::Right),
-            PlayerState::Dodge(_, DodgeDirection::Duck) => Some(Hitzone::Duck),
+            State::Stand(_) => Some(Hitzone::Stand),
+            State::Dodge(_, DodgeDirection::Left) => Some(Hitzone::Left),
+            State::Dodge(_, DodgeDirection::Right) => Some(Hitzone::Right),
+            State::Dodge(_, DodgeDirection::Duck) => Some(Hitzone::Duck),
             _ => None,
         }
     }
 
     fn get_hit(&mut self) {
-        self.state = PlayerState::Stunned(30);
+        self.state = State::Stunned(30);
     }
 }
 
@@ -119,7 +119,7 @@ impl Player {
 impl Default for Player {
     fn default() -> Self {
         Player {
-            state: PlayerState::Stand(PlayerAction::Neutral),
+            state: State::Stand(PlayerAction::Neutral),
         }
     }
 }
