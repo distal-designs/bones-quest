@@ -21,7 +21,7 @@ impl Enemy {
             self.transition(&state.on_block);
         } else if Self::was_hit_by_player(state, &player) {
             self.transition(&state.on_getting_hit);
-        } else if Self::did_hit_player(state, &player.hitzone) {
+        } else if Self::did_hit_player(state, &player) {
             self.transition(&state.after_hitting_player);
         } else if self.frame >= state.frames {
             self.transition(&state.on_end);
@@ -54,12 +54,13 @@ impl Enemy {
         }
     }
 
-    fn did_hit_player(state: &EnemyStateDefinition, player_zone: &Hitzone) -> bool {
-        match player_zone {
-            Hitzone::Left => state.hitzones.left,
-            Hitzone::Right => state.hitzones.right,
-            Hitzone::Duck => state.hitzones.duck,
-            Hitzone::Stand => state.hitzones.stand,
+    fn did_hit_player(state: &EnemyStateDefinition, player: &Player) -> bool {
+        match player.hitzone() {
+            Some(Hitzone::Left) => state.hitzones.left,
+            Some(Hitzone::Right) => state.hitzones.right,
+            Some(Hitzone::Duck) => state.hitzones.duck,
+            Some(Hitzone::Stand) => state.hitzones.stand,
+            None => false,
         }
     }
 
