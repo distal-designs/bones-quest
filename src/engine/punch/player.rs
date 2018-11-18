@@ -98,6 +98,16 @@ impl Player {
         }
     }
 
+    pub fn hitzone(&self) -> Option<Hitzone> {
+        match self.state {
+            PlayerState::Stand(_) => Some(Hitzone::Stand),
+            PlayerState::Dodge(_, DodgeDirection::Left) => Some(Hitzone::Left),
+            PlayerState::Dodge(_, DodgeDirection::Right) => Some(Hitzone::Right),
+            PlayerState::Dodge(_, DodgeDirection::Duck) => Some(Hitzone::Duck),
+            _ => None,
+        }
+    }
+
     fn get_hit(&mut self) {
         self.state = PlayerState::Stunned(30);
     }
