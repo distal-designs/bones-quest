@@ -4,13 +4,11 @@ use super::Player;
 use super::player::{AttackDirection, Hitzone};
 use super::scripting::{EnemyStateDefinition, EnemyStateTransition, Vulnerability};
 
-
 #[derive(Debug)]
 pub struct Enemy {
     pub frame: u8,
     pub state: String,
 }
-
 
 impl Enemy {
     pub fn update(&mut self, state: &EnemyStateDefinition, player: &Player) {

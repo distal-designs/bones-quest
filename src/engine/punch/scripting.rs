@@ -2,7 +2,6 @@ use std::collections::HashMap;
 
 use rlua::{self, FromLua, Lua, Table, Value};
 
-
 #[derive(Clone, Debug)]
 pub struct EnemyStateVulnerability {
     pub left: Vulnerability,
@@ -39,7 +38,6 @@ pub struct EnemyDefinition<'lua> {
     pub states: HashMap<String, EnemyStateDefinition<'lua>>,
 }
 
-
 #[derive(Clone, Debug)]
 pub enum EnemyStateTransition<'lua> {
     Static(String),
@@ -66,7 +64,6 @@ pub enum MainCharacter {
     Cattlebones,
 }
 
-
 impl<'lua> EnemyDefinition<'lua> {
     pub fn load(lua: &'lua Lua, enemy_id: &str) -> EnemyDefinition<'lua> {
         let loader = format!("return require 'src.game.enemies.{}'", enemy_id);
@@ -80,7 +77,6 @@ impl<'lua> EnemyDefinition<'lua> {
         ))
     }
 }
-
 
 impl<'lua> FromLua<'lua> for EnemyStateVulnerability {
     fn from_lua(value: Value, lua: &Lua) -> rlua::Result<Self> {

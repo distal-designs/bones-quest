@@ -115,7 +115,6 @@ impl Player {
     }
 }
 
-
 impl Default for Player {
     fn default() -> Self {
         Self {

@@ -9,14 +9,12 @@ use engine;
 use engine::input::Input;
 use engine::lua::Ext;
 
-
 pub struct Scene {
     lua: Lua,
     enemy_id: String,
     enemy: Enemy,
     player: Player,
 }
-
 
 impl Scene {
     pub fn new(enemy_id: &str) -> Self {
@@ -31,7 +29,6 @@ impl Scene {
         }
     }
 }
-
 
 impl<F> engine::scene::Scene<Input, F> for Scene {
     fn update(&mut self, input: &Input, _: &mut F) -> GameResult<()> {

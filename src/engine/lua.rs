@@ -2,11 +2,9 @@ use std::env;
 
 use rlua::{Lua, Value};
 
-
 pub trait Ext {
     fn new_with_path() -> Lua;
 }
-
 
 impl Ext for Lua {
     fn new_with_path() -> Lua {
