@@ -74,7 +74,7 @@ impl<'lua> EnemyDefinition<'lua> {
     }
 
     pub fn state(&self, name: &str) -> &EnemyStateDefinition<'lua> {
-        self.states.get(name).expect(&format!(
+        self.states.get(name).unwrap_or_else(|| panic!(
             "No state in enemy definition called '{}'",
             name
         ))
