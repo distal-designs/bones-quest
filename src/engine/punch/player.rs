@@ -32,7 +32,7 @@ pub enum Hitzone {
     Stand,
 }
 
-#[derive(Debug)]
+#[derive(Clone, Copy, Debug)]
 pub enum AttackDirection {
     Left,
     Right,
