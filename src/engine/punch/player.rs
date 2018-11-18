@@ -6,6 +6,14 @@ use engine::input::Input;
 type Frames = u8;
 
 #[derive(Debug)]
+pub enum PlayerAction {
+    Nothing,
+    AttackLeft(Frames),
+    AttackRight(Frames),
+    Parry(Frames),
+}
+
+#[derive(Debug)]
 pub struct Player {
     pub hitzone: Hitzone,
     pub attack: PlayerAttack,
