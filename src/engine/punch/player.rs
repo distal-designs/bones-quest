@@ -74,15 +74,12 @@ impl Player {
     }
 
     pub fn handle_collisions(&mut self, hitzones: &EnemyHitzones) {
-        if let StunStatus::Stunned(_) = self.stun_status { return };
-
-        match self.hitzone {
-            Hitzone::Left if hitzones.left => self.get_hit(),
-            Hitzone::Right if hitzones.right => self.get_hit(),
-            Hitzone::Stand if hitzones.stand => self.get_hit(),
-            Hitzone::Duck if hitzones.duck => self.get_hit(),
-            _ => {}
-        };
+        match self.state {
+            PlayerState::Dodge(_, DodgeDirection::Left) if hitzones.left => self.get_hit(),
+            PlayerState::Dodge(_, DodgeDirection::Right) if hitzones.right => self.get_hit(),
+            PlayerState::Dodge(_, DodgeDirection::Duck) if hitzones.duck => self.get_hit(),
+            PlayerState::Stand(_) if hitzones.stand => self.get_hit(),
+        }
     }
 
     fn get_hit(&mut self) {
