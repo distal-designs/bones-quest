@@ -7,7 +7,7 @@ use super::Enemy;
 use super::scripting::EnemyDefinition;
 use engine;
 use engine::input::Input;
-use engine::lua::LuaExt;
+use engine::lua::Ext;
 
 
 pub struct Scene {
