@@ -17,7 +17,7 @@ pub enum PlayerState {
     Stand(PlayerAction),
 }
 
-#[derive(Debug)]
+#[derive(Clone, Copy, Debug)]
 pub enum DodgeDirection {
     Left,
     Right,
