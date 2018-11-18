@@ -1,6 +1,6 @@
 use ggez::event::Keycode::{Left, Right, W, A, D, S};
 
-use super::scripting::{EnemyHitzones, Hitzone, PlayerAttack};
+use super::scripting::{EnemyHitzones};
 use engine::input::Input;
 
 type Frames = u8;
@@ -46,40 +46,31 @@ pub enum StunStatus {
 
 impl Player {
     pub fn update(&mut self, input: &Input) {
-        match self.stun_status {
-            StunStatus::Stunned(0) => {
-                self.stun_status = StunStatus::Normal;
-            }
-            StunStatus::Stunned(x) => {
-                self.stun_status = StunStatus::Stunned(x - 1);
-                return;
-            }
-            StunStatus::Normal => {}
+        use self::PlayerState::*;
+        use self::PlayerAction::*;
+        self.state = match self.state {
+            Stunned(1) | Dodge(1, _) | Stand(Attack(1, _)) | Stand(Parry(1))
+                => Stand(Neutral),
+            Stunned(x)
+                => Stunned(x - 1),
+            Dodge(x, d)
+                => Dodge(x - 1, d),
+            Stand(Attack(x, a))
+                => Stand(Attack(x - 1, a)),
+            Stand(Parry(x))
+                => Stand(Parry(x - 1)),
+            Stand(Neutral)
+                => vec![
+                    (&W, Stand(Parry(7))),
+                    (&A, Dodge(30, DodgeDirection::Left)),
+                    (&S, Dodge(30, DodgeDirection::Right)),
+                    (&D, Dodge(30, DodgeDirection::Duck)),
+                    (&Left, Stand(Attack(4, AttackDirection::Left))),
+                    (&Right, Stand(Attack(4, AttackDirection::Right)))
+                   ].into_iter()
+                    .find(|(key, _)| input.current_input.contains(key))
+                    .map_or(Stand(Neutral), |(_, new_state)| new_state)
         };
-
-        self.hitzone = if input.current_input.contains(&S) {
-            Hitzone::Duck
-        } else if input.current_input.contains(&A) {
-            Hitzone::Left
-        } else if input.current_input.contains(&D) {
-            Hitzone::Right
-        } else {
-            Hitzone::Stand
-        };
-
-        self.attack = if self.hitzone != Hitzone::Stand {
-            PlayerAttack::None
-        } else if input.current_input.contains(&Left) {
-            PlayerAttack::Left
-        } else if input.current_input.contains(&Right) {
-            PlayerAttack::Right
-        } else {
-            PlayerAttack::None
-        };
-
-        self.parrying = self.hitzone == Hitzone::Stand
-            && self.attack == PlayerAttack::None
-            && input.current_input.contains(&W);
     }
 
     pub fn handle_collisions(&mut self, hitzones: &EnemyHitzones) {
