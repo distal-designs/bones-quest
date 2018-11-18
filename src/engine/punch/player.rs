@@ -8,26 +8,33 @@ type Frames = u8;
 #[derive(Debug)]
 pub enum PlayerState {
     Stunned(Frames),
-    DodgeLeft(Frames),
-    DodgeRight(Frames),
-    Duck(Frames),
+    Dodge(Frames, DodgeDirection),
     Stand(PlayerAction),
+}
+
+#[derive(Debug)]
+pub enum DodgeDirection {
+    Left,
+    Right,
+    Duck,
+}
+
+#[derive(Debug)]
+pub enum AttackDirection {
+    Left,
+    Right,
 }
 
 #[derive(Debug)]
 pub enum PlayerAction {
     Neutral,
-    AttackLeft(Frames),
-    AttackRight(Frames),
+    Attack(Frames, AttackDirection),
     Parry(Frames),
 }
 
 #[derive(Debug)]
 pub struct Player {
-    pub hitzone: Hitzone,
-    pub attack: PlayerAttack,
-    pub parrying: bool,
-    pub stun_status: StunStatus,
+    state: PlayerState,
 }
 
 #[derive(Debug)]
