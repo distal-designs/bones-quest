@@ -37,13 +37,6 @@ pub struct Player {
     state: PlayerState,
 }
 
-#[derive(Debug)]
-pub enum StunStatus {
-    Normal,
-    Stunned(u8),
-}
-
-
 impl Player {
     pub fn update(&mut self, input: &Input) {
         use self::PlayerState::*;
