@@ -49,6 +49,7 @@ impl Player {
     pub fn update(&mut self, input: &Input) {
         use self::PlayerState::*;
         use self::PlayerAction::*;
+        let recently_pressed = input.pressed();
         self.state = match self.state {
             Stunned(1) | Dodge(1, _) | Stand(Attack(1, _)) | Stand(Parry(1))
                 => Stand(Neutral),
@@ -69,7 +70,7 @@ impl Player {
                     (&Left, Stand(Attack(4, AttackDirection::Left))),
                     (&Right, Stand(Attack(4, AttackDirection::Right)))
                    ].into_iter()
-                    .find(|(key, _)| input.current_input.contains(key))
+                    .find(|(key, _)| recently_pressed.contains(key))
                     .map_or(Stand(Neutral), |(_, new_state)| new_state)
         };
     }
