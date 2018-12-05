@@ -4,6 +4,7 @@ use ggez::graphics::{
 use ggez::{Context, GameResult};
 
 use super::draw_cache::TryIntoDrawable;
+use std::collections::HashMap;
 
 
 pub struct Dialog {
@@ -33,6 +34,10 @@ pub struct Character {
     pub direction: String,
     pub position: i8,
 }
+
+
+pub struct Menu(HashMap<String, String>);
+pub struct MenuCache(Vec<Text>);
 
 
 impl TryIntoDrawable<Image> for Character {
@@ -175,6 +180,78 @@ impl Dialog {
 }
 
 
+impl TryIntoDrawable<MenuCache> for Menu {
+    fn try_into_drawable(&self, ctx: &mut Context) -> GameResult<MenuCache> {
+        let Menu(m) = self;
+
+        let mut text = String::new();
+        for (k, v) in m {
+            text.push_str(&format!("{}) {}\n", k, v));
+        }
+
+        let font = ctx.default_font.clone();
+        let text_cache = font
+            .get_wrap(&text, Self::bounds(ctx).w as usize)
+            .1
+            .iter()
+            .map(|line| Text::new(ctx, &line, &font).unwrap())
+            .collect();
+
+
+        Ok(MenuCache(text_cache))
+    }
+}
+
+
+impl Drawable for MenuCache {
+    fn draw_ex(&self, ctx: &mut Context, mode: DrawParam) -> GameResult<()> {
+        let bounds = Menu::bounds(ctx);
+
+        let MenuCache(m) = self;
+        for (index, text) in m.iter().enumerate() {
+            let x = bounds.x;
+            let y = bounds.y as usize + (index * text.height() as usize);
+            text.draw(ctx, Point2::new(x, y as f32), 0.0)?
+        }
+
+        Ok(())
+    }
+
+    fn set_blend_mode(&mut self, mode: Option<BlendMode>) {
+        let MenuCache(m) = self;
+        for text in m.iter_mut() {
+            text.set_blend_mode(mode);
+        }
+    }
+
+    fn get_blend_mode(&self) -> Option<BlendMode> {
+        let MenuCache(m) = self;
+        m.first()
+            .and_then(|text| text.get_blend_mode())
+    }
+}
+
+impl Menu {
+    pub fn new(menu: Option<HashMap<String, String>>) -> Option<Menu> {
+        match menu {
+            Some(v) => Some(Menu(v)),
+            None => None
+        }
+    }
+
+    fn bounds(ctx: &Context) -> Rect {
+       let width = ctx.conf.window_mode.width;
+        let height = ctx.conf.window_mode.height;
+        Rect {
+            w: width as f32 * 0.8,
+            h: height as f32 * 0.2,
+            x: width as f32 * 0.1,
+            y: height as f32 * 0.7,
+        }
+    }
+}
+
+
 pub enum Background {
     Color(graphics::Color),
 }
@@ -222,7 +299,6 @@ impl Drawable for BackgroundCache {
         }
     }
 }
-
 
 pub fn to_window_position(width: u32, position: i8) -> f32 {
     let position = f32::from(position);

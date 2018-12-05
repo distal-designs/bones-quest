@@ -7,7 +7,7 @@ use ggez::{self, GameResult};
 
 use engine::draw_cache::DrawCache;
 use engine::input::Input;
-use engine::ui::{Background, BackgroundCache, Character, Dialog, DialogCache, Portrait};
+use engine::ui::{Background, BackgroundCache, Character, Dialog, DialogCache, Portrait, Menu, MenuCache};
 use engine::visual_novel::command::{self, Command};
 use engine::{self, color};
 
@@ -19,7 +19,7 @@ pub struct VisualNovel {
     background: Option<DrawCache<Background, BackgroundCache>>,
     status: Status,
     characters: HashMap<String, DrawCache<Character, Image>>,
-    menu: Option<HashMap<String, String>>,
+    menu: Option<DrawCache<Menu, MenuCache>>,
 }
 
 
@@ -28,7 +28,11 @@ impl VisualNovel {
         let commands = &mut self.commands;
         let command = &mut commands[self.command_index];
 
-        self.menu = command.menu.clone();
+        self.menu = match Menu::new(command.menu.clone()) {
+            Some(m) => Some(DrawCache::new(m)),
+            None => None
+        };
+        //self.menu = Menu::new(command.menu.clone());
         Self::apply_characters(&mut self.characters, command);
         Self::apply_dialog(&mut self.dialog, command);
         Self::apply_background(&mut self.background, command);
