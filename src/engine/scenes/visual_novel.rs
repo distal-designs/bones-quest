@@ -92,6 +92,35 @@ impl VisualNovel {
     }
 
 
+    fn get_next_command_by_menu_option(&self, key: Keycode) -> usize {
+        let num: i8 = match key {
+            Num1 => 0,
+            Num2 => 1,
+            Num3 => 2,
+            Num4 => 3,
+            _ => -1,
+        };
+
+        let menu = self.commands[self.command_index].menu.as_ref().unwrap();
+        if num > menu.len() as i8 || num < 0 {
+            return self.command_index
+        }
+
+        let menu_key = menu.keys().into_iter().nth(num as usize).unwrap();
+        let ref id = menu[menu_key];
+
+        let mut idx = 0;
+        for (i, cmd) in self.commands.iter().enumerate() {
+            idx = match cmd.id {
+                Some(ref cid) if cid == id => i,
+                Some(_) => idx,
+                None => idx,
+            };
+        }
+        idx
+    }
+
+
     pub fn new(commands: Vec<Command>) -> Self {
         Self {
             commands,
@@ -116,9 +145,10 @@ impl<F> engine::scene::Scene<Input, F> for VisualNovel {
         for keycode in input.pressed() {
             self.command_index = match self.menu.is_some() {
                 true => match (keycode, self.command_index) {
-                    (k, x) if is_menu_option(k, self.menu.is_some()) => {
+                    (k, _) if is_menu_option(k, self.menu.is_some()) => {
                         self.status = Status::PendingCommands;
-                        x + 1
+
+                        self.get_next_command_by_menu_option(k)
                     },
                     (_, x) => x,
                 }
