@@ -1,4 +1,7 @@
+extern crate strum;
+#[macro_use] extern crate strum_macros;
 extern crate ggez;
+extern crate rlua;
 extern crate queues;
 extern crate regex;
 #[macro_use]
@@ -10,9 +13,8 @@ mod engine;
 
 use ggez::{conf, event, Context};
 
-use engine::main_state::MainState;
-use engine::scenes::visual_novel::VisualNovel;
-use engine::visual_novel::command::Command;
+use crate::engine::main_state::MainState;
+use crate::engine::punch::Scene;
 
 
 fn main() {
@@ -21,8 +23,7 @@ fn main() {
     let ctx = &mut Context::load_from_conf("bones-quest", "distal-designs", c).unwrap();
 
     let state = &mut MainState::new();
-    let dialog = Command::load(&mut ctx.filesystem, "/dialogs/blood.toml").unwrap();
-    let vn = VisualNovel::new(dialog);
-    state.scenes.push(Box::new(vn));
+    let scene = Scene::new("example");
+    state.scenes.push(Box::new(scene));
     event::run(ctx, state).unwrap();
 }

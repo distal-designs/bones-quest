@@ -32,7 +32,7 @@ impl VisualNovel {
             .position(pred)
             .expect(&format!("ID does not exist: {}", target));
         self.status = Status::PendingCommands;
-        return new_index;
+        new_index
     }
 
 
