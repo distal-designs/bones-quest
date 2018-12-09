@@ -249,8 +249,8 @@ impl Menu {
         Rect {
             w: width as f32 * 0.8,
             h: height as f32 * 0.2,
-            x: width as f32 * 0.1,
-            y: height as f32 * 0.7,
+            x: width as f32 * 0.2,
+            y: height as f32 * 0.75,
         }
     }
 }

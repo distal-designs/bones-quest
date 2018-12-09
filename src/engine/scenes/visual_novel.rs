@@ -145,6 +145,10 @@ impl<F> engine::scene::Scene<Input, F> for VisualNovel {
         for keycode in input.pressed() {
             self.command_index = match self.menu.is_some() {
                 true => match (keycode, self.command_index) {
+                    (Left, x) if x != 0 => {
+                        self.status = Status::PendingCommands;
+                        x - 1
+                    },
                     (k, _) if is_menu_option(k, self.menu.is_some()) => {
                         self.status = Status::PendingCommands;
 
