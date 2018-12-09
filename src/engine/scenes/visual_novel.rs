@@ -1,7 +1,8 @@
 use std::collections::HashMap;
 use std::mem;
 
-use ggez::event::Keycode::{Left, Right};
+use ggez::event::Keycode;
+use ggez::event::Keycode::{Left, Right, Num1, Num2, Num3, Num4};
 use ggez::graphics::{DrawParam, Drawable, Image, Point2};
 use ggez::{self, GameResult};
 
@@ -32,7 +33,7 @@ impl VisualNovel {
             Some(m) => Some(DrawCache::new(m)),
             None => None
         };
-        //self.menu = Menu::new(command.menu.clone());
+
         Self::apply_characters(&mut self.characters, command);
         Self::apply_dialog(&mut self.dialog, command);
         Self::apply_background(&mut self.background, command);
@@ -105,19 +106,33 @@ impl VisualNovel {
 }
 
 
+fn is_menu_option(key: Keycode, has_menu: bool) -> bool {
+    has_menu && (key == Num1 || key == Num2 || key == Num3 || key == Num4)
+}
+
+
 impl<F> engine::scene::Scene<Input, F> for VisualNovel {
     fn update(&mut self, input: &Input, _: &mut F) -> GameResult<()> {
         for keycode in input.pressed() {
-            self.command_index = match (keycode, self.command_index) {
-                (Left, x) if x != 0 => {
-                    self.status = Status::PendingCommands;
-                    x - 1
+            self.command_index = match self.menu.is_some() {
+                true => match (keycode, self.command_index) {
+                    (k, x) if is_menu_option(k, self.menu.is_some()) => {
+                        self.status = Status::PendingCommands;
+                        x + 1
+                    },
+                    (_, x) => x,
                 }
-                (Right, x) if x != self.commands.len() - 1 => {
-                    self.status = Status::PendingCommands;
-                    x + 1
+                false => match (keycode, self.command_index) {
+                    (Left, x) if x != 0 => {
+                        self.status = Status::PendingCommands;
+                        x - 1
+                    }
+                    (Right, x) if x != self.commands.len() - 1 => {
+                        self.status = Status::PendingCommands;
+                        x + 1
+                    }
+                    (_, x) => x,
                 }
-                (_, x) => x,
             }
         }
         if let Status::PendingCommands = self.status {
@@ -143,6 +158,9 @@ impl<F> engine::scene::Scene<Input, F> for VisualNovel {
         }
         if let Some(ref dialog) = self.dialog {
             dialog.draw_ex(ctx, DrawParam::default())?;
+        }
+        if let Some(ref menu) = self.menu {
+            menu.draw_ex(ctx, DrawParam::default())?;
         }
         let screen_width = ctx.conf.window_mode.width;
         for draw_cache in self.characters.values() {

@@ -36,6 +36,7 @@ pub struct Character {
 }
 
 
+#[derive(Debug)]
 pub struct Menu(HashMap<String, String>);
 pub struct MenuCache(Vec<Text>);
 
@@ -185,8 +186,11 @@ impl TryIntoDrawable<MenuCache> for Menu {
         let Menu(m) = self;
 
         let mut text = String::new();
-        for (k, v) in m {
-            text.push_str(&format!("{}) {}\n", k, v));
+        
+        let mut pos = 1;
+        for (k, _) in m {
+            text.push_str(&format!("{}) {}\n", pos, k));
+            pos += 1;
         }
 
         let font = ctx.default_font.clone();
