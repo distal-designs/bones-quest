@@ -1,13 +1,14 @@
 use std::collections::HashMap;
 use std::mem;
 
-use ggez::event::Keycode::{Left, Num1, Num2, Num3, Right};
+use ggez::event::Keycode;
+use ggez::event::Keycode::{Left, Right, Num1, Num2, Num3, Num4};
 use ggez::graphics::{DrawParam, Drawable, Image, Point2};
 use ggez::{self, GameResult};
 
 use engine::draw_cache::DrawCache;
 use engine::input::Input;
-use engine::ui::{Background, BackgroundCache, Character, Dialog, DialogCache, Portrait};
+use engine::ui::{Background, BackgroundCache, Character, Dialog, DialogCache, Portrait, Menu, MenuCache};
 use engine::visual_novel::command::{self, Command};
 use engine::{self, color};
 
@@ -19,7 +20,7 @@ pub struct VisualNovel {
     background: Option<DrawCache<Background, BackgroundCache>>,
     status: Status,
     characters: HashMap<String, DrawCache<Character, Image>>,
-    menu: Option<HashMap<String, String>>,
+    menu: Option<DrawCache<Menu, MenuCache>>,
 }
 
 
@@ -40,7 +41,11 @@ impl VisualNovel {
         let commands = &mut self.commands;
         let command = &mut commands[self.command_index];
 
-        self.menu = command.menu.clone();
+        self.menu = match Menu::new(command.menu.clone()) {
+            Some(m) => Some(DrawCache::new(m)),
+            None => None
+        };
+
         Self::apply_characters(&mut self.characters, command);
         Self::apply_dialog(&mut self.dialog, command);
         Self::apply_background(&mut self.background, command);
@@ -99,6 +104,35 @@ impl VisualNovel {
     }
 
 
+    fn get_next_command_by_menu_option(&self, key: Keycode) -> usize {
+        let num: i8 = match key {
+            Num1 => 0,
+            Num2 => 1,
+            Num3 => 2,
+            Num4 => 3,
+            _ => -1,
+        };
+
+        let menu = self.commands[self.command_index].menu.as_ref().unwrap();
+        if num > menu.len() as i8 || num < 0 {
+            return self.command_index
+        }
+
+        let menu_key = menu.keys().into_iter().nth(num as usize).unwrap();
+        let ref id = menu[menu_key];
+
+        let mut idx = 0;
+        for (i, cmd) in self.commands.iter().enumerate() {
+            idx = match cmd.id {
+                Some(ref cid) if cid == id => i,
+                Some(_) => idx,
+                None => idx,
+            };
+        }
+        idx
+    }
+
+
     pub fn new(commands: Vec<Command>) -> Self {
         Self {
             commands,
@@ -113,22 +147,38 @@ impl VisualNovel {
 }
 
 
+fn is_menu_option(key: Keycode, has_menu: bool) -> bool {
+    has_menu && (key == Num1 || key == Num2 || key == Num3 || key == Num4)
+}
+
+
 impl<F> engine::scene::Scene<Input, F> for VisualNovel {
     fn update(&mut self, input: &Input, _: &mut F) -> GameResult<()> {
         for keycode in input.pressed() {
-            self.command_index = match (keycode, self.command_index) {
-                (Left, x) if x != 0 => {
-                    self.status = Status::PendingCommands;
-                    x - 1
+            self.command_index = match self.menu.is_some() {
+                true => match (keycode, self.command_index) {
+                    (Left, x) if x != 0 => {
+                        self.status = Status::PendingCommands;
+                        x - 1
+                    },
+                    (k, _) if is_menu_option(k, self.menu.is_some()) => {
+                        self.status = Status::PendingCommands;
+
+                        self.get_next_command_by_menu_option(k)
+                    },
+                    (_, x) => x,
                 }
-                (Right, x) if x != self.commands.len() - 1 => {
-                    self.status = Status::PendingCommands;
-                    x + 1
+                false => match (keycode, self.command_index) {
+                    (Left, x) if x != 0 => {
+                        self.status = Status::PendingCommands;
+                        x - 1
+                    }
+                    (Right, x) if x != self.commands.len() - 1 => {
+                        self.status = Status::PendingCommands;
+                        x + 1
+                    }
+                    (_, x) => x,
                 }
-                (Num1, _) => Self::jump(self, "blood-begin"),
-                (Num2, _) => Self::jump(self, "blood-second"),
-                (Num3, _) => Self::jump(self, "blood-end"),
-                (_, x) => x,
             }
         }
         if let Status::PendingCommands = self.status {
@@ -154,6 +204,9 @@ impl<F> engine::scene::Scene<Input, F> for VisualNovel {
         }
         if let Some(ref dialog) = self.dialog {
             dialog.draw_ex(ctx, DrawParam::default())?;
+        }
+        if let Some(ref menu) = self.menu {
+            menu.draw_ex(ctx, DrawParam::default())?;
         }
         let screen_width = ctx.conf.window_mode.width;
         for draw_cache in self.characters.values() {
