@@ -12,13 +12,13 @@ pub struct Enemy {
 
 impl Enemy {
     pub fn update(&mut self, state: &EnemyStateDefinition, player: &Player) {
-        if Self::was_parried_by_player(state, &player) {
+        if Self::was_parried_by_player(state, player) {
             self.transition(&state.on_parry);
-        } else if Self::did_block_player(state, &player) {
+        } else if Self::did_block_player(state, player) {
             self.transition(&state.on_block);
-        } else if Self::was_hit_by_player(state, &player) {
+        } else if Self::was_hit_by_player(state, player) {
             self.transition(&state.on_getting_hit);
-        } else if Self::did_hit_player(state, &player) {
+        } else if Self::did_hit_player(state, player) {
             self.transition(&state.after_hitting_player);
         } else if self.frame >= state.frames {
             self.transition(&state.on_end);

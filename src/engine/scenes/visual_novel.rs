@@ -30,7 +30,7 @@ impl VisualNovel {
             .commands
             .iter()
             .position(pred)
-            .expect(&format!("ID does not exist: {}", target));
+            .unwrap_or_else(|| panic!("ID does not exist: {}", target));
         self.status = Status::PendingCommands;
         new_index
     }
@@ -73,10 +73,10 @@ impl VisualNovel {
     ) {
         match &command.background {
             Some(command::Background::Hide) => {
-                mem::replace(background, None);
+                background.take();
             }
             Some(command::Background::Color(hex)) => {
-                let new_bg = DrawCache::new(Background::Color(color::from_hex(&hex)));
+                let new_bg = DrawCache::new(Background::Color(color::from_hex(hex)));
                 mem::replace(background, Some(new_bg));
             }
             Some(command::Background::Image(_)) => unimplemented!(),

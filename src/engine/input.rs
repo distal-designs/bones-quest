@@ -37,7 +37,7 @@ impl Input {
 
 
     pub fn get_input_history(&self) -> &Vec<HashSet<Keycode>> {
-        &self.input_history.get_queue()
+        self.input_history.get_queue()
     }
 
 
@@ -56,7 +56,7 @@ impl Input {
                 let len = all.len();
                 let current = &all[len - 1];
                 let previous = &all[len - 2];
-                current.difference(&previous).cloned().collect()
+                current.difference(previous).cloned().collect()
             }
         }
     }
