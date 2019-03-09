@@ -1,10 +1,8 @@
-extern crate toml;
-
-
 use std::collections::HashMap;
 use std::io::Read;
 
 use ggez::filesystem::Filesystem;
+use serde::Deserialize;
 
 
 #[derive(Deserialize, Debug)]

@@ -5,11 +5,11 @@ use ggez::event::Keycode::{Left, Num1, Num2, Num3, Right};
 use ggez::graphics::{DrawParam, Drawable, Image, Point2};
 use ggez::{self, GameResult};
 
-use engine::draw_cache::DrawCache;
-use engine::input::Input;
-use engine::ui::{Background, BackgroundCache, Character, Dialog, DialogCache, Portrait};
-use engine::visual_novel::command::{self, Command};
-use engine::{self, color};
+use crate::engine::draw_cache::DrawCache;
+use crate::engine::input::Input;
+use crate::engine::ui::{Background, BackgroundCache, Character, Dialog, DialogCache, Portrait};
+use crate::engine::visual_novel::command::{self, Command};
+use crate::engine::{self, color};
 
 
 pub struct VisualNovel {
@@ -30,7 +30,7 @@ impl VisualNovel {
             .commands
             .iter()
             .position(pred)
-            .expect(&format!("ID does not exist: {}", target));
+            .unwrap_or_else(|| panic!("ID does not exist: {}", target));
         self.status = Status::PendingCommands;
         new_index
     }
@@ -73,10 +73,10 @@ impl VisualNovel {
     ) {
         match &command.background {
             Some(command::Background::Hide) => {
-                mem::replace(background, None);
+                background.take();
             }
             Some(command::Background::Color(hex)) => {
-                let new_bg = DrawCache::new(Background::Color(color::from_hex(&hex)));
+                let new_bg = DrawCache::new(Background::Color(color::from_hex(hex)));
                 mem::replace(background, Some(new_bg));
             }
             Some(command::Background::Image(_)) => unimplemented!(),

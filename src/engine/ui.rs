@@ -48,7 +48,7 @@ impl TryIntoDrawable<DialogCache> for Dialog {
             .get_wrap(&self.text, Self::bounds(ctx).w as usize)
             .1
             .iter()
-            .map(|line| Text::new(ctx, &line, &font).unwrap())
+            .map(|line| Text::new(ctx, line, &font).unwrap())
             .collect();
 
         let bounds = Self::bounds(ctx);
@@ -74,7 +74,7 @@ impl TryIntoDrawable<DialogCache> for Dialog {
 
         let (character, name_box) = match self.portrait {
             Some(Portrait { ref character, .. }) => {
-                let text = Text::new(ctx, &character, &font)?;
+                let text = Text::new(ctx, character, &font)?;
                 let name_box = graphics::Mesh::new_polygon(
                     ctx,
                     DrawMode::Fill,

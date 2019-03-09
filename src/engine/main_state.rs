@@ -5,7 +5,7 @@ use ggez::{event, Context, GameResult};
 
 use super::flags::Flags;
 use super::input::Input;
-use engine::scene_stack::SceneStack;
+use crate::engine::scene_stack::SceneStack;
 
 
 pub struct MainState {

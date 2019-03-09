@@ -24,8 +24,8 @@ impl Scene {
         Self {
             player: Player::default(),
             lua: Lua::new_with_path(),
-            enemy_id: enemy_id.to_owned(),
             enemy: Enemy { state, frame: 0 },
+            enemy_id,
         }
     }
 }
@@ -35,7 +35,7 @@ impl<F> engine::scene::Scene<Input, F> for Scene {
         self.player.update(input);
         let enemy_definition = EnemyDefinition::load(&self.lua, &self.enemy_id);
         let state_definition = enemy_definition.state(&self.enemy.state);
-        self.enemy.update(&state_definition, &self.player);
+        self.enemy.update(state_definition, &self.player);
         self.player.handle_collisions(&state_definition.hitzones);
         Ok(())
     }

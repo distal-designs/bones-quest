@@ -131,7 +131,6 @@ dependencies = [
  "regex 1.0.5 (registry+https://github.com/rust-lang/crates.io-index)",
  "rlua 0.14.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde 1.0.78 (registry+https://github.com/rust-lang/crates.io-index)",
- "serde_derive 1.0.78 (registry+https://github.com/rust-lang/crates.io-index)",
  "strum 0.10.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "strum_macros 0.10.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "toml 0.4.6 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -1023,6 +1022,9 @@ dependencies = [
 name = "serde"
 version = "1.0.78"
 source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "serde_derive 1.0.78 (registry+https://github.com/rust-lang/crates.io-index)",
+]
 
 [[package]]
 name = "serde_derive"
