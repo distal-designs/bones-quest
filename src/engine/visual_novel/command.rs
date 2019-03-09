@@ -1,6 +1,3 @@
-extern crate toml;
-
-
 use std::collections::HashMap;
 use std::io::Read;
 

@@ -1,9 +1,3 @@
-extern crate ggez;
-extern crate rlua;
-extern crate queues;
-extern crate regex;
-
-
 mod engine;
 
 
