@@ -1,5 +1,3 @@
-extern crate strum;
-#[macro_use] extern crate strum_macros;
 extern crate ggez;
 extern crate rlua;
 extern crate queues;

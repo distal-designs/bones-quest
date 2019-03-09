@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 
 use rlua::{self, FromLua, Lua, Table, Value};
+use strum_macros::{EnumString};
 
 #[derive(Clone, Debug)]
 pub struct EnemyStateVulnerability {
