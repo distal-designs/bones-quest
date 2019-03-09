@@ -3,7 +3,7 @@ pub mod visual_novel;
 
 use ggez::{self, GameResult};
 
-use engine;
+use crate::engine;
 
 
 pub struct _Overworld;
