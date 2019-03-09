@@ -2,6 +2,7 @@
 name = "bones-quest"
 version = "0.1.0"
 authors = ["Nicholas Farley <nicholasafarley@gmail.com>", "Eric Bronner <erbronne@gmail.com>"]
+edition = "2018"
 publish = false
 
 [dependencies]
