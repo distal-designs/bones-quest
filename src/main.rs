@@ -4,8 +4,6 @@ extern crate ggez;
 extern crate rlua;
 extern crate queues;
 extern crate regex;
-#[macro_use]
-extern crate serde_derive;
 
 
 mod engine;
