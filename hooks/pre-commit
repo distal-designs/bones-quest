@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 for FILE in $(git diff --name-only --cached); do
   [ "$(echo "$FILE" | awk -F . '{print $NF}')" != 'rs' ] && exit 0
