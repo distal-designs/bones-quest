@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 for FILE in $(git diff --name-only --cached); do
-  [ "${FILE: -3}" != '.rs' ] && exit 0
+  [ "$(echo "$FILE" | awk -F . '{print $NF}')" != 'rs' ] && exit 0
 
   if ! rustfmt +nightly "$FILE" --check > /dev/null 2>&1; then
     echo "'$FILE' has rust style issues. Run 'cargo +nightly fmt' and then restage!"
