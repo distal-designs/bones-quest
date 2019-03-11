@@ -1,10 +1,10 @@
 #!/usr/bin/env sh
 
-for FILE in $(git diff --name-only --cached); do
-  [ "$(echo "$FILE" | awk -F . '{print $NF}')" != 'rs' ] && exit 0
+for filename in $(git diff --name-only --cached); do
+  [ "$(echo "$filename" | awk -F . '{print $NF}')" != 'rs' ] && exit 0
 
-  if ! rustfmt +nightly "$FILE" --check > /dev/null 2>&1; then
-    echo "'$FILE' has rust style issues. Run 'cargo +nightly fmt' and then restage!"
+  if ! rustfmt "$filename" --check > /dev/null 2>&1; then
+    echo "'$filename' has rust style issues. Run 'cargo +nightly fmt' and then restage!"
     exit 1
   fi
 done
