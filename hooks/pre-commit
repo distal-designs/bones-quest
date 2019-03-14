@@ -3,7 +3,7 @@
 for filename in $(git diff --name-only --cached); do
   [ "$(echo "$filename" | awk -F . '{print $NF}')" != 'rs' ] && exit 0
 
-  if ! rustfmt "$filename" --check > /dev/null 2>&1; then
+  if ! rustfmt --check "$filename" > /dev/null 2>&1; then
     echo "'$filename' has rust style issues. Run 'cargo +nightly fmt' and then restage!"
     exit 1
   fi
