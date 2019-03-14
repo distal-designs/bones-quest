@@ -1,10 +1,16 @@
 #!/usr/bin/env sh
 
+has_style_issue=false
 for filename in $(git diff --name-only --cached); do
   [ "$(echo "$filename" | awk -F . '{print $NF}')" != 'rs' ] && exit 0
 
   if ! rustfmt --check "$filename" > /dev/null 2>&1; then
-    echo "'$filename' has rust style issues. Run 'cargo +nightly fmt' and then restage!"
-    exit 1
+    if ! "$has_style_issue"; then
+      has_style_issue=true
+      echo ERROR: pre-commit: The following files have style issues
+    fi
+    echo "- $filename"
   fi
 done
+
+"$has_style_issue" && exit 1
