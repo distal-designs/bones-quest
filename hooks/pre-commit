@@ -1,5 +1,9 @@
 #!/usr/bin/env sh
 
+if ! command -v rustfmt; then
+  echo ERROR: pre-commit: rustfmt not found on PATH
+fi
+
 has_style_issue=false
 for filename in $(git diff --name-only --cached); do
   [ "$(echo "$filename" | awk -F . '{print $NF}')" != 'rs' ] && exit 0
