@@ -17,4 +17,6 @@ for filename in $(git diff --name-only --cached); do
   fi
 done
 
-"$has_style_issue" && exit 1
+if "$has_style_issue"; then
+  exit 1
+fi
